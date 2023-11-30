@@ -12,7 +12,7 @@ My name is Axel Zuber. I live in a small village to the north of Frankfurt/Main 
 For the last 28 years i worked as a solution architect/lead engineer/software developer<br/>
 at [Deutsche Bank](https://www.db.com/). During my tenure i used most of the platforms en-vogue in that time :
 - IBM z/OS
-- Unix-like bare-metal servers
+- Bare-metal servers running Unix-like OSes
 - Private cloud (Red Hat Openshift)
 - Google Cloud Platform
 
