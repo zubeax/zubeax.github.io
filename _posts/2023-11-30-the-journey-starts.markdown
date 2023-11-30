@@ -9,7 +9,7 @@ i was quickly frustrated by the fact that operations kept us at arms length from
 Turns out Google has to earn money, so all resources have to be paid for. On top of that
 every change is going through [Terraform](https://www.terraform.io/) in a Gitops pipeline. It was quite disenchanting.
 
-While looking for ways to set up an environment that i could manage on my own i came across 
+While looking for ways to set up an environment that i could manage on my own, i came across 
 a number of blogs where people deployed [k3s](https://k3s.io/) (a bare-metal kubernetes distribution) on 
 Raspberry Pi clusters in all shapes and sizes. I had used Raspberry PIs for a number of projects throughout my house over the years,
 so i decided to give it a try.
