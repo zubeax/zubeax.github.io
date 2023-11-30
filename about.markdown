@@ -19,4 +19,4 @@ I graduated with a degree in solid state physics from the [University of Darmsta
 
 If you want to go back further, check out my [LinkedIn profile](https://www.linkedin.com/in/axel-zuber/).
 
-I blog about Kubernetes, Micro Services and their application. Since i have been around since CPU clock rates have been measured in MHz, you should expect the occasional historical item as well.
+I blog about Kubernetes, Micro Services and their application. Since i have been around since CPU clock rates were measured in MHz, you should expect the occasional historical item as well.
