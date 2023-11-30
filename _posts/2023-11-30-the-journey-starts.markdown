@@ -16,7 +16,7 @@ Raspberry Pi clusters in all shapes and sizes.<br/>
 I had used Raspberry PIs for a number of projects throughout my house over the last years,
 so i decided to give it a try.
 <br/>
-Even if i did not require an HA configuration with 99.999% availability i still wanted a decent case, a fan and no wires all over the place.
+Even if i did not require an HA configuration with 99.999% availability i still wanted a decent case, a fan, and no wires all over the place.
 
 This is what i came up with.
 
