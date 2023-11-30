@@ -7,6 +7,8 @@ feature_image: "/assets/axel.jpg"
 ---
 My name is Axel Zuber. I live in a small village to the north of Frankfurt/Main in Germany.
 
+![Axel]({{ "/axel.jpg" | relative_url }})
+
 For the last 28 years i worked as a solution architect/lead engineer/software developer at [Deutsche Bank](https://www.db.com/). During my tenure i used on most of the platforms en-vogue in that time :
 - IBM z/OS
 - Unix-like bare-metal servers
