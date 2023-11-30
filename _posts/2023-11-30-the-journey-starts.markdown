@@ -3,7 +3,6 @@ layout: post
 title: "The Journey Starts"
 date: 2023-11-30
 categories: kubernetes raspberrypi
-feature_image: "Raspberry Pi Kubernetes Cluster.png"
 ---
 
 After initially being quite excited about the possibilities offered by [Kubernetes}(https://kubernetes.io/) on [GCP](https://cloud.google.com/),
