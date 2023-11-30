@@ -4,4 +4,3 @@ list_title: My Latest Posts
 title: ''
 ---
 
-# Index
