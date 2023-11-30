@@ -26,5 +26,5 @@ Power is provided by a 5-port USB-C hub. Connectivity is managed by a 5-port swi
 So i have 2 220V connections and 1 Ethernet patch cable. Good enough to get started.
 <br/>
 In this series of blogs i will cover my journey of turning this brick into a useful member of my household.
-
+<br/><br/>
 Stay tuned.
