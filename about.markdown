@@ -1,18 +1,12 @@
 ---
 layout: page
-title: About
+title: About Axel
 permalink: /about/
 ---
+My name is Axel Zuber. I live in a small village to the north of Frankfurt/Main in Germany.
 
-This is the base Jekyll theme. You can find out more info about customizing your Jekyll theme, as well as basic Jekyll usage documentation at [jekyllrb.com](https://jekyllrb.com/)
+For the last 28 years i worked as a solution architect/lead engineer/software developer at [Deutsche Bank](https://www.db.com/).
 
-You can find the source code for Minima at GitHub:
-[jekyll][jekyll-organization] /
-[minima](https://github.com/jekyll/minima)
+I graduated with a degree in solid state physics at the [University of Darmstadt](https://www.tu-darmstadt.de/index.en.jsp).
 
-You can find the source code for Jekyll at GitHub:
-[jekyll][jekyll-organization] /
-[jekyll](https://github.com/jekyll/jekyll)
-
-
-[jekyll-organization]: https://github.com/jekyll
+If you want to go back further, check out my [LinkedIn profile]()[https://www.linkedin.com/in/axel-zuber-7497a23/].

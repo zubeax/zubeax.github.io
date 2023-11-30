@@ -1,4 +1,4 @@
-## GitHub Pages Blog
+## Axel's (Readme) Blog
 
 A collection of blogs with a focus on creating and maintaining Kubernetes clusters, both in private and public-cloud environments.
 
