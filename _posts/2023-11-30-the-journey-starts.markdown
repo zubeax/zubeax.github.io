@@ -4,7 +4,6 @@ title: "The Journey Starts"
 date: 2023-11-30
 categories: kubernetes raspberrypi
 ---
-
 After initially being quite excited about the possibilities offered by [Kubernetes](https://kubernetes.io/) on [GCP](https://cloud.google.com/),
 i was quickly frustrated by the fact that operations kept us at arms length from playing on the Cloud Console (aka command line).<br/>
 Turns out Google has to earn money, so all resources have to be paid for. On top of that
@@ -25,3 +24,5 @@ A 4-node [Raspberry Pi 4](https://www.raspberrypi.com/products/raspberry-pi-4-mo
 Each cluster node has a 500 GB SSD attached via a SATA/USB 3.0 adapter. The SSDs serve both as OS disks as well as storage medium for Kubernetes persistent volumes.<br/>
 Power is provided by a 5-port USB-C hub. Connectivity is managed by a 5-port switch.
 So i have 2 220V connections and 1 Ethernet patch cable. Good enough to get started.
+<br/>
+In this series of blogs i will 
