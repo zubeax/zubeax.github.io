@@ -12,8 +12,7 @@ every change is going through [Terraform](https://www.terraform.io/). It was qui
 
 While looking for ways to set up an environment that i could manage on my own i came across 
 a number of blogs where people deployed [k3s](https://k3s.io/) (a bare-metal kubernetes distribution) on 
-Raspberry Pi clusters in all shapes and sizes.<br/>
-I had used Raspberry PIs for a number of projects throughout my house over the last years,
+Raspberry Pi clusters in all shapes and sizes. I had used Raspberry PIs for a number of projects throughout my house over the years,
 so i decided to give it a try.
 <br/>
 Even if i did not require an HA configuration with 99.999% availability i still wanted a decent case, a fan, and no wires all over the place.
