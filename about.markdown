@@ -20,4 +20,4 @@ I graduated from the [University of Darmstadt](https://www.tu-darmstadt.de/index
 
 If you want more detail, check out my [LinkedIn profile](https://www.linkedin.com/in/axel-zuber/).
 
-I blog about Kubernetes, Micro Services and their application. Since i have been around since CPU clock rates were measured in MHz, you should expect the occasional historical item as well.
+I blog about Kubernetes, Micro Services and their application. I have been around since CPU clock rates were measured in MHz and data transfer rates in kbp/s, so you should expect the occasional historical item as well.

@@ -22,6 +22,6 @@ This is what i came up with.
 ![Raspberry Pi Kubernetes Cluster]({{ "/assets/Raspberry Pi Kubernetes Cluster.png" | relative_url }})
 
 A 4-node [Raspberry Pi 4](https://www.raspberrypi.com/products/raspberry-pi-4-model-b/) cluster.
-Each cluster node has a 500 GB SSD attached via an SATA/USB 3.0 adapter. The SSDs serve both as OS disks as well as storage medium for Kubernetes persistent volumes.<br/>
+Each cluster node has a 500 GB SSD attached via a SATA/USB 3.0 adapter. The SSDs serve both as OS disks as well as storage medium for Kubernetes persistent volumes.<br/>
 Power is provided by a 5-port USB-C hub. Connectivity is managed by a 5-port switch.
 So i have 2 220V connections and 1 Ethernet patch cable. Good enough to get started.
