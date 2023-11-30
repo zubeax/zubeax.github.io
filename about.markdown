@@ -16,7 +16,7 @@ at [Deutsche Bank](https://www.db.com/). During my tenure i used most of the pla
 - Private cloud (Red Hat Openshift)
 - Google Cloud Platform
 
-I graduated from the [University of Darmstadt](https://www.tu-darmstadt.de/index.en.jsp) with a degree in solid state physics in 1989.
+I graduated from the [Technical University of Darmstadt](https://www.tu-darmstadt.de/index.en.jsp) with a degree in solid state physics in 1989.
 
 If you want more detail, check out my [LinkedIn profile](https://www.linkedin.com/in/axel-zuber/).
 <br/><br/>
