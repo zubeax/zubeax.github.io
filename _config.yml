@@ -35,6 +35,10 @@ staticman_url: https://sdosda-staticman.herokuapp.com/v3/entry/github/zubeax/gp-
 theme: minima
 plugins:
   - jekyll-feed
+
+gems:
+  - jekyll-font-awesome-sass
+
 # Exclude from processing.
 # The following items will not be processed, by default.
 # Any item listed under the `exclude:` key here will be automatically added to
