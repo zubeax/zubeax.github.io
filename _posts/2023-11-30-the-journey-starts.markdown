@@ -6,7 +6,7 @@ categories: kubernetes raspberrypi
 tags: kubernetes raspberrypi
 ---
 After initially being quite excited about the possibilities offered by [Kubernetes](https://kubernetes.io/) on [GCP](https://cloud.google.com/),
-i was quickly frustrated by the fact that operations kept us at arms length from playing on the Cloud Console (aka command line).<br/>
+i was quickly frustrated by the fact that operations kept us at arm's length from playing on the Cloud Console (aka command line).<br/>
 Turns out Google has to earn money, so all resources have to be paid for. On top of that
 every change is going through [Terraform](https://www.terraform.io/) in a Gitops pipeline. It was quite disenchanting.
 
