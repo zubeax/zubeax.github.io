@@ -19,9 +19,9 @@ Even if i did not require an HA configuration with 99.999% availability i still 
 
 This is what i came up with.
 
-![Raspberry Pi Kubernetes Cluster]({{ "/assets/Raspberry Pi Kubernetes Cluster.png" | relative_url }})
+![Raspberry Pi Kubernetes Cluster]({{ "/assets/images/Raspberry Pi Kubernetes Cluster.png" | relative_url }})
 
-A 4-node [Raspberry Pi 4](https://www.raspberrypi.com/products/raspberry-pi-4-model-b/) cluster.
+A 4-node [Raspberry Pi 4](https://www.raspberrypi.com/products/raspberry-pi-4-model-b/) cluster.<br/>
 Each cluster node has a 500 GB SSD attached via a SATA/USB 3.0 adapter. The SSDs serve both as OS disks as well as storage medium for Kubernetes persistent volumes. The price-tag was about 500 EUR. A decent price for 16 cores, 32 GB of RAM and 2 TB of disk space.<br/>
 Power is provided by a 5-port USB hub. Connectivity is managed by a 5-port switch. So i have 2 220V connections and 1 Ethernet patch cable. Good enough to get started.<br/>
 Power consumption is between 15 to 20 W. Running the cluster 24x7 amounts to about 70 EUR/year at 0.4 EUR/kWh. Compared to the annual 1400 EUR bill for an Intel Tower with a 400 W power supply this is quite a bargain.<br/>
