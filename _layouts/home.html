@@ -10,30 +10,32 @@ layout: default
   {{ content }}
 
   {% if site.posts.size > 0 %}
-    <h2 class="post-list-heading">{{ page.list_title | default: "Posts" }}</h2>
-    <ul class="post-list">
-      {% for post in site.posts %}
-      <li>
-        <div>
-          {% assign date_format = site.minima.date_format | default: "%b %-d, %Y" %}
+  <h2 class="post-list-heading">{{ page.list_title | default: "Posts" }}</h2>
+  <ul class="post-list">
+    {%- for post in site.posts -%}
+    <li class="post">
+      <a class="post-link" href="{{ post.url | relative_url }}">
+        {%- if post.cover_image -%}
+          <img src="/assets/images/{{ post.cover_image }}" class="article-image" />
+        {%- endif -%} 
+        <div class="post-head">
+
+          {%- assign date_format = site.minima.date_format | default: "%b %-d, %Y" -%}
           <span class="post-meta">{{ post.date | date: date_format }}</span>
           <h3>
-            <a class="post-link" href="{{ post.url | relative_url }}">
-              {{ post.title | escape }}
-            </a>
+            {{ post.title | escape }}
           </h3>
-          {% if site.show_excerpts %}
-            {{ post.excerpt }}
-          {% endif %}
         </div>
-        {% if post.feature_image %}
-          <div class="feature-image">
-            <img src="{{ '/assets/' | append: post.feature_image | relative_url }}" />
-          </div>
-        {% endif %}
-      </li>
-      {% endfor %}
-    </ul>
+      </a>
+      {%- if site.show_excerpts -%}
+        {{ post.excerpt }}
+        <a href="{{ post.url | relative_url }}">
+          continue reading
+        </a>
+      {%- endif -%}
+    </li>
+    {%- endfor -%}
+  </ul>
 
     <p class="rss-subscribe">subscribe <a href="{{ '/feed.xml' | relative_url }}">via RSS</a></p>
   {% endif %}

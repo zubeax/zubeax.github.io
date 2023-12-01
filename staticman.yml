@@ -39,7 +39,7 @@ comments:
   moderation: false
 
   # When allowedOrigins is defined, only requests sent from one of the listed domains will be accepted.
-  allowedOrigins: ["localhost", "simondosda.github.io"]
+  allowedOrigins: ["localhost", "zubeax.github.io"]
 
   # (*) REQUIRED
   #
