@@ -3,6 +3,7 @@ layout: post
 title: "The Journey Starts"
 date: 2023-11-30
 categories: kubernetes raspberrypi
+tags: kubernetes raspberrypi
 ---
 After initially being quite excited about the possibilities offered by [Kubernetes](https://kubernetes.io/) on [GCP](https://cloud.google.com/),
 i was quickly frustrated by the fact that operations kept us at arms length from playing on the Cloud Console (aka command line).<br/>
