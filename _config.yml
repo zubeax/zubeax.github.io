@@ -31,7 +31,7 @@ github_username: zubeax
 permalink: /:collection/:year-:month-:day-:title:output_ext
 show_excerpts: true
 
-staticman_url: https://kippel.myddns.me:7443/v3/entry/github/zubeax/github.io/main/comments
+staticman_url: https://kippel.myddns.me:7443/v2/entry/zubeax/zubeax.github.io/main/comments
 
 # Build settings
 theme: minima
