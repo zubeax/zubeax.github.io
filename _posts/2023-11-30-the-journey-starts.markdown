@@ -1,6 +1,6 @@
 ---
 layout: post
-title: "The Journey Starts"
+title: "The Journey Begins"
 date: 2023-11-30
 categories: kubernetes raspberrypi
 tags: kubernetes raspberrypi
