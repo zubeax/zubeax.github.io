@@ -6,7 +6,7 @@ if [ x"$commitmessage" == x ]; then
     exit 1
 fi
 
-git add -A
+git add -A .
 git commit -m "$commitmessage"
 git push
 
