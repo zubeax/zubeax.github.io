@@ -25,7 +25,7 @@ to my workstation.
 
 This step can't be executed on the SSDs. We have to boot each node and execute the <code><b>rpi-eeprom-config</b></code> utility program. I decided to sacrifice 4 SD cards to boot from and leave them in each node to have a fallback in case an SSD should fail.
 
-Booting each node from the same SD card might be a cheapter option.
+Booting each node from the same SD card might be a cheaper option.
 
 After the node is up, open an ssh connection. Then perform the 2 steps below.
 
