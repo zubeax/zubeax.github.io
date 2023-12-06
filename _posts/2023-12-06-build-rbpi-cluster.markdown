@@ -18,13 +18,20 @@ rbpic0n1 is designated as the master node, the rest will become client nodes.
 
 I used the Raspberry Pi Imager to flash the OS on all 4 SSDs. Connect the SATA/USB Adapters to a USB-Hub attached
 to my workstation.
+The configuration options would cover 
+
+-   hostname
+-   keyboard layout
+-   timezone
+-   non-root account with an ssh public key of my choice
+
 
 ![Splash Screen]({{ "/assets/images/2023-12-06-build-pi-cluster/pi-imager-splash-screen.png" | relative_url }})
 ![General Settings]({{ "/assets/images/2023-12-06-build-pi-cluster/pi-imager-general.png" | relative_url }})
 ![SSH Settings]({{ "/assets/images/2023-12-06-build-pi-cluster/pi-imager.ssh-config.png" | relative_url }})
 
 
-## Configuring for USB Boot
+### Configuring for USB Boot
 
 This step can't be executed on the SSDs. We have to boot each node and execute the <code><b>rpi-eeprom-config</b></code> utility program. I decided to sacrifice 4 SD cards to boot from and leave them in each node to have a fallback in case an SSD should fail.
 
@@ -63,7 +70,7 @@ BOOT_ORDER=0xf14
 The boot order 0xf14 stands for : (usb, sdcard, repeat). Repeat this step for all 4 nodes.
 
 
-## Resizing the disk partitions
+### Resizing the disk partitions
 
 I wanted to set aside a separate partition to be managed by a Kubernetes storage manager so i resized the root partition to 60G :
 
@@ -149,7 +156,7 @@ The 5-port USB-C charger that i use for a power supply is hidden in the case, so
 Let's see what happens when i push the switch.
 
 
-## Preliminary Diagnostics
+### Preliminary Diagnostics
 
 I use a standalone Raspberry Pi B to run <b>dnsmasq</b> for DHCP and DNS services. Let's look at dhcp.leases.
 
@@ -220,6 +227,7 @@ temp=32.1'C
 No sweat. When the fan got too loud for me while i had the case on my desk, i would switch it off.
 Then temperatures rose up to 60 °C. That was without any load on the system, so i guess this is not the ceiling.
 After i move the cluster to the basement, the fan will run continuously so temperature should not be a concern.
+
 
 Now it is time to look into the installation of Kubernetes master and client nodes. I will cover this in my next blog.
 
