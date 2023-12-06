@@ -40,9 +40,11 @@ plugins:
   - jekyll-seo-tag
   - jekyll-target-blank
   - jekyll-sitemap
+  - jekyll-github-metadata
 
 gems:
   - jekyll-font-awesome-sass
+  - jekyll-github-metadata
 
 # Exclude from processing.
 # The following items will not be processed, by default.
