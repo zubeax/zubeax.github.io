@@ -9,7 +9,7 @@ In this article we are going to install and configure the Raspbian OS on the clu
 
 I assigned the cluster nodes hostnames in the range rbpic0n[1-4] :
 
-[Cluster Schematic]({{ "/assets/images/2023-12-06-build-pi-cluster/cluster-schematic.png" | relative_url }})
+![Cluster Schematic]({{ "/assets/images/2023-12-06-build-pi-cluster/cluster-schematic.png" | relative_url }})
 
 ## Installing the OS
 
