@@ -36,15 +36,16 @@ staticman_url: https://kippel.myddns.me:5000/api/v1.0/comments/
 # Build settings
 theme: minima
 plugins:
+  - "jekyll-github-metadata"    # required for the 'Projects' page.
   - jekyll-feed
   - jekyll-seo-tag
   - jekyll-target-blank
   - jekyll-sitemap
-  - jekyll-github-metadata
 
 gems:
+  - "jekyll-github-metadata"
   - jekyll-font-awesome-sass
-  - jekyll-github-metadata
+
 
 # Exclude from processing.
 # The following items will not be processed, by default.
