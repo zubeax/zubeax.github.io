@@ -140,9 +140,10 @@ PARTUUID=2245eb21-02       /            ext4    defaults,noatime                
 PARTUUID=2245eb21-03       /mnt/sda3    ext4    defaults,noatime                                    0 0
 ```
 
-After completing these steps on all 4 nodes we can now start the entire cluster. 
+After completing these steps on all 4 nodes we are now ready to start the entire cluster. 
 The 5-port USB-C charger that i use for a power supply is hidden in the case, so i use a switched powerstrip.
 
+Let's see what happens when i push the switch.
 
 
 ## Preliminary Diagnostics
