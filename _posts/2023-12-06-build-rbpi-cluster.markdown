@@ -5,7 +5,7 @@ date: 2023-12-06
 categories: cluster raspberrypi
 tags: cluster raspberrypi
 ---
-In this article we are going to install and configure the Raspbian OS on the cluster nodes.
+In this article we are going to install and configure Raspbian OS on the cluster nodes.
 
 I assigned the cluster nodes hostnames in the range rbpic0n[1-4] :
 
@@ -151,7 +151,7 @@ Let's see what happens when i push the switch.
 I use a standalone Raspberry Pi B to run <b>dnsmasq</b> for DHCP and DNS services. Let's look at dhcp.leases.
 
 ```bash
-ssh dhcpdns 'cat /tmp/dhcp.leases' | grep rbpic0n
+ssh dhcpdns 'cat /tmp/dhcp.leases' | grep rbpic0
 1701979039 d8:3a:dd:10:d1:37 192.168.100.24 rbpic0n3 01:d8:3a:dd:10:d1:37
 1701979044 d8:3a:dd:10:d2:90 192.168.100.242 rbpic0n1 01:d8:3a:dd:10:d2:90
 1701979043 d8:3a:dd:10:d1:eb 192.168.100.26 rbpic0n4 01:d8:3a:dd:10:d1:eb
