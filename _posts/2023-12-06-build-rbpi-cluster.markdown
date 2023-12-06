@@ -16,16 +16,16 @@ I assigned the cluster nodes hostnames in the range rbpic0n[1-4] :
 I used the Raspberry Pi Imager to flash the OS on all 4 SSDs. Connect the SATA/USB Adapters to a USB-Hub attached
 to my workstation.
 
-[Splash Screen]({{ "/assets/images/2023-12-06-build-pi-cluster/pi-imager-splash-screen.png" | relative_url }})
-[General Settings]({{ "/assets/images/2023-12-06-build-pi-cluster/pi-imager-general.png" | relative_url }})
-[SSH Settings]({{ "/assets/images/2023-12-06-build-pi-cluster/pi-imager.ssh-config.png" | relative_url }})
+![Splash Screen]({{ "/assets/images/2023-12-06-build-pi-cluster/pi-imager-splash-screen.png" | relative_url }})
+![General Settings]({{ "/assets/images/2023-12-06-build-pi-cluster/pi-imager-general.png" | relative_url }})
+![SSH Settings]({{ "/assets/images/2023-12-06-build-pi-cluster/pi-imager.ssh-config.png" | relative_url }})
 
 
-## Configure for USB Boot
+## Configuring for USB Boot
 
 This step can't be executed on the SSDs. We have to boot each node and execute the <code><b>rpi-eeprom-config</b></code> utility program. I decided to sacrifice 4 SD cards to boot from and leave them in each node to have a fallback in case an SSD should fail.
 
-Booting each node from the same SD card is a cheapter option.
+Booting each node from the same SD card might be a cheapter option.
 
 After the node is up, open an ssh connection. Then perform the 2 steps below.
 
@@ -60,7 +60,7 @@ BOOT_ORDER=0xf14
 The boot order to 0xf14 stands for : (usb, sdcard, repeat). Repeat this step for all 4 nodes.
 
 
-## Resize the disk partitions
+## Resizing the disk partitions
 
 I wanted to set aside a separate partition to be managed by a Kubernetes storage manager so i resized the root partition to 60G :
 
@@ -68,7 +68,9 @@ I wanted to set aside a separate partition to be managed by a Kubernetes storage
 resize2fs /dev/sda2 60G
 ```
 
+
 then i used <b>cfdisk</b> to create a new partition in the reclaimed space.
+
 
 ```bash
                                                Disk: /dev/sda
@@ -94,9 +96,11 @@ then i used <b>cfdisk</b> to create a new partition in the reclaimed space.
 
 Finally i formatted this partition into an ext4 file system.
 
+
 ```bash
 mkfs.ext4 /dev/sda3
 ```
+
 
 Each of the SSDs attached to the cluster nodes now looks similar to this :
 
@@ -114,4 +118,134 @@ Device     Boot     Start       End   Sectors   Size Id Type
 /dev/sda1            8192    532479    524288   256M  c W95 FAT32 (LBA)
 /dev/sda2          532480 126361599 125829120    60G 83 Linux
 /dev/sda3       126361600 976773119 850411520 405.5G 83 Linux
+```
+
+Now we grab the PARTUUID of our new partition /dev/sda3
+
+```bash
+# blkid
+/dev/mmcblk0p1: LABEL_FATBOOT="bootfs" LABEL="bootfs" UUID="0B22-2966" BLOCK_SIZE="512" TYPE="vfat" PARTUUID="a48c1955-01"
+/dev/mmcblk0p2: LABEL="rootfs" UUID="3ad7386b-e1ae-4032-ae33-0c40f5ecc4ac" BLOCK_SIZE="4096" TYPE="ext4" PARTUUID="a48c1955-02"
+/dev/sda1: LABEL_FATBOOT="bootfs" LABEL="bootfs" UUID="0B22-2966" BLOCK_SIZE="512" TYPE="vfat" PARTUUID="2245eb21-01"
+/dev/sda2: LABEL="rootfs" UUID="3ad7386b-e1ae-4032-ae33-0c40f5ecc4ac" BLOCK_SIZE="4096" TYPE="ext4" PARTUUID="2245eb21-02"
+/dev/sda3: LABEL="data" UUID="dfdd8a7e-e593-4c2d-b3e0-684a50189d8c" BLOCK_SIZE="4096" TYPE="ext4" PARTUUID="2245eb21-03"
+```
+
+and add it to /etc/fstab
+
+```bash
+proc                       /proc        proc    defaults                                            0 0
+PARTUUID=2245eb21-01       /boot        vfat    defaults                                            0 2
+PARTUUID=2245eb21-02       /            ext4    defaults,noatime                                    0 1
+PARTUUID=2245eb21-03       /mnt/sda3    ext4    defaults,noatime                                    0 0
+```
+
+After completing these steps on all 4 nodes we can now start the entire cluster. 
+The 5-port USB-C charger that i use for a power supply is hidden in the case, so i use a switched powerstrip.
+
+
+
+## Preliminary Diagnostics
+
+I use a standalone Raspberry Pi B to run <b>dnsmasq</b> for DHCP and DNS services. Let's look at dhcp.leases.
+
+```bash
+ssh dhcpdns 'cat /tmp/dhcp.leases' | grep rbpic0n
+1701979039 d8:3a:dd:10:d1:37 192.168.100.24 rbpic0n3 01:d8:3a:dd:10:d1:37
+1701979044 d8:3a:dd:10:d2:90 192.168.100.242 rbpic0n1 01:d8:3a:dd:10:d2:90
+1701979043 d8:3a:dd:10:d1:eb 192.168.100.26 rbpic0n4 01:d8:3a:dd:10:d1:eb
+1701979040 d8:3a:dd:10:d1:cb 192.168.100.37 rbpic0n2 01:d8:3a:dd:10:d1:cb
+```
+
+Looks good.
+
+Let's check the mounted file systems.
+
+```bash
+$ clustercmd blkid
+
+=== rbpic0n1
+
+/dev/sda1: LABEL_FATBOOT="bootfs" LABEL="bootfs" UUID="0B22-2966" BLOCK_SIZE="512" TYPE="vfat" PARTUUID="2245eb21-01"
+/dev/sda2: LABEL="rootfs" UUID="3ad7386b-e1ae-4032-ae33-0c40f5ecc4ac" BLOCK_SIZE="4096" TYPE="ext4" PARTUUID="2245eb21-02"
+/dev/sda3: LABEL="data" UUID="dfdd8a7e-e593-4c2d-b3e0-684a50189d8c" BLOCK_SIZE="4096" TYPE="ext4" PARTUUID="2245eb21-03"
+
+=== rbpic0n2
+
+/dev/sda1: LABEL_FATBOOT="bootfs" LABEL="bootfs" UUID="0B22-2966" BLOCK_SIZE="512" TYPE="vfat" PARTUUID="0f732d3f-01"
+/dev/sda2: LABEL="rootfs" UUID="3ad7386b-e1ae-4032-ae33-0c40f5ecc4ac" BLOCK_SIZE="4096" TYPE="ext4" PARTUUID="0f732d3f-02"
+/dev/sda3: LABEL="data" UUID="66e6f9ad-bb20-41a0-9b81-9325a8b0029c" BLOCK_SIZE="4096" TYPE="ext4" PARTUUID="0f732d3f-03"
+
+=== rbpic0n3
+
+/dev/sda1: LABEL_FATBOOT="bootfs" LABEL="bootfs" UUID="0B22-2966" BLOCK_SIZE="512" TYPE="vfat" PARTUUID="5ad112e0-01"
+/dev/sda2: LABEL="rootfs" UUID="3ad7386b-e1ae-4032-ae33-0c40f5ecc4ac" BLOCK_SIZE="4096" TYPE="ext4" PARTUUID="5ad112e0-02"
+/dev/sda3: LABEL="data" UUID="8cbc1ad4-e472-4f44-b302-e0de4ea8fc2c" BLOCK_SIZE="4096" TYPE="ext4" PARTUUID="5ad112e0-03"
+
+=== rbpic0n4
+
+/dev/sda1: LABEL_FATBOOT="bootfs" LABEL="bootfs" UUID="0B22-2966" BLOCK_SIZE="512" TYPE="vfat" PARTUUID="eadb40fb-01"
+/dev/sda2: LABEL="rootfs" UUID="3ad7386b-e1ae-4032-ae33-0c40f5ecc4ac" BLOCK_SIZE="4096" TYPE="ext4" PARTUUID="eadb40fb-02"
+/dev/sda3: UUID="b8c30d63-d2e5-474a-9528-4a47fc930e9b" BLOCK_SIZE="4096" TYPE="ext4" PARTUUID="eadb40fb-03"
+```
+
+All SSD partitions are there.
+
+Last step. CPU temperatures :
+
+```bash
+$ clustercmd vcgencmd measure_temp
+
+=== rbpic0n1
+
+temp=40.4'C
+
+=== rbpic0n2
+
+temp=35.0'C
+
+=== rbpic0n3
+
+temp=37.9'C
+
+=== rbpic0n4
+
+temp=32.1'C
+```
+
+No sweat. When the fan got too loud for me while i had the case on my desk, i would switch it off.
+Then temperatures rose up to 60 °C. That was without any load on the system, so i guess this is not the ceiling.
+After i move the cluster to the basement, the fan will run continuously so temperature should not be a concern.
+
+Now it is time to look into the installation of Kubernetes master and client nodes. I will cover this in my next blog.
+
+Stay tuned !
+
+
+P.S. the <b>clustercmd</b> command i used above is part of a set of shell utility functions i use to manage the cluster.
+At the current stage i don't want to spend the time to become familiar with Ansible, so i keep things simple.
+
+```bash
+clusternodes () 
+{ 
+    echo rbpic0n1 rbpic0n2 rbpic0n3 rbpic0n4
+}
+
+clustercmd () 
+{ 
+    [[ $# -eq 0 ]] && { 
+        cat 0<&0 > /tmp/bufferedstdin
+    };
+    for pi in $(clusternodes);
+    do
+        echo -e "===\n=== ${pi}\n===\n";
+        if [[ $# -eq 0 ]]; then
+            ssh -o LogLevel=QUIET -t $pi < /tmp/bufferedstdin;
+        else
+            ssh -o LogLevel=QUIET -t $pi "$@";
+        fi;
+    done;
+    echo -e "\n";
+    rm -f /tmp/bufferedstdin
+}
 ```
