@@ -5,11 +5,14 @@ date: 2023-12-06
 categories: cluster raspberrypi
 tags: cluster raspberrypi
 ---
-In this article we are going to install and configure Raspbian OS on the cluster nodes.
+In this article I am going to install and configure Raspbian OS on the cluster nodes.
 
 I assigned the cluster nodes hostnames in the range rbpic0n[1-4] :
 
 ![Cluster Schematic]({{ "/assets/images/2023-12-06-build-pi-cluster/cluster-schematic.png" | relative_url }})
+
+rbpic0n1 is designated as the master node, the rest will become client nodes.
+
 
 ## Installing the OS
 
