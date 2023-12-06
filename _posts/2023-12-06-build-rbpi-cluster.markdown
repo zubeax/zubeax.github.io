@@ -57,7 +57,7 @@ NET_INSTALL_ENABLED=0
 BOOT_ORDER=0xf14
 ```
 
-The boot order to 0xf14 stands for : (usb, sdcard, repeat). Repeat this step for all 4 nodes.
+The boot order 0xf14 stands for : (usb, sdcard, repeat). Repeat this step for all 4 nodes.
 
 
 ## Resizing the disk partitions
