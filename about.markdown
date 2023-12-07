@@ -3,7 +3,7 @@ layout: page
 title: About Axel
 permalink: /about/
 categories: kubernetes raspberrypi
-feature_image: "/assets/axel.jpg"
+feature_image: "/assets/images/axel.jpg"
 ---
 My name is Axel Zuber. I live in a small village to the north of Frankfurt/Main in Germany.
 
