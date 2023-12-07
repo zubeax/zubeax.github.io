@@ -23,7 +23,7 @@ Installation of k3s is straighforward : you grab the installscript from their we
 # curl -sfL https://get.k3s.io | sh -s - \
 		--write-kubeconfig-mode 644 \
 		--disable servicelb \
-		--token k3sadmin \
+		--token k3smaster \
 		--bind-address 192.168.100.242 \
 		--disable-cloud-controller \
 		--disable local-storage
@@ -34,17 +34,17 @@ The parameters are :
 - <b>--write-kubeconfig-mode 644</b> This is the mode that we want to use for the kubeconfig file.
 - <b>--disable servicelb</b> We will use <b>metallb</b> as a load balancer, so we disable the service load balancer.
 - <b>--token</b> This is the token that we want the client nodes to use to connect to the K3s master node.
-- <b>--bind-address</b> This is the master node's ip address.
+- <b>--bind-address</b> This is the master node's ip address as assigned by my DHCP infrastructure.
 - <b>--disable-cloud-controller</b> CCM (Cloud Controller Manager) enables a k3s cluster to talk to a cloud provider API. I don't think we need it.
 - <b>--disable local-storage</b> We will use <b>longhorn</b> as a storage provider, so we have to disable the K3s local storage.
 
-If you want the master node excluded from container scheduling, add the '--node-tain' parameter :
+If you want the master node excluded from container scheduling, add the '--node-taint' parameter :
 
 ```bash
 		--node-taint CriticalAddonsOnly=true:NoExecute \
 ```
 
-Since i can always taint the master node manually, i'll skip this for the moment, until i can observe if the master node can take the load.
+Since i can always taint the master node manually, i'll skip this for the moment, until i can observe if the master node is able to take the load.
 
 The script logs its activity like this :
 
@@ -96,7 +96,6 @@ Dec 07 15:13:56 rbpic0n1 k3s[677]: Trace[1341680801]:  ---"Txn call completed" 6
 Dec 07 15:13:56 rbpic0n1 k3s[677]: Trace[1341680801]: [650.046539ms] [650.046539ms] END
 ```
 
-
 <br/><br/>
 ## Installing the Client Nodes
 
@@ -104,16 +103,18 @@ In order to connect to the master, the client nodes require the hashed master to
 
 ```bash
 cat /var/lib/rancher/k3s/server/node-token'
-K10cda...<redacted>...fad8::server:k3sadmin
+K10cda...<redacted>...fad8::server:k3smaster
 ```
 
-Then execute this script on each client node :
+Then execute this script on each client node (replacing <node-token> with our master token) :
 
 ```bash
 curl -sfL https://get.k3s.io | K3S_URL=https://192.168.100.242:6443 K3S_TOKEN=<node-token> sh -
+```
 
 Installation should return a log similar to this :
 
+```bash
 [INFO]  Finding release for channel stable
 [INFO]  Using v1.27.6+k3s1 as release
 [INFO]  Downloading hash https://github.com/k3s-io/k3s/releases/download/v1.27.6+k3s1/sha256sum-arm64.txt
@@ -133,7 +134,7 @@ Created symlink /etc/systemd/system/multi-user.target.wants/k3s-agent.service �
 [INFO]  systemd: Starting k3s-agent
 ```
 
-If everything went well, all agents should be running. Let's check with <b>systemctl status</b>
+If everything went well, all agents should now be running. Let's check with <b>systemctl status</b>
 
 ```bash
 # systemctl status k3s-agent'
@@ -157,11 +158,10 @@ If everything went well, all agents should be running. Let's check with <b>syste
              └─14119 /var/lib/rancher/k3s/data/af4faef5f17...
 ```
 
-
 <br/><br/>
 ## Verify Cluster Health
 
-Let's check if the client nodes were successful in connecting to the master. For that we ssh into the master node and execute :
+If the client nodes were successful in connecting to the master, the <b>kubectl get nodes</b> command should list them :
 
 ```bash
 # kubectl get nodes
@@ -172,7 +172,7 @@ rbpic0n3   Ready    <none>                 4m43s   v1.27.7+k3s2
 rbpic0n4   Ready    <none>                 48s     v1.27.7+k3s2
 ```
 
-We are making progress. Our Kubernetes Cluster is up and running.
+There they are. We are making progress. Our Kubernetes Cluster is up and running.
 
 In the next article i will cover customization activities :
 
