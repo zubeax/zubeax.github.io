@@ -6,3 +6,18 @@ categories: raspberrypi cluster kubernetes k3s
 tags: raspberrypi cluster kubernetes k3s
 ---
 After completing the basic prerequisite tasks I am now ready to install Kubernetes on the master and client nodes.
+There are a number of options for doing so :
+
+-   k3s, a bare-metal kubernetes distribution derived from the official sources, published by Rancher
+-   MicroK8s, similar to k3s, published by Canonical
+-   os-specific packages for kubectl, containerd, ...
+
+k3s seemed to be a popular choice, so i decided to go with it.
+
+<br/><br/>
+## Installing the Master Node
+
+
+<br/><br/>
+## Installing the Client Nodes
+
