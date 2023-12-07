@@ -28,7 +28,7 @@ The configuration options would cover
 
 ![Splash Screen]({{ "/assets/images/2023-12-06-build-pi-cluster/pi-imager-splash-screen.png" | relative_url }}){:width="700px"}
 <br/>
-![General Settings]({{ "/assets/images/2023-12-06-build-pi-cluster/pi-imager-general.png" | relative_url }}){:height="400px"} ![SSH Settings]({{ "/assets/images/2023-12-06-build-pi-cluster/pi-imager.ssh-config.png" | relative_url }}){:height="400px"}
+![General Settings]({{ "/assets/images/2023-12-06-build-pi-cluster/pi-imager-general.png" | relative_url }}){:height="450px"} ![SSH Settings]({{ "/assets/images/2023-12-06-build-pi-cluster/pi-imager.ssh-config.png" | relative_url }}){:height="450px"}
 
 <br/><br/>
 ### Configuring for USB Boot
