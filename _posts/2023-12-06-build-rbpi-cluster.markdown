@@ -13,7 +13,7 @@ I assigned the cluster nodes hostnames in the range rbpic0n[1-4] :
 
 rbpic0n1 is designated as the master node, the rest will become client nodes.
 
-
+<br/><br/>
 ## Installing the OS
 
 I used the Raspberry Pi Imager to flash the OS on all 4 SSDs. I connected the SATA/USB Adapters to a USB-Hub attached to my workstation.
@@ -30,7 +30,7 @@ The configuration options would cover
 ![General Settings]({{ "/assets/images/2023-12-06-build-pi-cluster/pi-imager-general.png" | width=1024 | relative_url }})
 ![SSH Settings]({{ "/assets/images/2023-12-06-build-pi-cluster/pi-imager.ssh-config.png" | width=1024 | relative_url }})
 
-
+<br/><br/>
 ### Configuring for USB Boot
 
 The data transfer rates to the SSD are about 3 times higher than those to an SD Card.
@@ -87,7 +87,7 @@ BOOT_ORDER=0xf14
 
 The boot order 0xf14 stands for : (usb, sdcard, repeat). Repeat this step for all 4 nodes.
 
-
+<br/><br/>
 ### Resizing the disk partitions
 
 I wanted to set aside a separate partition to be managed by a Kubernetes storage manager so i resized the root partition to 60G :
@@ -173,7 +173,7 @@ The 5-port USB-C charger i use for a power supply is hidden in the case, so i us
 
 Let's see what happens when i push the switch.
 
-
+<br/><br/>
 ### Preliminary Diagnostics
 
 I use a standalone Raspberry Pi B to run <b>dnsmasq</b> for DHCP and DNS services. Let's look at dhcp.leases.
@@ -252,7 +252,7 @@ Now it is time to look into the installation of Kubernetes master and client nod
 
 Stay tuned !
 
-
+<br/><br/><br/>
 P.S. the <b>clustercmd</b> command i used above is part of a set of shell utility functions i use to manage the cluster.
 At the current stage i don't want to spend the time to become familiar with Ansible, so i keep things simple.
 
