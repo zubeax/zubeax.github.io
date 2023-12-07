@@ -16,8 +16,8 @@ rbpic0n1 is designated as the master node, the rest will become client nodes.
 
 ## Installing the OS
 
-I used the Raspberry Pi Imager to flash the OS on all 4 SSDs. Connect the SATA/USB Adapters to a USB-Hub attached
-to my workstation.
+I used the Raspberry Pi Imager to flash the OS on all 4 SSDs. I connected the SATA/USB Adapters to a USB-Hub attached to my workstation.
+
 The configuration options would cover 
 
 -   hostname
@@ -32,6 +32,24 @@ The configuration options would cover
 
 
 ### Configuring for USB Boot
+
+The data transfer rates to the SSD are about 3 times higher than those to an SD Card.
+
+```bash
+# dd if=/dev/random of=/mnt/sdcard2/tmp/murx bs=$((1024*1024)) count=512
+512+0 records in
+512+0 records out
+536870912 bytes (537 MB, 512 MiB) copied, 18.0773 s, 29.7 MB/s
+```
+
+```bash
+# dd if=/dev/random of=/tmp/murx bs=$((1024*1024)) count=512
+512+0 records in
+512+0 records out
+536870912 bytes (537 MB, 512 MiB) copied, 7.23104 s, 74.2 MB/s
+```
+
+ So i decided to configure the cluster nodes to also boot from SSD not just use it for data storage.
 
 This step can't be executed on the SSDs. We have to boot each node and execute the <code><b>rpi-eeprom-config</b></code> utility program. I decided to sacrifice 4 SD cards to boot from and leave them in each node to have a fallback in case an SSD should fail.
 
@@ -93,13 +111,13 @@ then i used <b>cfdisk</b> to create a new partition in the reclaimed space.
 >>  /dev/sda3                    126361600     976773119     850411520     405.5G     83 Linux              
 
 
- ┌────────────────────────────────────────────────────────────────────────────────────────────────────────┐
- │  Partition type: Linux (83)                                                                            │
- │ Filesystem UUID: dfdd8a7e-e593-4c2d-b3e0-684a50189d8c                                                  │
- │Filesystem LABEL: data                                                                                  │
- │      Filesystem: ext4                                                                                  │
- │      Mountpoint: /mnt/sda3 (mounted)                                                                   │
- └────────────────────────────────────────────────────────────────────────────────────────────────────────┘
+ ┌───────────────────────────────────────────────────────────────────┐
+ │  Partition type: Linux (83)                                       │
+ │ Filesystem UUID: dfdd8a7e-e593-4c2d-b3e0-684a50189d8c             │
+ │Filesystem LABEL: data                                             │
+ │      Filesystem: ext4                                             │
+ │      Mountpoint: /mnt/sda3 (mounted)                              │
+ └───────────────────────────────────────────────────────────────────┘
        [Bootable]  [ Delete ]  [ Resize ]  [  Quit  ]  [  Type  ]  [  Help  ]  [  Write ]  [  Dump  ]
 ```
 
@@ -173,31 +191,32 @@ Looks good.
 Let's check the mounted file systems.
 
 ```bash
-$ clustercmd blkid
+$ clustercmd mount
 
 === rbpic0n1
 
-/dev/sda1: LABEL_FATBOOT="bootfs" LABEL="bootfs" UUID="0B22-2966" BLOCK_SIZE="512" TYPE="vfat" PARTUUID="2245eb21-01"
-/dev/sda2: LABEL="rootfs" UUID="3ad7386b-e1ae-4032-ae33-0c40f5ecc4ac" BLOCK_SIZE="4096" TYPE="ext4" PARTUUID="2245eb21-02"
-/dev/sda3: LABEL="data" UUID="dfdd8a7e-e593-4c2d-b3e0-684a50189d8c" BLOCK_SIZE="4096" TYPE="ext4" PARTUUID="2245eb21-03"
+/dev/sda2 on / type ext4 (rw,noatime)
+/dev/sda3 on /mnt/sda3 type ext4 (rw,noatime,stripe=8191)
+/dev/sda1 on /boot type vfat (rw,relatime,fmask=0022,dmask=0022,codepage=437,iocharset=ascii,shortname=mixed,errors=remount-ro)
 
 === rbpic0n2
 
-/dev/sda1: LABEL_FATBOOT="bootfs" LABEL="bootfs" UUID="0B22-2966" BLOCK_SIZE="512" TYPE="vfat" PARTUUID="0f732d3f-01"
-/dev/sda2: LABEL="rootfs" UUID="3ad7386b-e1ae-4032-ae33-0c40f5ecc4ac" BLOCK_SIZE="4096" TYPE="ext4" PARTUUID="0f732d3f-02"
-/dev/sda3: LABEL="data" UUID="66e6f9ad-bb20-41a0-9b81-9325a8b0029c" BLOCK_SIZE="4096" TYPE="ext4" PARTUUID="0f732d3f-03"
+/dev/sda2 on / type ext4 (rw,noatime)
+/dev/sda3 on /mnt/sda3 type ext4 (rw,noatime,stripe=8191)
+/dev/sda1 on /boot type vfat (rw,relatime,fmask=0022,dmask=0022,codepage=437,iocharset=ascii,shortname=mixed,errors=remount-ro)
 
 === rbpic0n3
 
-/dev/sda1: LABEL_FATBOOT="bootfs" LABEL="bootfs" UUID="0B22-2966" BLOCK_SIZE="512" TYPE="vfat" PARTUUID="5ad112e0-01"
-/dev/sda2: LABEL="rootfs" UUID="3ad7386b-e1ae-4032-ae33-0c40f5ecc4ac" BLOCK_SIZE="4096" TYPE="ext4" PARTUUID="5ad112e0-02"
-/dev/sda3: LABEL="data" UUID="8cbc1ad4-e472-4f44-b302-e0de4ea8fc2c" BLOCK_SIZE="4096" TYPE="ext4" PARTUUID="5ad112e0-03"
+/dev/sda2 on / type ext4 (rw,noatime)
+/dev/sda3 on /mnt/sda3 type ext4 (rw,noatime,stripe=8191)
+/dev/sda1 on /boot type vfat (rw,relatime,fmask=0022,dmask=0022,codepage=437,iocharset=ascii,shortname=mixed,errors=remount-ro)
 
 === rbpic0n4
 
-/dev/sda1: LABEL_FATBOOT="bootfs" LABEL="bootfs" UUID="0B22-2966" BLOCK_SIZE="512" TYPE="vfat" PARTUUID="eadb40fb-01"
-/dev/sda2: LABEL="rootfs" UUID="3ad7386b-e1ae-4032-ae33-0c40f5ecc4ac" BLOCK_SIZE="4096" TYPE="ext4" PARTUUID="eadb40fb-02"
-/dev/sda3: UUID="b8c30d63-d2e5-474a-9528-4a47fc930e9b" BLOCK_SIZE="4096" TYPE="ext4" PARTUUID="eadb40fb-03"
+/dev/sda2 on / type ext4 (rw,noatime)
+/dev/sda3 on /mnt/sda3 type ext4 (rw,noatime,stripe=8191)
+/dev/sda1 on /boot type vfat (rw,relatime,fmask=0022,dmask=0022,codepage=437,iocharset=ascii,shortname=mixed,errors=remount-ro)
+
 ```
 
 All SSD partitions are there.

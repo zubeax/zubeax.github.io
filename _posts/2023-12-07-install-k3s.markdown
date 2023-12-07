@@ -1,0 +1,8 @@
+---
+layout: post
+title: "Installing Kubernetes on Raspberry Pi Cluster"
+date: 2023-12-07
+categories: raspberrypi cluster kubernetes k3s
+tags: raspberrypi cluster kubernetes k3s
+---
+After completing the basic prerequisite tasks I am now ready install Kubernetes on master and client nodes.
