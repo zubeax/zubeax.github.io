@@ -31,12 +31,12 @@ Installation of k3s is straighforward : you grab the installscript from their we
 
 The parameters are :
 
-- <b>write-kubeconfig-mode 644</b> This is the mode that we want to use for the kubeconfig file.
-- <b>disable servicelb</b> We will use <b>metallb</b> as a load balancer, so we disable the service load balancer.
-- <b>token</b> This is the token that we want the client nodes to use to connect to the K3s master node.
-- <b>bind-address</b> This is the master node's ip address.
-- <b>disable-cloud-controller</b> CCM (Cloud Controller Manager) enables a k3s cluster to talk to a cloud provider API. I don't think we need it.
-- <b>disable local-storage</b> We will use <b>longhorn</b> as a storage provider, so we have to disable the K3s local storage.
+- <b>--write-kubeconfig-mode 644</b> This is the mode that we want to use for the kubeconfig file.
+- <b>--disable servicelb</b> We will use <b>metallb</b> as a load balancer, so we disable the service load balancer.
+- <b>--token</b> This is the token that we want the client nodes to use to connect to the K3s master node.
+- <b>--bind-address</b> This is the master node's ip address.
+- <b>--disable-cloud-controller</b> CCM (Cloud Controller Manager) enables a k3s cluster to talk to a cloud provider API. I don't think we need it.
+- <b>--disable local-storage</b> We will use <b>longhorn</b> as a storage provider, so we have to disable the K3s local storage.
 
 If you want the master node excluded from container scheduling, add the '--node-tain' parameter :
 
