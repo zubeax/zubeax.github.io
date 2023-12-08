@@ -1,6 +1,6 @@
 ---
 layout: post
-title: "Installing Kubernetes on Raspberry Pi Cluster"
+title: "Installing Kubernetes on a Raspberry Pi Cluster"
 date: 2023-12-07
 categories: raspberrypi cluster kubernetes k3s
 tags: raspberrypi cluster kubernetes k3s
@@ -8,11 +8,11 @@ tags: raspberrypi cluster kubernetes k3s
 After completing the basic prerequisite tasks I am now ready to install Kubernetes on the master and client nodes.
 There are a number of options for doing so :
 
--   [k3s](https://k3s.io/), a bare-metal kubernetes distribution derived from the official sources, published by Rancher
+-   [k3s](https://k3s.io/), a bare-metal Kubernetes distribution derived from the official sources, published by Rancher
 -   [MicroK8s](https://microk8s.io/), similar to k3s, published by Canonical
 -   os-specific packages for kubectl, containerd, ...
 
-k3s seemed to be a popular choice, so i decided to go with it.
+k3s seems to be a popular choice, so i decided to go with it.
 
 <br/><br/>
 ## Installing the Master Node
@@ -31,20 +31,20 @@ Installation of k3s is straighforward : you grab the installscript from their we
 
 The parameters are :
 
-- <b>--write-kubeconfig-mode 644</b> This is the mode that we want to use for the kubeconfig file.
-- <b>--disable servicelb</b> We will use <b>metallb</b> as a load balancer, so we disable the service load balancer.
-- <b>--token</b> This is the token that we want the client nodes to use to connect to the K3s master node.
-- <b>--bind-address</b> This is the master node's ip address as assigned by my DHCP infrastructure.
-- <b>--disable-cloud-controller</b> CCM (Cloud Controller Manager) enables a k3s cluster to talk to a cloud provider API. I don't think we need it.
-- <b>--disable local-storage</b> We will use <b>longhorn</b> as a storage provider, so we have to disable the K3s local storage.
+- <b>write-kubeconfig-mode 644</b> This is the mode that we want to use for the kubeconfig file.
+- <b>disable servicelb</b> We will use <b>metallb</b> as a load balancer, so we disable the service load balancer.
+- <b>token</b> This is the token that we want the client nodes to use to connect to the K3s master node.
+- <b>bind-address</b> This is the master node's ip address as assigned by my DHCP infrastructure.
+- <b>disable-cloud-controller</b> CCM (Cloud Controller Manager) enables a k3s cluster to talk to a cloud provider API. I don't think we need it.
+- <b>disable local-storage</b> We will use <b>longhorn</b> as a storage provider, so we have to disable the K3s local storage.
 
-If you want the master node excluded from container scheduling, add the '--node-taint' parameter :
+If you want the master node excluded from container scheduling, add the 'node-taint' parameter :
 
 ```bash
-		--node-taint CriticalAddonsOnly=true:NoExecute \
+		--node-taint CriticalAddonsOnly=true:NoExecute
 ```
 
-Since i can always taint the master node manually, i'll skip this for the moment, until i can observe if the master node is able to take the load.
+Since i can always taint the master node manually, i will skip this until i can observe if the master node is able to take the load.
 
 The script logs its activity like this :
 
@@ -177,7 +177,6 @@ There they are. We are making progress. Our Kubernetes Cluster is up and running
 In the next article i will cover customization activities :
 
 - Installing Metallb Load Balancer
-- Installing Traefik Ingress Manager
 - Installing Longhorn Storage Manager
 
 Stay tuned !
