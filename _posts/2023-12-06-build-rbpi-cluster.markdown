@@ -4,6 +4,7 @@ title: "Building a Raspberry Pi Cluster"
 date: 2023-12-06
 categories: cluster raspberrypi
 tags: cluster raspberrypi
+toc: false
 ---
 In this article I am going to install and configure Raspbian OS on the cluster nodes.
 

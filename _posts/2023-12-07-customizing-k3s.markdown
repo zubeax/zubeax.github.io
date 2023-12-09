@@ -4,16 +4,23 @@ title: "Customizing a k3s Kubernetes Cluster"
 date: 2023-12-08
 categories: raspberrypi cluster kubernetes k3s
 tags: raspberrypi cluster kubernetes k3s
+toc: true
 ---
 In the last blog we completed the installation of k3s on our cluster. As it stands, the cluster lacks the capabilities to
 <br/> 
-- [Metallb](https://metallb.universe.tf/) : load balance incoming requests to multiple container instances and to expose services outside of the cluster
-- [Longhorn](https://longhorn.io/) : provide containers with persistent storage
+- load balance incoming requests to multiple container instances and to expose services outside of the cluster
+- provide containers with persistent storage
+
 <br/>
-I am going to address these issues in the following 3 paragraphs of this blog.
+We will address these issues in the following paragraphs of this blog.
+
+# Table of contents
+1. [Prequisite : Installing Helm](#helm)
+2. [Installing the MetalLB Load Balancer](#metallb)
+3. [Installing the Longhorn Storage Manager](#longhorn)
 
 <br/><br/>
-## Installing the Helm Package Manager
+## Installing the Helm Package Manager<a name="helm"></a>
 
 Some of the components we are going to install in this Blog come packaged as Helm Charts. In order to install them,  we have to install Helm first.
 
@@ -44,9 +51,9 @@ Error: Kubernetes cluster unreachable: Get "http://localhost:8080/version": dial
 
 
 <br/><br/>
-## Installing the MetalLB Load Balancer
+## Installing the MetalLB Load Balancer<a name="metallb"></a>
 
-MetalLB provides a network load-balancer implementation. It allows you to create Kubernetes services of type <b>LoadBalancer</b> that are visible outside of the cluster.
+[Metallb](https://metallb.universe.tf/) provides a network load-balancer implementation. It allows you to create Kubernetes services of type <b>LoadBalancer</b> that are visible outside of the cluster.
 It has two features that work together to provide this service: address allocation, and external announcement.
 
 
@@ -159,10 +166,10 @@ This is the list of services that are currently assigned ip addresses from the p
 ```
 
 <br/><br/>
-## Installing the Longhorn Storage Manager
+## Installing the Longhorn Storage Manager<a name="longhorn"></a>
 
 k3s comes with the 'local storage' provider by default. But in case one of the client nodes fails, all persisted volumes from that node would be gone. 
-Longhorn remedies that risk by replicating the volumes within the cluster.
+[Longhorn](https://longhorn.io/) remedies that risk by replicating the volumes within the cluster.
 
 ### Prerequisites
 
