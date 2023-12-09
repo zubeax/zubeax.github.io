@@ -6,7 +6,7 @@ categories: raspberrypi cluster kubernetes k3s
 tags: raspberrypi cluster kubernetes k3s
 toc: true
 ---
-In the last blog we completed the installation of k3s on our cluster. As it stands, the cluster lacks the capabilities to
+In the last blog we completed the installation of k3s on our cluster. Technically we are now good to start deploying applications (e.g. from [docker hub](https://hub.docker.com/)). As it stands however, the cluster lacks the capabilities to
 <br/> 
 - load balance incoming requests to multiple container instances and to expose services outside of the cluster
 - provide containers with persistent storage
@@ -19,7 +19,7 @@ We will address these issues in the following paragraphs of this blog.
 2. [Installing the MetalLB Load Balancer](#metallb)
 3. [Installing the Longhorn Storage Manager](#longhorn)
 
-<br/><br/>
+<br/>
 ## Installing the Helm Package Manager<a name="helm"></a>
 
 Some of the components we are going to install in this Blog come packaged as Helm Charts. In order to install them,  we have to install Helm first.
@@ -35,7 +35,7 @@ Preparing to install helm into /usr/local/bin
 helm installed into /usr/local/bin/helm
 ```
 
-Conceptually Helm is an abstraction layer around the Kubernetes API. Helm requires authentication credentials for submitting API requests.
+Conceptually Helm is an abstraction layer around the Kubernetes API and requires authentication credentials for submitting API requests.
 The procedure for that is simple : Add this export statement to root's ~/.bashrc on the master node:
 
 ```bash
@@ -49,8 +49,7 @@ If you miss this last step, you will run into errors like this :
 Error: Kubernetes cluster unreachable: Get "http://localhost:8080/version": dial tcp [::1]:8080: connect: connection refused
 ```
 
-
-<br/><br/>
+<br/>
 ## Installing the MetalLB Load Balancer<a name="metallb"></a>
 
 [Metallb](https://metallb.universe.tf/) provides a network load-balancer implementation. It allows you to create Kubernetes services of type <b>LoadBalancer</b> that are visible outside of the cluster.
@@ -61,7 +60,7 @@ It has two features that work together to provide this service: address allocati
 
 Since the external addresses assigned by MetalLB come out of the address range managed by my dnsmasq DHCP service, i have to ensure that dnsmasq does not use them.
 
-This is the <b>dhcp-range</b> clause from /etc/dnsmasq.conf that ensures that dnsmasq only assigns addresses from 192.168.100.[1..149]. Addresses in the range 192.168.100.[150..199] are reserved for MetalLB.
+This is the <b>dhcp-range</b> clause from /etc/dnsmasq.conf that ensures that dnsmasq only assigns addresses from 192.168.100.[1..149] and 192.168.100.[200..255]. Addresses in the range 192.168.100.[150..199] are reserved for MetalLB.
 
 ```bash
 # assign an address from one of the ranges below
@@ -168,8 +167,8 @@ This is the list of services that are currently assigned ip addresses from the p
 <br/><br/>
 ## Installing the Longhorn Storage Manager<a name="longhorn"></a>
 
-k3s comes with the 'local storage' provider by default. But in case one of the client nodes fails, all persisted volumes from that node would be gone. 
-[Longhorn](https://longhorn.io/) remedies that risk by replicating the volumes within the cluster.
+k3s comes with the 'local storage' provider by default. The problem with local storage is that in case one of the client nodes fails,
+all persisted volumes from that node would be gone. [Longhorn](https://longhorn.io/) remediates this risk by replicating the volumes within the cluster.
 
 ### Prerequisites
 
@@ -269,7 +268,7 @@ Now the URL http://192.168.100.151 should open the Longhorn Dashboard from anywh
 
 If you are content to have Longhorn manage persistent volumes on the SD Card you booted the node from, you can safely skip this step.
 <br/>
-I could not find a way to add disks to Longhorn from the commandline, so i had to select 'Operations/Edit node and disks' for every cluster node in the Longhorn Dashboard.
+For my configuration i wanted to make Longhorn use the 400GB partitions from the attached SSDs. I could not find a way to add disks to Longhorn from the commandline, so i had to select 'Operations/Edit node and disks' for every cluster node in the Longhorn Dashboard.
 Hit 'Add Disk' at the bottom and then fill in the form.
 
 ![Longhorn Dashboardn]({{ "/assets/images/2023-12-08-customize-cluster/Longhorn-Add-Disk.png" | relative_url }})

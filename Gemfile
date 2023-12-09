@@ -18,7 +18,10 @@ group :jekyll_plugins do
   gem "jekyll-feed", "~> 0.12"
   gem 'jekyll-target-blank' # Forces all external links to open in a new browser window
   gem 'jekyll-sitemap'
+  gem 'jekyll-github-metadata'
+  gem 'jekyll-seo-tag'
   gem 'jekyll-toc'
+  gem 'jekyll-font-awesome-sass'
 end
 
 # Performance-booster for watching directories on Windows
