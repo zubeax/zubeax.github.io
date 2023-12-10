@@ -10,20 +10,7 @@ In the last blog we completed the installation of k3s on our cluster. Technicall
 <br/> 
 - load balance incoming requests to multiple container instances and to expose services outside of the cluster
 - provide containers with persistent storage
-<<<<<<< HEAD:_posts/2023-12-08-customizing-k3s.markdown
 
-<br/>
-We will address these issues in the following paragraphs of this blog.
-
-# Table of contents
-1. [Prequisite : Installing Helm](#helm)
-2. [Installing the MetalLB Load Balancer](#metallb)
-3. [Installing the Longhorn Storage Manager](#longhorn)
-
-<br/><br/>
-=======
-
-<br/>
 We will address these issues in the following paragraphs of this blog.
 
 # Table of contents
@@ -32,7 +19,6 @@ We will address these issues in the following paragraphs of this blog.
 3. [Installing the Longhorn Storage Manager](#longhorn)
 
 <br/>
->>>>>>> 60837122e6ea3158c10016a36a475935e3443de7:_posts/2023-12-07-customizing-k3s.markdown
 ## Installing the Helm Package Manager<a name="helm"></a>
 
 Some of the components we are going to install in this Blog come packaged as Helm Charts. In order to install them,  we have to install Helm first.
@@ -65,12 +51,6 @@ Error: Kubernetes cluster unreachable: Get "http://localhost:8080/version": dial
 <br/>
 ## Installing the MetalLB Load Balancer<a name="metallb"></a>
 
-<<<<<<< HEAD:_posts/2023-12-08-customizing-k3s.markdown
-<br/><br/>
-## Installing the MetalLB Load Balancer<a name="metallb"></a>
-
-=======
->>>>>>> 60837122e6ea3158c10016a36a475935e3443de7:_posts/2023-12-07-customizing-k3s.markdown
 [Metallb](https://metallb.universe.tf/) provides a network load-balancer implementation. It allows you to create Kubernetes services of type <b>LoadBalancer</b> that are visible outside of the cluster.
 It has two features that work together to provide this service: address allocation, and external announcement.
 
@@ -186,13 +166,8 @@ This is the list of services that are currently assigned ip addresses from the p
 <br/><br/>
 ## Installing the Longhorn Storage Manager<a name="longhorn"></a>
 
-<<<<<<< HEAD:_posts/2023-12-08-customizing-k3s.markdown
-k3s comes with the 'local storage' provider by default. But in case one of the client nodes fails, all persisted volumes from that node would be gone. 
-[Longhorn](https://longhorn.io/) remedies that risk by replicating the volumes within the cluster.
-=======
 k3s comes with the 'local storage' provider by default. The problem with local storage is that in case one of the client nodes fails,
 all persisted volumes from that node would be gone. [Longhorn](https://longhorn.io/) remediates this risk by replicating the volumes within the cluster.
->>>>>>> 60837122e6ea3158c10016a36a475935e3443de7:_posts/2023-12-07-customizing-k3s.markdown
 
 ### Prerequisites
 
@@ -287,15 +262,14 @@ Now the URL http://192.168.100.151 should open the Longhorn Dashboard from anywh
 
 ![Longhorn Dashboardn]({{ "/assets/images/2023-12-08-customize-cluster/longhorn-dashboard.png" | relative_url }})
 
-<br/>
-### Configuring our SSD Volumes
+## Configuring our SSD Volumes
 
 If you are content to have Longhorn manage persistent volumes on the SD Card you booted the node from, you can safely skip this step.
 <br/>
 For my configuration i wanted to make Longhorn use the 400GB partitions from the attached SSDs. I could not find a way to add disks to Longhorn from the commandline, so i had to select 'Operations/Edit node and disks' for every cluster node in the Longhorn Dashboard.
 Hit 'Add Disk' at the bottom and then fill in the form.
 
-![Longhorn Dashboardn]({{ "/assets/images/2023-12-08-customize-cluster/Longhorn-Add-Disk.png" | relative_url }})
+![Longhorn Add Disk]({{ "/assets/images/2023-12-08-customize-cluster/Longhorn-Add-Disk.png" | relative_url }})
 
 
 If you want to remove the default storage volumes allocated in '/var/lib/longhorn', you can disable them and tick ‘Eviction Requested’ in this form.
@@ -303,7 +277,6 @@ If you want to remove the default storage volumes allocated in '/var/lib/longhor
 Now confirm and repeat for the next node.
 
 
-<br/>
 ### Making Longhorn the default storage class
 
 Check if you find the file <b>/var/lib/rancher/k3s/server/manifests/local-storage.yaml</b> on the master node.
@@ -320,7 +293,6 @@ exit 0
 ```
 
 Then make longhorn the default storage class :
-
 
 ```bash
 kubectl -n longhorn-system patch storageclass longhorn -p '{"metadata": {"annotations":{"storageclass.kubernetes.io/is-default-class":"true"}}}'
