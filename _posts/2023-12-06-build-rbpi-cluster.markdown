@@ -163,16 +163,16 @@ Now we grab the PARTUUID of our new partition /dev/sda3
 and add it to /etc/fstab
 
 ```bash
-proc                       /proc        proc    defaults                                            0 0
-PARTUUID=2245eb21-01       /boot        vfat    defaults                                            0 2
-PARTUUID=2245eb21-02       /            ext4    defaults,noatime                                    0 1
-PARTUUID=2245eb21-03       /mnt/sda3    ext4    defaults,noatime                                    0 0
+proc                       /proc        proc    defaults            0 0
+PARTUUID=2245eb21-01       /boot        vfat    defaults            0 2
+PARTUUID=2245eb21-02       /            ext4    defaults,noatime    0 1
+PARTUUID=2245eb21-03       /mnt/sda3    ext4    defaults,noatime    0 3
 ```
 
 After completing these steps on all 4 nodes, we are now ready to start the entire cluster. 
 The 5-port USB-C charger i use for a power supply is hidden in the case, so i use a switched powerstrip.
 
-Let's see what happens when i push the switch.
+I don't have an Igor, so i will have to pull the switch myself.
 
 <br/><br/>
 ### Preliminary Diagnostics
@@ -180,7 +180,7 @@ Let's see what happens when i push the switch.
 I use a standalone Raspberry Pi B to run <b>dnsmasq</b> for DHCP and DNS services. Let's look at dhcp.leases.
 
 ```bash
-ssh dhcpdns 'cat /tmp/dhcp.leases' | grep -e 'rbpic0n[1-4]'
+ssh dnsdhcp 'cat /tmp/dhcp.leases' | grep -e 'rbpic0n[1-4]'
 1701979039 d8:3a:dd:10:d1:37 192.168.100.24 rbpic0n3 01:d8:3a:dd:10:d1:37
 1701979044 d8:3a:dd:10:d2:90 192.168.100.242 rbpic0n1 01:d8:3a:dd:10:d2:90
 1701979043 d8:3a:dd:10:d1:eb 192.168.100.26 rbpic0n4 01:d8:3a:dd:10:d1:eb

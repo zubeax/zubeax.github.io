@@ -402,7 +402,7 @@ Commercial support is available at
 * Connection #0 to host 192.168.100.150 left intact
 ```
 
-Except for the <b>Proxy-Connection: Keep-Alive</b> tag from the response, there is no difference in the result.
+Except for the <b>Proxy-Connection: Keep-Alive</b> tag from the response there is no difference in the result.
 Not bad at all !
 
 <br/>
@@ -433,6 +433,7 @@ EOT
 expose it for download (i used the Python HTTP.Server module)
 
 ```bash
+cat > /etc/systemd/system/autoproxy.service << EOT
 [Unit]
 Description=Autoproxy Service
 After=network.target
@@ -447,6 +448,10 @@ User=pi
 
 [Install]
 WantedBy=multi-user.target
+EOT
+
+systemctl enable autoproxy
+systemctl start autoproxy
 ```
 
 and add the configuration below to your /etc/dnsmasq.conf file.
@@ -463,7 +468,7 @@ After refreshing the WiFi connection on your tablet, http://nginx.kippel.k3s/ sh
 
 ![Nginx Splashscreen]({{ "/assets/images/2023-12-10-k3s-networking/nginx-splashscreen.png" | relative_url }}){:width="650px"}
 
-For Windows workstation this should also work out of the box. With Linux workstations you might have to manually tweak the proxy settings.
+For Windows workstations this will also work out of the box. With Linux workstations you might have to manually tweak the proxy settings.
 
 
 <br/><br/>
