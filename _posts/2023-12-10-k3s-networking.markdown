@@ -31,7 +31,7 @@ Rancher supports post-installation customization of objects with [<b>HelmChartCo
 
 We create a configuration file and apply it to Traefik. While we are at it, we also configure the dashboard for http access. In my home network i can live without having TLS enabled for the dashboard.
 
-```bash
+```sh
 cat >./traefik-custom-conf.yaml << EOT
 apiVersion: helm.cattle.io/v1
 kind: HelmChartConfig
@@ -58,7 +58,7 @@ kubectl -n kube-system apply -f ./traefik-custom-conf.yaml
 
 Ensure that the reconfiguration worked : Verify that the api.dashboard/api.insecure clauses show up as per our configuration file.
 
-```bash
+```sh
 $ kubectl -n kube-system describe deployment/traefik
 
 Name:                   traefik
@@ -89,7 +89,7 @@ The shell commands below create a configuration file and then the service with <
 <b>n.b. 2</b> : the load balancer service is 'attached' to the traefik pod by means of the 'selector' clauses. When you create 
 such services on your own, make sure that them right.
 
-```bash
+```sh
 cat >./traefik-lb-service.yaml << EOT
 apiVersion: v1
 kind: Service
@@ -116,7 +116,7 @@ kubectl -n kube-system apply -f ./traefik-lb-service.yaml
 
 Ensure that everything went according to plan.
 
-```bash
+```sh
 $ kubectl -n kube-system get svc/traefik
 NAME      TYPE           CLUSTER-IP      EXTERNAL-IP       PORT(S)                                     AGE
 traefik   LoadBalancer   10.43.137.173   192.168.100.150   9000:32424/TCP,80:32265/TCP,443:32347/TCP   30d
@@ -139,7 +139,7 @@ Here goes :
 - create a deployment from the 'nginx' image from docker hub
 - list all resources from the namespace
 
-```bash
+```sh
 $ kubectl create namespace nginx
 
 $ kubectl -n nginx create deployment nginx --image=nginx
@@ -157,7 +157,7 @@ replicaset.apps/nginx-77b4fdf86c   1         1         1       4h14m
 
 As you can see, there is no service to link to yet, so the next step is to create one.
 
-```bash
+```sh
 $ kcqn expose deployment nginx --port=8080 --target-port=80
 service/nginx exposed
 
@@ -175,7 +175,7 @@ Let's see if we can submit requests to the Nginx server with the addresses we cu
 
 Our first destination will be the nginx pod. Grab its cluster ip address from the description :
 
-```bash
+```sh
 $ kubectl -n nginx describe pod/nginx-77b4fdf86c-bg5jn
 
 Name:             nginx-77b4fdf86c-bg5jn
@@ -189,7 +189,7 @@ IPs:
 
 A simple HTTP GET (via port 80) should be sufficient.
 
-```bash
+```sh
 # curl -v http://10.42.3.115:80/
 *   Trying 10.42.3.115:80...
 * Connected to 10.42.3.115 (10.42.3.115) port 80 (#0)
@@ -237,7 +237,7 @@ Commercial support is available at
 
 That looks good. Let's try with the service (via port 8080).
 
-```bash
+```sh
 # curl -v http://10.43.73.209:8080/
 *   Trying 10.43.73.209:8080...
 * Connected to 10.43.73.209 (10.43.73.209) port 8080 (#0)
@@ -290,7 +290,7 @@ Looking good as well. Now that we have established that our Nginx service is wil
 
 Ingress Routes come in all shapes and sizes. For this example i will pick a fairly simple type : host-based routing.
 
-```bash
+```sh
 $ cat > ./nginx-ingressroute-host.yaml << EOT
 apiVersion: traefik.containo.us/v1alpha1
 kind: IngressRoute
@@ -356,7 +356,7 @@ One attribute that is missing from the IngressRoute description is a <b>cluster 
 <br/>
 Let's try that.
 
-```bash
+```sh
 $ curl -v -x http://192.168.100.150:80 http://nginx.kippel.k3s/
 
 *   Trying 192.168.100.150:80...
@@ -411,7 +411,7 @@ Not bad at all !
 If you (like me) are running your own DNS/DHCP server in your network, there is a simple way to automate request routing over the Traefik proxy : DHCP Option 252.
 Create a PAC file on any server (i decided to use the dnsdhcp server)
 
-```bash
+```sh
 cat > /etc/proxy/proxy.pac << EOT
 function FindProxyForURL(url, host)
 {
@@ -432,7 +432,7 @@ EOT
 
 expose it for download (i used the Python HTTP.Server module)
 
-```bash
+```sh
 cat > /etc/systemd/system/autoproxy.service << EOT
 [Unit]
 Description=Autoproxy Service
@@ -456,7 +456,7 @@ systemctl start autoproxy
 
 and add the configuration below to your /etc/dnsmasq.conf file.
 
-```bash
+```sh
 ##
 #   Configure autoproxy for routing
 #   to openshift codeready and kubernetes k3s

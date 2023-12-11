@@ -23,7 +23,7 @@ We will address these issues in the following paragraphs of this blog.
 
 Some of the components we are going to install in this Blog come packaged as Helm Charts. In order to install them,  we have to install Helm first.
 
-```bash
+```sh
 # curl https://raw.githubusercontent.com/helm/helm/main/scripts/get-helm-3 | bash
   % Total    % Received % Xferd  Average Speed   Time    Time     Time  Current
                                  Dload  Upload   Total   Spent    Left  Speed
@@ -37,13 +37,13 @@ helm installed into /usr/local/bin/helm
 Conceptually Helm is an abstraction layer around the Kubernetes API and requires authentication credentials for submitting API requests.
 The procedure for that is simple : Add this export statement to root's ~/.bashrc on the master node:
 
-```bash
+```sh
 export KUBECONFIG=/etc/rancher/k3s/k3s.yaml
 ```
 
 If you miss this last step, you will run into errors like this :
 
-```bash
+```sh
 # helm list
 Error: Kubernetes cluster unreachable: Get "http://localhost:8080/version": dial tcp [::1]:8080: connect: connection refused
 ```
@@ -61,7 +61,7 @@ Since the external addresses assigned by MetalLB come out of the address range m
 
 This is the <b>dhcp-range</b> clause from /etc/dnsmasq.conf that ensures that dnsmasq only assigns addresses from 192.168.100.[1..149] and 192.168.100.[200..255]. Addresses in the range 192.168.100.[150..199] are reserved for MetalLB.
 
-```bash
+```sh
 # assign an address from one of the ranges below
 # assign lease expiry times for each address range
 # either use a tagged range or the untagged default
@@ -73,7 +73,7 @@ dhcp-range=192.168.100.200,192.168.100.254,24h
 
 The IP Address Pool definition below ties into my dnsmasq configuration from above. MetalLB LoadBalancer services are immediately visible in my network.
 
-```bash
+```sh
 cat > ./ipaddresspool.yaml << EOF
 apiVersion: metallb.io/v1beta1
 kind: IPAddressPool
@@ -90,7 +90,7 @@ EOF
 
 After MetalLB has assigned an external IP address to a service, it needs to make the network beyond the cluster aware that the IP “lives” in the cluster. MetalLB uses standard networking or routing protocols to achieve this. The L2Advertisement object instructs MetalLB which addresses are in scope of advertising.
 
-```bash
+```sh
 cat > ./advertisement.yaml << EOF
 apiVersion: metallb.io/v1beta1
 kind: L2Advertisement
@@ -105,7 +105,7 @@ EOF
 
 Create the objects with 'kubectl apply' :
 
-```bash
+```sh
 kubectl -n metallb-system apply -f ./ipaddresspool.yaml -f ./advertisement.yaml
 ```
 
@@ -113,13 +113,13 @@ Now we are ready to install MetalLB. We are going to use a Helm Chart for instal
 
 Install metallb with the helm command below
 
-```bash
+```sh
 helm --namespace metallb-system install --create-namespace metallb metallb/metallb 
 ```
 
 Verify that the installation was successful :
 
-```bash
+```sh
 $ kubectl -n metallb-system get all
 NAME                                      READY   STATUS    RESTARTS       AGE
 pod/metallb-speaker-98j28                 4/4     Running   76 (30h ago)   29d
@@ -149,7 +149,7 @@ and give it responsibility for address resolution.
 
 This is the list of services that are currently assigned ip addresses from the pool :
 
-```bash
+```sh
 ##
 #	k3s kubernetes cluster
 ##
@@ -173,13 +173,13 @@ all persisted volumes from that node would be gone. [Longhorn](https://longhorn.
 
 Longhorn uses iscsi to manage volumes as block level devices, so we have to install iscsi.
 
-```bash
+```sh
 sudo apt-get install -y open-iscsi
 ```
 
 For the installation we grab the required object definitions from the Longhorn website and apply them with kubectl.
 
-```bash
+```sh
 # kubectl apply -f https://raw.githubusercontent.com/longhorn/longhorn/v1.5.1/deploy/longhorn.yaml
 
 namespace/longhorn-system created
@@ -227,7 +227,7 @@ deployment.apps/longhorn-ui created
 
 We are going to create a load balancer service that exposes the Longhorn Dashboard outside of the cluster.
 
-```bash
+```sh
 cat >./longhorn-loadbalancer-service.yaml <<EOT
 apiVersion: v1
 kind: Service
@@ -252,7 +252,7 @@ kubectl -n longhorn-system apply -f ./longhorn-loadbalancer-service.yaml
 
 MetalLB assigns the load balancer service another ip address from its address pool.
 
-```bash
+```sh
 # kubectl -n longhorn-system get service
 NAME                          TYPE           CLUSTER-IP      EXTERNAL-IP       PORT(S)        AGE
 longhorn-lb                   LoadBalancer   10.43.37.142    192.168.100.151   80:30979/TCP   29d
@@ -283,7 +283,7 @@ Check if you find the file <b>/var/lib/rancher/k3s/server/manifests/local-storag
 
 If you do, run this script to remove 'default-class' status from the 'local storage' class.
 
-```bash
+```sh
 #!/bin/bash
 [[ ! -f /var/lib/rancher/k3s/server/manifests/local-storage.yaml ]] && { echo "local-storage.yaml not found."; exit 1; }
 sudo cp /var/lib/rancher/k3s/server/manifests/local-storage.yaml /var/lib/rancher/k3s/server/manifests/custom-local-storage.yaml
@@ -294,13 +294,13 @@ exit 0
 
 Then make longhorn the default storage class :
 
-```bash
+```sh
 kubectl -n longhorn-system patch storageclass longhorn -p '{"metadata": {"annotations":{"storageclass.kubernetes.io/is-default-class":"true"}}}'
 ```
 
 Now verify that the longhorn storage class has the 'IsDefaultClass:  Yes' attribute set :
 
-```bash
+```sh
 # kubectl -n longhorn-system describe storageclass longhorn 
 Name:            longhorn
 IsDefaultClass:  Yes
