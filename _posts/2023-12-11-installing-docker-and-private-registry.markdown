@@ -90,7 +90,7 @@ WARNING: Access to the remote API on a privileged Docker daemon is equivalent
 
 ### Verifying successful installation
 
-Running the 'docker version' should get you output similar to the one below.
+Running the 'docker version' command should get you output similar to the one below.
 
 ```sh
 # docker version
@@ -132,7 +132,7 @@ We are going to install the registry straight from a docker hub image, so we hav
 - the 'docker-registry' namespace
 - a Longhorn Persistent Volume Claim 'docker-registry'
 - a Service exposing the registry port 5000
-- a Deployment configuration that identifies the image to pull (v2) and specifying a number of environment variables.
+- a Deployment configuration that identifies the image to pull (v2) and sets a number of environment variables.
 - a MetalLB Load Balancer service that exposes the registry with a cluster-external IP address
 
 
