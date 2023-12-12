@@ -245,7 +245,7 @@ Ok. gunicorn seems to have started the application successfully.
 <br/>
 ### Accessing the application<a name="applicationui"></a>
 
-Our ingess route should is path-based. It should give us access via
+Our path-based ingress route should give us access via
 
 http://ingress.k3s.kippel.de/simple-quiz/
 
