@@ -16,7 +16,8 @@ from that registry will take some persuasion, but don't worry, we will succeed.
 1. [Installing Docker on k3s](#docker)
 2. [Installing a private Docker Registry](#registry)
 3. [Configuring Kubernetes for the Registry](#configuration)
-4. [Conclusion](#conclusion)
+4. [Copy an image from docker hub to our private registry](#cacheimage)
+5. [Conclusion](#conclusion)
 
 <br/>
 ### Installing Docker on k3s<a name="docker"></a>
@@ -311,6 +312,72 @@ mirrors:
       - "http://registry.k3s.kippel.de:5000"
 EOT
 ```
+<br/>
+### Copy an image from docker hub to our private registry<a name="cacheimage"></a>
+
+One way to have images available in our registry (apart from building them from scratch) is to download them from an internet registry and then push them to our private registry.
+This is quite useful for scenarios where we want to customize an existing image (e.g. add a spring boot application to a base image with an installed jdk).
+Here is how it works :
+
+- pull the image from docker.io into the docker registry
+
+```sh
+# docker pull nginx
+Using default tag: latest
+latest: Pulling from library/nginx
+2c6d21737d83: Pull complete 
+0bf6824a0232: Pull complete 
+f47d5fcfb558: Pull complete 
+ecba2628ac35: Pull complete 
+1d082d8e4ce1: Pull complete 
+b2b90333fd43: Pull complete 
+0ef920b5aa7f: Pull complete 
+Digest: sha256:10d1f5b58f74683ad34eb29287e07dab1e90f10af243f151bb50aa5dbb4d62ee
+Status: Downloaded newer image for nginx:latest
+docker.io/library/nginx:latest
+```
+- tag the image for our private registry
+
+```sh
+# docker images
+REPOSITORY                                                  TAG       IMAGE ID       CREATED        SIZE
+nginx                                                       latest    5628e5ea3c17   3 weeks ago    192MB
+
+# docker tag docker.io/nginx:latest registry.k3s.kippel.de:5000/nginx:latest
+
+# docker images
+REPOSITORY                                                  TAG       IMAGE ID       CREATED        SIZE
+nginx                                                       latest    5628e5ea3c17   3 weeks ago    192MB
+registry.k3s.kippel.de:5000/nginx                           latest    5628e5ea3c17   3 weeks ago    192MB
+```
+
+- push the image to our private registry and remove it from the docker registry (saves some disk space)
+
+```sh
+# docker push registry.k3s.kippel.de:5000/nginx:latest
+The push refers to repository [registry.k3s.kippel.de:5000/nginx]
+3033c8a8ba59: Pushed 
+cb1c835f32b9: Pushed 
+94677b587bab: Pushed 
+0367492d0972: Pushed 
+21bb29481bb4: Pushed 
+66544fa913ad: Pushed 
+f4e4d9391e13: Pushed 
+latest: digest: sha256:736342e81e97220f954b8c33846ba80d2d95f59b30225a5c63d063c8b250b0ab size: 1778
+
+# docker rmi nginx:latest
+Untagged: nginx:latest
+Untagged: nginx@sha256:10d1f5b58f74683ad34eb29287e07dab1e90f10af243f151bb50aa5dbb4d62ee
+```
+
+The 'curl' command from above should now show the nginx image.
+
+```sh
+$ curl -s -X GET http://registry.k3s.kippel.de:5000/v2/_catalog
+{"repositories":["nginx"]}
+```
+
+Bless me ! So it does.
 
 
 <br/><br/>

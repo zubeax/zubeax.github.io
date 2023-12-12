@@ -260,7 +260,7 @@ longhorn-lb                   LoadBalancer   10.43.37.142    192.168.100.151   8
 
 Now the URL http://192.168.100.151 should open the Longhorn Dashboard from anywhere in your network.
 
-![Longhorn Dashboardn]({{ "/assets/images/2023-12-08-customize-cluster/longhorn-dashboard.png" | relative_url }})
+![Longhorn Dashboard]({{ "/assets/images/2023-12-08-customize-cluster/longhorn-dashboard.png" | relative_url }})
 
 ## Configuring our SSD Volumes
 
