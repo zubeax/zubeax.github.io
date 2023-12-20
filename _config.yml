@@ -38,12 +38,14 @@ keywords:              [kubernetes k3s raspberrypi microservices]
 logo:                  /assets/images/favicon.png
 
 # This should be the same author as first entry in `_data/authors.yml`.
+# Used by `jekyll-feed`:
 author:
-  # Used by `jekyll-feed`:
   name:                Axel Zuber
   email:               axel@smooth-sailing.net
-  # # Used by `jekyll-seo-tag`:
-  # twitter:             <username>
+  social:
+    github:            zubeax
+    linkedin:          axel-zuber
+    stackoverflow:     23135442/Ghostdog
 
 # Add links to the sidebar.
 menu:
@@ -333,13 +335,6 @@ plugins:
 #   bing:                <verification-id>
 #   alexa:               <verification-id>
 #   yandex:              <verification-id>
-
-# Used on index and about sites
-social:
-  name:                Axel Zuber
-  links:
-    - https://github.com/zubeax
-
 
 # Plugin Configs
 # ---------------------------------------------------------------------------------------

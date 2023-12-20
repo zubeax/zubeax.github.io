@@ -6,4 +6,9 @@ github:
 linkedin:
   name: LinkedIn
   icon: icon-linkedin2
-  prepend: "https://www.linkedin.com/in/axel-zuber"
+  prepend: "https://www.linkedin.com/in/"
+stackoverflow:
+  name: StackOverflow
+  icon: icon-stackoverflow
+  prepend: "http://stackoverflow.com/users/"
+
