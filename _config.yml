@@ -83,8 +83,8 @@ remote_theme: hydecorp/hydejack@v9
 # pyStatikMan configuration
 # ---------------------------------------------------------------------------------------
 
-staticman_url: https://kippel.myddns.me:5000/api/v1.0/comments/
-#staticman_url: https://x2df8h.kippel.de:5000/api/v1.0/comments/
+#staticman_url: https://kippel.myddns.me:5000/api/v1.0/comments/
+staticman_url: https://x2df8h.kippel.de:5000/api/v1.0/comments/
 
 
 # Customization
