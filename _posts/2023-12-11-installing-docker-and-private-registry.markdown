@@ -1,20 +1,40 @@
 ---
 layout: post
+<<<<<<< HEAD
 title: "Installing Docker and a Private Registry"
 date: 2023-12-11
 categories: kubernetes containerd dockerregistry
 description: >
   Install a private docker registry and configure our cluster to accept it as an image source.
+=======
+title: "Installing Docker and a Private Registry on k3s"
+date: 2023-12-11
+categories: kubernetes k3s docker containerd registry
+tags: kubernetes k3s docker containerd registry
+>>>>>>> b3a2ffd0d1c98cba1f97edb239dd09e5fd02cb61
 ---
 Now that we can expose our services outside the cluster it is time to look into setting up a build pipeline for 
 our own images in earnest.
 
 In this article we are going to install Docker and a private Image Registry. Convincing containerd to accept images
 from that registry will take some persuasion, but don't worry, we will succeed.
+<<<<<<< HEAD
 
 - Table of Contents
 {:toc .large-only}
 
+=======
+<br/>
+
+# Table of contents
+1. [Installing Docker on k3s](#docker)
+2. [Installing a private Docker Registry](#registry)
+3. [Configuring Kubernetes for the Registry](#configuration)
+4. [Copy an image from docker hub to our private registry](#cacheimage)
+5. [Conclusion](#conclusion)
+
+<br/>
+>>>>>>> b3a2ffd0d1c98cba1f97edb239dd09e5fd02cb61
 ### Installing Docker on k3s<a name="docker"></a>
 
 I will look into options to create docker images by running the build process inside a container at a later time. For the moment i am content to use a docker installation on the master node.
@@ -120,6 +140,10 @@ Server: Docker Engine - Community
   GitCommit:        de40ad0
 ```
 
+<<<<<<< HEAD
+=======
+<br/><br/>
+>>>>>>> b3a2ffd0d1c98cba1f97edb239dd09e5fd02cb61
 ### Installing a private Docker Registry<a name="registry"></a>
 
 We are going to install the registry straight from a docker hub image, so we have to define the required Kubernetes objects on our own. The .yaml file below takes care of that. When you apply it it will create :
@@ -222,6 +246,10 @@ EOT
 kubectl apply -f docker-registry.yaml
 ```
 
+<<<<<<< HEAD
+=======
+<br/>
+>>>>>>> b3a2ffd0d1c98cba1f97edb239dd09e5fd02cb61
 ####  Verifying successful installation
 
 List the kubernetes resources in the 'docker-registry' namespace :
@@ -373,6 +401,10 @@ $ curl -s -X GET http://registry.k3s.kippel.de:5000/v2/_catalog
 Bless me ! So it does.
 
 
+<<<<<<< HEAD
+=======
+<br/><br/>
+>>>>>>> b3a2ffd0d1c98cba1f97edb239dd09e5fd02cb61
 ## Conclusion<a name="conclusion"></a>
 
 Slowly but surely we are getting there. Now that we have Docker and our Private Registry available it is time to roll our own and start building images. 
