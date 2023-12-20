@@ -47,14 +47,14 @@ author:
 
 # Add links to the sidebar.
 menu:
-  - title:             Blog
-    url:               /posts/
-  - title:             Projects
-    url:               /projects/
   - title:             About
     url:               /about/
+  - title:             Archive
+    url:               /posts/
   - title:             Tags
     url:               /tags/
+  - title:             Projects
+    url:               /projects/
 
 # Add links to the footer.
 # Typically you'll want to link to your cookie- or privacy policy (if appliable), etc..
