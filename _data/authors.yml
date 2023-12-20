@@ -1,0 +1,13 @@
+axel:
+  name:              Axel Zuber
+  email:             axel@smooth-sailing.net
+
+  about:             |
+    Axel Zuber. COBOL Programmer on a Journey.
+
+  # This photo will be used in the about section
+  picture:
+    path:            "/assets/images/axel.jpg"
+
+  social:
+    github:          zubeax

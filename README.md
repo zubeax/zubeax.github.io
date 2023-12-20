@@ -1,5 +1,15 @@
-## Axel's (Readme) Blog
+# Axel's Blog
 
-A collection of blogs with a focus on creating and maintaining Kubernetes clusters, both in private and public-cloud environments.
+## [About Me]
 
-This repository can be accessed at the following adress: [https://github.com/zubeax/zubeax.github.io](https://github.com/zubeax/zubeax.github.io)
+Hi !<br>
+I like writing as much as reading, so I decided to spend a bit of time creating this blog.<br>
+
+## About Hydejack
+
+This blog is based on the jekyll theme **[Hydejack]**.<br>
+Please give credit to its author : *[qwtel]*.
+
+[About Me]: https://blog.smooth-sailing.net/about/
+[Hydejack]: https://hydejack.com/
+[qwtel]: https://github.com/qwtel

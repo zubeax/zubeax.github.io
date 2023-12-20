@@ -1,0 +1,15 @@
+
+{
+    "version": "0.2.0",
+    "configurations": [
+      {
+        "type": "rdbg",
+        "name": "Debug Jekyll",
+        "request": "launch",
+        "script": "/home/vboxuser/.rvm/gems/ruby-2.7.6/bin/jekyll build --config _config.yml --profile --verbose",
+        "args": [],
+        "askParameters": false,
+      }
+    ]
+  }
+  

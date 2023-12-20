@@ -3,8 +3,8 @@ layout: post
 title: "The Journey Begins"
 date: 2023-11-30
 categories: kubernetes raspberrypi
-tags: kubernetes raspberrypi
-toc: false
+description: >
+  How did i end up thinking about a Kubernetes cluster of my own ?
 ---
 After initially being quite excited about the possibilities offered by [Kubernetes](https://kubernetes.io/) on [GCP](https://cloud.google.com/),
 i was quickly frustrated by the fact that operations kept us at arm's length from playing on the Cloud Console (aka command line).<br/>

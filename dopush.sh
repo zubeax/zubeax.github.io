@@ -6,9 +6,13 @@ if [ x"$commitmessage" == x ]; then
     exit 1
 fi
 
+sed -i -e 's/^theme:/#theme:/' -e 's/^#remote_theme:/remote_theme:/' _config.yml
+
 git add -A .
 git commit -m "$commitmessage"
 git push
+
+sed -i -e 's/^#theme:/theme:/' -e 's/^remote_theme:/#remote_theme:/' _config.yml
 
 exit 0
 

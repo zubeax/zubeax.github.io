@@ -1,0 +1,9 @@
+# This file contains meta data for various social media sites
+github:
+  name: GitHub
+  icon: icon-github
+  prepend: "https://github.com/"
+linkedin:
+  name: LinkedIn
+  icon: icon-linkedin2
+  prepend: "https://www.linkedin.com/in/axel-zuber"

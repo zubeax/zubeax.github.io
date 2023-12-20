@@ -3,10 +3,13 @@ layout: post
 title: "Building a Raspberry Pi Cluster"
 date: 2023-12-06
 categories: cluster raspberrypi
-tags: cluster raspberrypi
-toc: false
+description: >
+  A quick walkthrough on the assembly process for my Raspberry Pi4 Cluster.
 ---
 In this article I am going to install and configure Raspbian OS on the cluster nodes.
+
+- Table of Contents
+{:toc .large-only}
 
 I assigned the cluster nodes hostnames in the range rbpic0n[1-4] :
 
@@ -36,14 +39,14 @@ The configuration options would cover
 
 The data transfer rates to an SSD are about 3 times higher than those to an SD Card.
 
-```bash
+```sh
 # dd if=/dev/random of=/mnt/sdcard2/tmp/murx bs=$((1024*1024)) count=512
 512+0 records in
 512+0 records out
 536870912 bytes (537 MB, 512 MiB) copied, 18.0773 s, 29.7 MB/s
 ```
 
-```bash
+```sh
 # dd if=/dev/random of=/tmp/murx bs=$((1024*1024)) count=512
 512+0 records in
 512+0 records out
@@ -60,7 +63,7 @@ After the node is up, open an ssh connection. Then perform the 2 steps below.
 
 <b>Step 1</b> : Verify that the boot loader is recent.
 
-```bash
+```sh
 # rpi-eeprom-update
 BOOTLOADER: up to date
    CURRENT: Wed 11 Jan 17:40:52 UTC 2023 (1673458852)
@@ -76,7 +79,7 @@ BOOTLOADER: up to date
 
 <b>Step 2</b> : Set the boot order.
 
-```bash
+```sh
 root@rbpic0n1:~ # rpi-eeprom-config --edit
 [all]
 BOOT_UART=0
@@ -93,7 +96,7 @@ The boot order 0xf14 stands for : (usb, sdcard, repeat). Repeat this step for al
 
 I wanted to set aside a separate partition to be managed by a Kubernetes storage manager so i resized the root partition to 60G :
 
-```bash
+```sh
 resize2fs /dev/sda2 60G
 ```
 
@@ -101,7 +104,7 @@ resize2fs /dev/sda2 60G
 then i used <b>cfdisk</b> to create a new partition in the reclaimed space.
 
 
-```bash
+```sh
                                                Disk: /dev/sda
                           Size: 465.76 GiB, 500107862016 bytes, 976773168 sectors
                                      Label: dos, identifier: 0x2245eb21
@@ -126,14 +129,14 @@ then i used <b>cfdisk</b> to create a new partition in the reclaimed space.
 Finally i formatted this partition into an ext4 file system.
 
 
-```bash
+```sh
 mkfs.ext4 /dev/sda3
 ```
 
 
 Each of the SSDs attached to the cluster nodes now looks similar to this :
 
-```bash
+```sh
 # sfdisk -l /dev/sda
 Disk /dev/sda: 465.76 GiB, 500107862016 bytes, 976773168 sectors
 Disk model: ASM1153USB3.0TOS
@@ -151,7 +154,7 @@ Device     Boot     Start       End   Sectors   Size Id Type
 
 Now we grab the PARTUUID of our new partition /dev/sda3
 
-```bash
+```sh
 # blkid
 /dev/mmcblk0p1: LABEL_FATBOOT="bootfs" LABEL="bootfs" UUID="0B22-2966" BLOCK_SIZE="512" TYPE="vfat" PARTUUID="a48c1955-01"
 /dev/mmcblk0p2: LABEL="rootfs" UUID="3ad7386b-e1ae-4032-ae33-0c40f5ecc4ac" BLOCK_SIZE="4096" TYPE="ext4" PARTUUID="a48c1955-02"
@@ -162,7 +165,7 @@ Now we grab the PARTUUID of our new partition /dev/sda3
 
 and add it to /etc/fstab
 
-```bash
+```sh
 proc                       /proc        proc    defaults            0 0
 PARTUUID=2245eb21-01       /boot        vfat    defaults            0 2
 PARTUUID=2245eb21-02       /            ext4    defaults,noatime    0 1
@@ -179,7 +182,7 @@ I don't have an Igor, so i will have to pull the switch myself.
 
 I use a standalone Raspberry Pi B to run <b>dnsmasq</b> for DHCP and DNS services. Let's look at dhcp.leases.
 
-```bash
+```sh
 ssh dnsdhcp 'cat /tmp/dhcp.leases' | grep -e 'rbpic0n[1-4]'
 1701979039 d8:3a:dd:10:d1:37 192.168.100.24 rbpic0n3 01:d8:3a:dd:10:d1:37
 1701979044 d8:3a:dd:10:d2:90 192.168.100.242 rbpic0n1 01:d8:3a:dd:10:d2:90
@@ -191,7 +194,7 @@ Looks good.
 
 Let's check the mounted file systems.
 
-```bash
+```sh
 $ clustercmd mount
 
 === rbpic0n1
@@ -224,7 +227,7 @@ All SSD partitions are there.
 
 Last step. CPU temperatures :
 
-```bash
+```sh
 $ clustercmd vcgencmd measure_temp
 
 === rbpic0n1
@@ -257,7 +260,7 @@ Stay tuned !
 P.S. the <b>clustercmd</b> command i used above is part of a set of shell utility functions i use to manage the cluster.
 At the current stage i don't want to spend the time to become familiar with Ansible, so i keep things simple.
 
-```bash
+```sh
 clusternodes () 
 { 
     echo rbpic0n1 rbpic0n2 rbpic0n3 rbpic0n4
