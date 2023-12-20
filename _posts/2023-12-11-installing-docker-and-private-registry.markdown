@@ -20,7 +20,7 @@ from that registry will take some persuasion, but don't worry, we will succeed.
 I will look into options to create docker images by running the build process inside a container at a later time. For the moment i am content to use a docker installation on the master node.
 After trying (and failing) to install from the OS packages i decided to use the install script from [get.docker.com](https://get.docker.com). The script requires sudo entitlements, the installation process is straightforward.
 
-<b>N.B.</b> I looked into running docker root-less, but since it is a temporary solution i decided it was not worth the trouble. If you want to go ahead with rootless operation, follow the instructions at the of the installation log. The required scripts are present in /usr/bin.
+<b>N.B.</b> I looked into running docker root-less, but since it is a temporary solution i decided it was not worth the trouble. If you want to go ahead with rootless operation, follow the instructions at the end of the installation log. The required scripts are present in /usr/bin.
 
 ```sh
 # curl -fsSL https://get.docker.com -o get-docker.sh

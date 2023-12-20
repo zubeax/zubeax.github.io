@@ -3,7 +3,7 @@ layout: tag-list
 type: tag
 title: Longhorn
 slug: longhorn
-category: Kubernetes
+category: kubernetes
 sidebar: true
 description: >
    Kubernetes Storage Management
