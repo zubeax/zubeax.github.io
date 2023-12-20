@@ -2,7 +2,6 @@
 layout: post
 title: "Building and Deploying our own Images"
 date: 2023-12-12
-<<<<<<< HEAD
 categories: kubernetes docker imagebuild
 description: >
   Establish a process to build our own container images and deploy them to the cluster.
@@ -10,11 +9,6 @@ description: >
 - Table of Contents
 {:toc .large-only}
 
-=======
-categories: kubernetes docker containerd images build
-tags: kubernetes docker containerd images build
----
->>>>>>> b3a2ffd0d1c98cba1f97edb239dd09e5fd02cb61
 Slowly but surely our homegrown cluster becomes usable. We can
 
 - instantiate services either from our private registry or any internet image registry
@@ -31,21 +25,7 @@ Retracing my steps does not require you to wait until Scartaris's shadow caresse
 
 Enjoy the trip.
 
-<<<<<<< HEAD
 ## Docker Build<a name="dockerbuild"></a>
-=======
-<br/>
-
-# Table of contents
-1. [Building a Docker Image](#dockerbuild)
-2. [Installing the Service with Helm](#helminstall)
-3. [Verifying Service Sanity](#verifyservice)
-4. [Accessing the Application](#applicationui)
-5. [Conclusion](#conclusion)
-
-<br/>
-### Docker Build<a name="dockerbuild"></a>
->>>>>>> b3a2ffd0d1c98cba1f97edb239dd09e5fd02cb61
 
 The 'build.sh' script in the repository root kicks off a regular docker build from the contents of the repo (this is what the trailing '.' is for). After the build is complete the 'docker push' command pushes the image to our private registry.
 
@@ -176,12 +156,7 @@ e9d9a56c6bc5: Pushed
 v0.9: digest: sha256:af6f2e247c87843c2440bdaefd71068ed74266f04f7191372179ca68a58d2669 size: 1792
 ```
 
-<<<<<<< HEAD
 ## Installing the service with helm<a name="helminstall"></a>
-=======
-<br/>
-### Installing the service with helm<a name="helminstall"></a>
->>>>>>> b3a2ffd0d1c98cba1f97edb239dd09e5fd02cb61
 
 The 'install.sh' script is a wrapper around helm that also supports 'upgrade' and 'delete' operations. For a simple first-time installation you could just run :
 
@@ -216,12 +191,7 @@ simple-quiz	simple-quiz	1       	2023-12-12 19:03:09.395572272 +0100 CET	deploye
 Looking good.
 
 
-<<<<<<< HEAD
 ## Verifying service sanity<a name="verifyservice"></a>
-=======
-<br/>
-### Verifying service sanity<a name="verifyservice"></a>
->>>>>>> b3a2ffd0d1c98cba1f97edb239dd09e5fd02cb61
 
 If you are interested, list the kubernetes objects installed by helm :
 
@@ -264,12 +234,7 @@ Let's peek at the application log from the simple-quiz pod :
 Ok. gunicorn seems to have started the application successfully.
 
 
-<<<<<<< HEAD
 ## Accessing the application<a name="applicationui"></a>
-=======
-<br/>
-### Accessing the application<a name="applicationui"></a>
->>>>>>> b3a2ffd0d1c98cba1f97edb239dd09e5fd02cb61
 
 Our path-based ingress route should give us access via
 
@@ -339,10 +304,6 @@ A slightly more challenging task is this :
 
 Let me know in the comments how you fared.
 
-<<<<<<< HEAD
-=======
-<br/><br/>
->>>>>>> b3a2ffd0d1c98cba1f97edb239dd09e5fd02cb61
 ## Conclusion<a name="conclusion"></a>
 
 We covered quite a bit of ground in our journey. In the next stretch i will look into a number of topics :
@@ -351,8 +312,4 @@ We covered quite a bit of ground in our journey. In the next stretch i will look
 - Finding and installing an in-cluster docker-build capability.
 - Installing and customizing <b>Jenkins</b> to integrate gitea and docker-build.
 
-<<<<<<< HEAD
 Stay tuned !
-=======
-Stay tuned !
->>>>>>> b3a2ffd0d1c98cba1f97edb239dd09e5fd02cb61
