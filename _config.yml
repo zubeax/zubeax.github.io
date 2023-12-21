@@ -49,6 +49,8 @@ author:
 
 # Add links to the sidebar.
 menu:
+  - title:             Home
+    url:               /
   - title:             About
     url:               /about/
   - title:             Archive
