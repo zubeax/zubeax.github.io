@@ -46,6 +46,7 @@ author:
     github:            zubeax
     linkedin:          axel-zuber
     stackoverflow:     23135442/Ghostdog
+    rss:               https://blog.smooth-sailing.net/feed.xml  # make sure you provide an absolute URL
 
 # Add links to the sidebar.
 menu:
@@ -86,6 +87,12 @@ paginate_path:         /:num/
 remote_theme: hydecorp/hydejack@v9
 
 
+# No Google Analytics for the moment
+# ---------------------------------------------------------------------------------------
+
+google_analytics: false
+
+
 # pyStatikMan configuration
 # ---------------------------------------------------------------------------------------
 
@@ -97,8 +104,7 @@ staticman_url: https://kippel.smooth-sailing.net:5000/api/v1.0/comments/
  
 # Sidebar image and theme color of the site.
 accent_image:          /assets/images/sunset-shot.jpg
-#accent_color:          rgb(79,177,186)
-#accent_color:          rgb(255,255,255)
+accent_color:          rgb(241, 202, 27)
 
 # This is used for the `theme-color` meta tag,
 # which changes the background color of the browser UI in certain browsers.
@@ -118,7 +124,7 @@ font:                  Noto Sans, Helvetica, Arial, sans-serif
 font_heading:          Roboto Slab, Helvetica, Arial, sans-serif
 
 # The font used for code blocks. Expects a string that is a valid CSS font-family value.
-font_code:             Fira Code, Menlo, Monaco, Consolas, monospace;
+font_code:             Fira Code, Menlo, Monaco, Consolas, monospace
 
 defaults:
   # You can use this to provide a default accent color and background for
@@ -126,10 +132,9 @@ defaults:
   - scope:
       path:            hyde/
     values:
-      accent_color:    rgb(38,139,210)
-      theme_color:     rgb(32,32,32)
+      accent_color:    rgb(241, 202, 27)
       accent_image:
-        background:    rgb(32,32,32)
+        background:    rgb(241, 202, 27)
         overlay:       false
 
   # Don't include documents in assets in the sitemap
@@ -331,6 +336,7 @@ plugins:
 
 # Where you prove that you own this site (used by jekyll-seo-tag)
 # google_site_verification: <verification-id>
+# google_site_verification: "zIn7l_GwuOi4WnyRQsdhI9Jpn6IAs0SLR_4HG8OZzsM"
 # -- or --
 # webmaster_verifications:
 #   google:              <verification-id>

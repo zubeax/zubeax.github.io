@@ -19,14 +19,14 @@ Ingress Routes managed by the [<b>Traefik Reverse Proxy</b>](https://docs.k3s.io
 
 ### Enabling the Traefik Dashboard<a name="dashboard"></a>
 
-Even though i am pretty much a commandline person, i occasionally like to point-and-click in a Dashboard. Let's enable the 
-Traefik dashboard for that.
+Even though i am pretty much a commandline person, i occasionally like to point-and-click in a Dashboard. Let's enable the Traefik dashboard for that.
 
 Rancher supports post-installation customization of objects with [<b>HelmChartConfig</b>](https://docs.k3s.io/helm#:~:text=The%20HelmChartConfig%20resource%20must%20match,as%20an%20additional%20value%20file.) resources. The HelmChartConfig resource must match the name and namespace of its corresponding HelmChart, and supports providing additional valuesContent, which is passed to the helm command as an additional value file. 
 
 We create a configuration file and apply it to Traefik. While we are at it, we also configure the dashboard for http access. In my home network i can live without having TLS enabled for the dashboard.
 
 ```sh
+#File: 'traefik-custom-conf.yaml' 
 cat >./traefik-custom-conf.yaml << EOT
 apiVersion: helm.cattle.io/v1
 kind: HelmChartConfig
@@ -50,7 +50,6 @@ EOT
 
 kubectl -n kube-system apply -f ./traefik-custom-conf.yaml
 ```
-
 Ensure that the reconfiguration worked : Verify that the api.dashboard/api.insecure clauses show up as per our configuration file.
 
 ```sh
@@ -85,6 +84,7 @@ The shell commands below create a configuration file and then the service with <
 such services on your own, make sure that them right.
 
 ```sh
+#File: 'traefik-lb-service.yaml' 
 cat >./traefik-lb-service.yaml << EOT
 apiVersion: v1
 kind: Service
@@ -119,8 +119,10 @@ traefik   LoadBalancer   10.43.137.173   192.168.100.150   9000:32424/TCP,80:322
 
 Looks good. Our Traefik Dashboard should now open at http://192.168.100.150:9000. 
 
+![Traefik Dashboard]({{ "/assets/images/2023-12-10-k3s-networking/traefik-dashboard.png" | relative_url }}){:width="650px" .centered}
 
-![Traefik Dashboard]({{ "/assets/images/2023-12-10-k3s-networking/traefik-dashboard.png" | relative_url }}){:width="650px"}
+Traefik Dashboard
+{:.figcaption}
 
 And so it does.
 
@@ -284,6 +286,7 @@ Looking good as well. Now that we have established that our Nginx service is wil
 Ingress Routes come in all shapes and sizes. For this example i will pick a fairly simple type : host-based routing.
 
 ```sh
+#File: './nginx-ingressroute-host.yaml' 
 $ cat > ./nginx-ingressroute-host.yaml << EOT
 apiVersion: traefik.containo.us/v1alpha1
 kind: IngressRoute
@@ -344,6 +347,8 @@ Spec:
       Port:       8080
 Events:           <none>
 ```
+<b>nginx</b> Ingress Route
+{:.figcaption}
 
 One attribute that is missing from the IngressRoute description is a <b>cluster ip address</b>. We will look into the Kubernetes SDN (software defined network) in more depth in a future article. For the moment it is sufficient to remember that Traefik acts as a (reverse) proxy, so all requests meant for the Nginx server at the far end of this route have to use the proxy protocol.
 <br/>
@@ -394,6 +399,8 @@ Commercial support is available at
 </html>
 * Connection #0 to host 192.168.100.150 left intact
 ```
+<b>curl</b> Output for Ingress Route
+{:.figcaption}
 
 Except for the <b>Proxy-Connection: Keep-Alive</b> tag from the response there is no difference in the result.
 Not bad at all !
@@ -404,6 +411,7 @@ If you (like me) are running your own DNS/DHCP server in your network, there is 
 Create a PAC file on any server (i decided to use the dnsdhcp server)
 
 ```sh
+#File: '/etc/proxy/proxy.pac' 
 cat > /etc/proxy/proxy.pac << EOT
 function FindProxyForURL(url, host)
 {
@@ -425,6 +433,7 @@ EOT
 expose it for download (i used the Python HTTP.Server module)
 
 ```sh
+#File: '/etc/systemd/system/autoproxy.service' 
 cat > /etc/systemd/system/autoproxy.service << EOT
 [Unit]
 Description=Autoproxy Service
@@ -446,6 +455,9 @@ systemctl enable autoproxy
 systemctl start autoproxy
 ```
 
+autoproxy Systemd Configuration
+{:.figcaption}
+
 and add the configuration below to your /etc/dnsmasq.conf file.
 
 ```sh
@@ -458,7 +470,10 @@ dhcp-option=252,http://dnsdhcp.kippel.de:8080/proxy.pac
 
 After refreshing the WiFi connection on your tablet, http://nginx.kippel.k3s/ should now get you the Nginx Splash Screen.
 
-![Nginx Splashscreen]({{ "/assets/images/2023-12-10-k3s-networking/nginx-splashscreen.png" | relative_url }}){:width="650px"}
+![Nginx Splashscreen]({{ "/assets/images/2023-12-10-k3s-networking/nginx-splashscreen.png" | relative_url }}){:width="650px" .centered}
+
+<b>nginx</b> Splash Screen
+{:.figcaption}
 
 For Windows workstations this will also work out of the box. With Linux workstations you might have to manually tweak the proxy settings.
 

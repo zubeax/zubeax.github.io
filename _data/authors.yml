@@ -13,3 +13,4 @@ axel:
     github:          zubeax
     linkedin:        axel-zuber
     stackoverflow:   23135442/Ghostdog
+    rss:               https://blog.smooth-sailing.net/feed.xml  # make sure you provide an absolute URL

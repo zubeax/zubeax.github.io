@@ -25,7 +25,7 @@ After trying (and failing) to install from the OS packages i decided to use the 
 ```sh
 # curl -fsSL https://get.docker.com -o get-docker.sh
 
-# ./get-docker.sh -h
+# ./get-docker.sh
 # Executing docker install script, commit: e5543d473431b782227f8908005543bb4389b8de
 + sh -c apt-get update -qq >/dev/null
 + sh -c DEBIAN_FRONTEND=noninteractive apt-get install -y -qq apt-transport-https ca-certificates curl >/dev/null
@@ -84,6 +84,9 @@ WARNING: Access to the remote API on a privileged Docker daemon is equivalent
 ================================================================================  
 ```
 
+<b>docker</b> Installation Log
+{:.figcaption}
+
 ### Verifying successful installation
 
 Running the 'docker version' command should get you output similar to the one below.
@@ -132,6 +135,7 @@ We are going to install the registry straight from a docker hub image, so we hav
 
 
 ```sh
+#File: 'docker-registry.yaml'
 cat > ./docker-registry.yaml << EOT
 ---
 apiVersion: v1
@@ -272,18 +276,18 @@ $ curl -s -X GET http://registry.k3s.kippel.de:5000/v2/_catalog
 {"repositories":[]}
 ```
 
-Well, it is. We can check that box.
+Well, it is. We can tick that box.
 <br/><br/>
 <b>CAVEAT:</b> Remember the [Customizing a k3s Kubernetes Cluster]({{"/posts/2023-12-08-customizing-k3s.html" | relative_url }}) blog ? At the end i mentioned that i had added a number of cluster-external ip addresses to the <b>/etc/dnsmasq.hosts</b> configuration file of my dnsmasq service. 'registry.k3s.kippel.de' was one of them. That is the reason i can use a host name in that curl command.
 
-<br/>
 ### Configuring Kubernetes for the Private Registry<a name="configuration"></a>
 
 There are 2 configuration actions left that have to be completed before Docker and Kubernetes can access our private registry.
-<br/><br/>
+<br/>
 Docker requires a configuration file that instructs it to accept an 'insecure registry', i.e. a registry that is exposed via http, not https.
 
 ```sh
+#File: '/etc/docker/daemon.json'
 # cat > /etc/docker/daemon.json << EOT
 { "insecure-registries":["registry.k3s.kippel.de:5000","192.168.100.153:5000"] }
 EOT
@@ -292,6 +296,7 @@ EOT
 For Kubernetes we use the registry not just for storing our homegrown images but also as a mirror for Internet registries. This is what the 'mirrors' clause is for.
 
 ```sh
+#File: '/etc/rancher/k3s/registries.yaml'
 # cat > /etc/rancher/k3s/registries.yaml << EOT
 mirrors:
   "192.168.100.153":
@@ -305,7 +310,7 @@ mirrors:
       - "http://registry.k3s.kippel.de:5000"
 EOT
 ```
-<br/>
+
 ### Copy an image from docker hub to our private registry<a name="cacheimage"></a>
 
 One way to have images available in our registry (apart from building them from scratch) is to download them from an internet registry and then push them to our private registry.

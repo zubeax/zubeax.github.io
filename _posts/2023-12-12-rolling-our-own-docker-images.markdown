@@ -30,6 +30,7 @@ Enjoy the trip.
 The 'build.sh' script in the repository root kicks off a regular docker build from the contents of the repo (this is what the trailing '.' is for). After the build is complete the 'docker push' command pushes the image to our private registry.
 
 ```sh
+#File: 'build.sh'
 REGISTRY=registry.k3s.kippel.de:5000
 IMAGE=/development/flask/simple-quiz
 TAG=v0.9
@@ -41,6 +42,7 @@ docker push ${REGISTRY}${IMAGE}:${TAG}
 The service is a flask-based python application. It requires python and a python venv environment with the packages from 'requirements.txt' installed. Since the build sets out from a plain-vanilla debian image, we have quite a bit of customizing to do.
 
 ```dockerfile
+#File: 'Dockerfile'
 FROM debian:latest
 
 LABEL maintainer="axel@kippel.de"
@@ -240,7 +242,7 @@ Our path-based ingress route should give us access via
 
 http://ingress.k3s.kippel.de/simple-quiz/
 
-Let's try.
+Let's try with curl.
 
 ```sh
 # curl -v http://ingress.k3s.kippel.de/simple-quiz/
@@ -292,7 +294,10 @@ Let's try.
 
 Works flawlessly. Trying the same in any browser with access to our network presents the splash screen.<br/>
 
-![Simple Quiz Splashscreen]({{ "/assets/images/2023-12-12-rolling-our-own-docker-images/simple-quiz-splashscreen.png" | relative_url }}){:width="700px"}
+![Simple Quiz Splashscreen]({{ "/assets/images/2023-12-12-rolling-our-own-docker-images/simple-quiz-splashscreen.png" | relative_url }}){:width="700px" .centered}
+
+Simple Quiz Splashscreeen
+{:.figcaption}
 
 I will leave figuring out the mechanics of the application as an exercise for the reader.<br/>
 

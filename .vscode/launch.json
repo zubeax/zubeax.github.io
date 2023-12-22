@@ -6,7 +6,7 @@
         "type": "rdbg",
         "name": "Debug Jekyll",
         "request": "launch",
-        "script": "/home/vboxuser/.rvm/gems/ruby-2.7.6/bin/jekyll build --config _config.yml --profile --verbose",
+        "script": "/mnt/vboxshared/Blog/zubeax.github.io/vendor/bundle/ruby/2.7.0/bin/jekyll build --config _config.yml --profile --verbose",
         "args": [],
         "askParameters": false,
       }

@@ -12,12 +12,12 @@ In this article I am going to install and configure Raspbian OS on the cluster n
 {:toc .large-only}
 
 I assigned the cluster nodes hostnames in the range rbpic0n[1-4] :
-
 ![Cluster Schematic]({{ "/assets/images/2023-12-06-build-pi-cluster/cluster-schematic.png" | relative_url }})
+Initial Cluster Setup
+{:.figcaption}
 
 rbpic0n1 is designated as the master node, the rest will become client nodes.
 
-<br/><br/>
 ## Installing the OS
 
 I used the Raspberry Pi Imager to flash the OS on all 4 SSDs. I connected the SATA/USB Adapters to a USB-Hub attached to my workstation.
@@ -27,14 +27,12 @@ The configuration options would cover
 -   hostname
 -   keyboard layout
 -   timezone
--   non-root account with an ssh public key of my choice
-
-
+-   non-root account with an ssh public key of my choic
 ![Splash Screen]({{ "/assets/images/2023-12-06-build-pi-cluster/pi-imager-splash-screen.png" | relative_url }}){:width="700px"}
 <br/>
-![General Settings]({{ "/assets/images/2023-12-06-build-pi-cluster/pi-imager-general.png" | relative_url }}){:height="450px"} ![SSH Settings]({{ "/assets/images/2023-12-06-build-pi-cluster/pi-imager.ssh-config.png" | relative_url }}){:height="450px"}
+![General Settings]({{ "/assets/images/2023-12-06-build-pi-cluster/pi-imager-general.png" | relative_url }}){:height="250px"} 
+![SSH Settings]({{ "/assets/images/2023-12-06-build-pi-cluster/pi-imager.ssh-config.png" | relative_url }}){:height="250px"}
 
-<br/><br/>
 ### Configuring for USB Boot
 
 The data transfer rates to an SSD are about 3 times higher than those to an SD Card.
@@ -91,7 +89,6 @@ BOOT_ORDER=0xf14
 
 The boot order 0xf14 stands for : (usb, sdcard, repeat). Repeat this step for all 4 nodes.
 
-<br/><br/>
 ### Resizing the disk partitions
 
 I wanted to set aside a separate partition to be managed by a Kubernetes storage manager so i resized the root partition to 60G :
@@ -100,9 +97,7 @@ I wanted to set aside a separate partition to be managed by a Kubernetes storage
 resize2fs /dev/sda2 60G
 ```
 
-
-then i used <b>cfdisk</b> to create a new partition in the reclaimed space.
-
+then i used `cfdisk` to create a new partition in the reclaimed space.
 
 ```sh
                                                Disk: /dev/sda
@@ -125,6 +120,8 @@ then i used <b>cfdisk</b> to create a new partition in the reclaimed space.
        [Bootable]  [ Delete ]  [ Resize ]  [  Quit  ]  [  Type  ]  [  Help  ]  [  Write ]  [  Dump  ]
 ```
 
+cfdisk screen with the ssd partitions
+{:.figcaption}
 
 Finally i formatted this partition into an ext4 file system.
 
@@ -177,7 +174,7 @@ The 5-port USB-C charger i use for a power supply is hidden in the case, so i us
 
 I don't have an Igor, so i will have to pull the switch myself.
 
-<br/><br/>
+<br/>
 ### Preliminary Diagnostics
 
 I use a standalone Raspberry Pi B to run <b>dnsmasq</b> for DHCP and DNS services. Let's look at dhcp.leases.
@@ -256,11 +253,13 @@ Now it is time to look into the installation of Kubernetes master and client nod
 
 Stay tuned !
 
-<br/><br/><br/>
-P.S. the <b>clustercmd</b> command i used above is part of a set of shell utility functions i use to manage the cluster.
+<br/>
+P.S. the `clustercmd` command i used above is part of a set of shell utility functions i use to manage the cluster.
 At the current stage i don't want to spend the time to become familiar with Ansible, so i keep things simple.
 
+
 ```sh
+#file: 'bin/clustercmd.sh'
 clusternodes () 
 { 
     echo rbpic0n1 rbpic0n2 rbpic0n3 rbpic0n4

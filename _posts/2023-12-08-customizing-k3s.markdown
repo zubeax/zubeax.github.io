@@ -159,6 +159,8 @@ This is the list of services that are currently assigned ip addresses from the p
 192.168.100.156 registry-ui.k3s.kippel.de
 192.168.100.157 minio-browser.k3s.kippel.de
 ```
+excerpt from dnsmasq.hosts
+{:.figcaption}
 
 ## Installing the Longhorn Storage Manager<a name="longhorn"></a>
 
@@ -219,11 +221,15 @@ deployment.apps/longhorn-driver-deployer created
 deployment.apps/longhorn-ui created
 ```
 
+Longhorn Installation Log
+{:.figcaption}
+
 ### Exposing the Longhorn Dashboard
 
 We are going to create a load balancer service that exposes the Longhorn Dashboard outside of the cluster.
 
 ```sh
+#file: 'longhorn-loadbalancer-service.yaml'
 cat >./longhorn-loadbalancer-service.yaml <<EOT
 apiVersion: v1
 kind: Service
@@ -256,7 +262,9 @@ longhorn-lb                   LoadBalancer   10.43.37.142    192.168.100.151   8
 
 Now the URL http://192.168.100.151 should open the Longhorn Dashboard from anywhere in your network.
 
-![Longhorn Dashboard]({{ "/assets/images/2023-12-08-customize-cluster/longhorn-dashboard.png" | relative_url }})
+![Longhorn Dashboard]({{ "/assets/images/2023-12-08-customize-cluster/longhorn-dashboard.png" | relative_url }}){:.centered}
+Longhorn Dashboard
+{:.figcaption}
 
 ## Configuring our SSD Volumes
 
@@ -265,8 +273,9 @@ If you are content to have Longhorn manage persistent volumes on the SD Card you
 For my configuration i wanted to make Longhorn use the 400GB partitions from the attached SSDs. I could not find a way to add disks to Longhorn from the commandline, so i had to select 'Operations/Edit node and disks' for every cluster node in the Longhorn Dashboard.
 Hit 'Add Disk' at the bottom and then fill in the form.
 
-![Longhorn Add Disk]({{ "/assets/images/2023-12-08-customize-cluster/Longhorn-Add-Disk.png" | relative_url }})
-
+![Longhorn Add Disk]({{ "/assets/images/2023-12-08-customize-cluster/Longhorn-Add-Disk.png" | relative_url }}){:.centered}
+Longhorn Disk Configuration
+{:.figcaption}
 
 If you want to remove the default storage volumes allocated in '/var/lib/longhorn', you can disable them and tick ‘Eviction Requested’ in this form.
 

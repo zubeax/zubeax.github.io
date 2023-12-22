@@ -18,7 +18,6 @@ k3s seems to be a popular choice, so i decided to go with it.
 - Table of Contents
 {:toc .large-only}
 
-<br/><br/>
 ## Installing the Master Node
 
 Installation of k3s is straighforward : you grab the installscript from their website, parameterize it appropriately and execute.
@@ -100,7 +99,6 @@ Dec 07 15:13:56 rbpic0n1 k3s[677]: Trace[1341680801]:  ---"Txn call completed" 6
 Dec 07 15:13:56 rbpic0n1 k3s[677]: Trace[1341680801]: [650.046539ms] [650.046539ms] END
 ```
 
-<br/><br/>
 ## Installing the Client Nodes
 
 In order to connect to the master, the client nodes require the hashed master token. Go grab that :
@@ -162,7 +160,6 @@ If everything went well, all agents should now be running. Let's check with <b>s
              └─14119 /var/lib/rancher/k3s/data/af4faef5f17...
 ```
 
-<br/><br/>
 ## Verify Cluster Health
 
 If the client nodes were successful in connecting to the master, the <b>kubectl get nodes</b> command should list them :
