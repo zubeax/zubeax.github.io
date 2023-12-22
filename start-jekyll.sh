@@ -4,7 +4,7 @@ repo=$(basename $(realpath $(dirname ${0})))
 
 export PAGES_REPO_NWO=${repo}
 
-draftsclause=""
+draftsclause="--drafts"
 [[ x"${1}" == x--drafts    ]] && { draftsclause="--drafts"; }
 [[ x"${1}" == x--no-drafts ]] && { draftsclause=""; }
 

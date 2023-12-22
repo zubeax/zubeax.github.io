@@ -17,7 +17,7 @@ Ingress Routes managed by the [<b>Traefik Reverse Proxy</b>](https://docs.k3s.io
 - Table of Contents
 {:toc .large-only}
 
-### Enabling the Traefik Dashboard<a name="dashboard"></a>
+### Enabling the Traefik Dashboard
 
 Even though i am pretty much a commandline person, i occasionally like to point-and-click in a Dashboard. Let's enable the Traefik dashboard for that.
 
@@ -126,7 +126,7 @@ Traefik Dashboard
 
 And so it does.
 
-### Application : Creating a simple Nginx Installation<a name="nginx"></a>
+### Application : Creating a simple Nginx Installation
 
 After all the hard work we have earned a bit of fun. Let's see how the mechanics of exposing a service with an Ingress Route actually work. Since we don't have a build pipeline yet (that requires a private image registry and a build process, something that I will cover in a future blog) we will have to use an image from Docker Hub.
 Here goes :
@@ -281,7 +281,7 @@ Commercial support is available at
 
 Looking good as well. Now that we have established that our Nginx service is willing and able to process requests from within the cluster, we will try from outside.
 
-### Creating the Nginx IngressRoute<a name="ingressroute"></a>
+### Creating the Nginx IngressRoute
 
 Ingress Routes come in all shapes and sizes. For this example i will pick a fairly simple type : host-based routing.
 
@@ -405,7 +405,7 @@ Commercial support is available at
 Except for the <b>Proxy-Connection: Keep-Alive</b> tag from the response there is no difference in the result.
 Not bad at all !
 
-### Automating Proxy Selection <a name="proxy"></a>
+### Automating Proxy Selection
 
 If you (like me) are running your own DNS/DHCP server in your network, there is a simple way to automate request routing over the Traefik proxy : DHCP Option 252.
 Create a PAC file on any server (i decided to use the dnsdhcp server)
@@ -478,7 +478,7 @@ After refreshing the WiFi connection on your tablet, http://nginx.kippel.k3s/ sh
 For Windows workstations this will also work out of the box. With Linux workstations you might have to manually tweak the proxy settings.
 
 
-## Conclusion<a name="conclusion"></a>
+## Conclusion
 
 With IngressRoutes we now have a means to expose an arbitrary number of services outside of our cluster without having to use a precious external ip address for every service. There is more to be said about Traefik, but we will postpone that for a later blog.
 

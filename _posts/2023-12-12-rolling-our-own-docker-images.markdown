@@ -25,7 +25,7 @@ Retracing my steps does not require you to wait until Scartaris's shadow caresse
 
 Enjoy the trip.
 
-## Docker Build<a name="dockerbuild"></a>
+## Docker Build
 
 The 'build.sh' script in the repository root kicks off a regular docker build from the contents of the repo (this is what the trailing '.' is for). After the build is complete the 'docker push' command pushes the image to our private registry.
 
@@ -158,7 +158,7 @@ e9d9a56c6bc5: Pushed
 v0.9: digest: sha256:af6f2e247c87843c2440bdaefd71068ed74266f04f7191372179ca68a58d2669 size: 1792
 ```
 
-## Installing the service with helm<a name="helminstall"></a>
+## Installing the service with helm
 
 The 'install.sh' script is a wrapper around helm that also supports 'upgrade' and 'delete' operations. For a simple first-time installation you could just run :
 
@@ -193,7 +193,7 @@ simple-quiz	simple-quiz	1       	2023-12-12 19:03:09.395572272 +0100 CET	deploye
 Looking good.
 
 
-## Verifying service sanity<a name="verifyservice"></a>
+## Verifying service sanity
 
 If you are interested, list the kubernetes objects installed by helm :
 
@@ -236,7 +236,7 @@ Let's peek at the application log from the simple-quiz pod :
 Ok. gunicorn seems to have started the application successfully.
 
 
-## Accessing the application<a name="applicationui"></a>
+## Accessing the application
 
 Our path-based ingress route should give us access via
 
@@ -309,7 +309,7 @@ A slightly more challenging task is this :
 
 Let me know in the comments how you fared.
 
-## Conclusion<a name="conclusion"></a>
+## Conclusion
 
 We covered quite a bit of ground in our journey. In the next stretch i will look into a number of topics :
 

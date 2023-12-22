@@ -15,7 +15,7 @@ from that registry will take some persuasion, but don't worry, we will succeed.
 - Table of Contents
 {:toc .large-only}
 
-### Installing Docker on k3s<a name="docker"></a>
+### Installing Docker on k3s
 
 I will look into options to create docker images by running the build process inside a container at a later time. For the moment i am content to use a docker installation on the master node.
 After trying (and failing) to install from the OS packages i decided to use the install script from [get.docker.com](https://get.docker.com). The script requires sudo entitlements, the installation process is straightforward.
@@ -123,7 +123,7 @@ Server: Docker Engine - Community
   GitCommit:        de40ad0
 ```
 
-### Installing a private Docker Registry<a name="registry"></a>
+### Installing a private Docker Registry
 
 We are going to install the registry straight from a docker hub image, so we have to define the required Kubernetes objects on our own. The .yaml file below takes care of that. When you apply it it will create :
 
@@ -280,7 +280,7 @@ Well, it is. We can tick that box.
 <br/><br/>
 <b>CAVEAT:</b> Remember the [Customizing a k3s Kubernetes Cluster]({{"/posts/2023-12-08-customizing-k3s.html" | relative_url }}) blog ? At the end i mentioned that i had added a number of cluster-external ip addresses to the <b>/etc/dnsmasq.hosts</b> configuration file of my dnsmasq service. 'registry.k3s.kippel.de' was one of them. That is the reason i can use a host name in that curl command.
 
-### Configuring Kubernetes for the Private Registry<a name="configuration"></a>
+### Configuring Kubernetes for the Private Registry
 
 There are 2 configuration actions left that have to be completed before Docker and Kubernetes can access our private registry.
 <br/>
@@ -311,7 +311,7 @@ mirrors:
 EOT
 ```
 
-### Copy an image from docker hub to our private registry<a name="cacheimage"></a>
+### Copy an image from docker hub to our private registry
 
 One way to have images available in our registry (apart from building them from scratch) is to download them from an internet registry and then push them to our private registry.
 This is quite useful for scenarios where we want to customize an existing image (e.g. add a spring boot application to a base image with an installed jdk).
@@ -378,7 +378,7 @@ $ curl -s -X GET http://registry.k3s.kippel.de:5000/v2/_catalog
 Bless me ! So it does.
 
 
-## Conclusion<a name="conclusion"></a>
+## Conclusion
 
 Slowly but surely we are getting there. Now that we have Docker and our Private Registry available it is time to roll our own and start building images. 
 I will tackle this in the next Blog.

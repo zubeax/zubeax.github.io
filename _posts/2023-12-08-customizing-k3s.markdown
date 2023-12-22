@@ -17,7 +17,7 @@ We will address these issues in the following paragraphs of this blog.
 - Table of Contents
 {:toc .large-only}
 
-## Installing the Helm Package Manager<a name="helm"></a>
+## Installing the Helm Package Manager
 
 Some of the components we are going to install in this Blog come packaged as Helm Charts. In order to install them,  we have to install Helm first.
 
@@ -46,7 +46,7 @@ If you miss this last step, you will run into errors like this :
 Error: Kubernetes cluster unreachable: Get "http://localhost:8080/version": dial tcp [::1]:8080: connect: connection refused
 ```
 
-## Installing the MetalLB Load Balancer<a name="metallb"></a>
+## Installing the MetalLB Load Balancer
 
 [Metallb](https://metallb.universe.tf/) provides a network load-balancer implementation. It allows you to create Kubernetes services of type <b>LoadBalancer</b> that are visible outside of the cluster.
 It has two features that work together to provide this service: address allocation, and external announcement.
@@ -162,7 +162,7 @@ This is the list of services that are currently assigned ip addresses from the p
 excerpt from dnsmasq.hosts
 {:.figcaption}
 
-## Installing the Longhorn Storage Manager<a name="longhorn"></a>
+## Installing the Longhorn Storage Manager
 
 k3s comes with the 'local storage' provider by default. The problem with local storage is that in case one of the client nodes fails,
 all persisted volumes from that node would be gone. [Longhorn](https://longhorn.io/) remediates this risk by replicating the volumes within the cluster.
