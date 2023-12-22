@@ -296,7 +296,7 @@ Works flawlessly. Trying the same in any browser with access to our network pres
 
 ![Simple Quiz Splashscreen]({{ "/assets/images/2023-12-12-rolling-our-own-docker-images/simple-quiz-splashscreen.png" | relative_url }}){:width="700px" .centered}
 
-Simple Quiz Splashscreeen
+Simple Quiz Splashscreen
 {:.figcaption}
 
 I will leave figuring out the mechanics of the application as an exercise for the reader.<br/>
