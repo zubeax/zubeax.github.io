@@ -12,8 +12,7 @@ slug: k3s
 
 # (Optional) Write a short (~150 characters) description of this featured tag.
 description: >
-  This is a featured category, which have their own page.
-  Check out `_featured_tags/docker.md` to learn how to create your own.
+  Blog posts on <b>k3s</b>, a lightweight Kubernetes distribution created by Rancher Labs.
 
 # (Optional) You can disable grouping posts by date.
 # no_groups: true

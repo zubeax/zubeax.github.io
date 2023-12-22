@@ -12,8 +12,7 @@ slug: dockerregistry
 
 # (Optional) Write a short (~150 characters) description of this featured tag.
 description: >
-  This is a featured category, which have their own page.
-  Check out `_featured_tags/docker.md` to learn how to create your own.
+  Blog posts on <b>Docker Registry</b>, a storage and distribution system for named Docker images.
 
 # (Optional) You can disable grouping posts by date.
 # no_groups: true

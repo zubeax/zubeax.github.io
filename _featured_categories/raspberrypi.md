@@ -12,8 +12,7 @@ slug: raspberrypi
 
 # (Optional) Write a short (~150 characters) description of this featured tag.
 description: >
-  This is a featured category, which have their own page.
-  Check out `_featured_tags/example.md` to learn how to create your own.
+  Blog posts on <b>Raspberry Pi</b>, the series of single-board computers made by the Raspberry Pi Foundation.
 
 # (Optional) You can disable grouping posts by date.
 # no_groups: true

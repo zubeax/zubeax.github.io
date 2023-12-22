@@ -11,6 +11,8 @@ slug: containerd
 
 # (Optional) Write a short (~150 characters) description of this featured tag.
 description: >
-  This is a featured category, which have their own page.
-  Check out `_featured_tags/containerd.md` to learn how to create your own.
+  Blog posts on <b>containerd</b>, the container runtime that manages the lifecycle of a container.
+
+# (Optional) You can disable grouping posts by date.
+# no_groups: true
 ---
