@@ -81,7 +81,7 @@ The shell commands below create a configuration file and then the service with <
 <b>n.b. 1</b> : to reduce complexity we do not map the dashboard port (9000) to yet another port.
 <br/>
 <b>n.b. 2</b> : the load balancer service is 'attached' to the traefik pod by means of the 'selector' clauses. When you create 
-such services on your own, make sure that them right.
+such services on your own, make sure that you get them right.
 
 ```sh
 #File: 'traefik-lb-service.yaml' 
