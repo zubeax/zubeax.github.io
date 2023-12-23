@@ -217,7 +217,7 @@ We let helm do the actual installation. The values file is below. The only item 
 
 ~~~yaml
 #File: 'gitea-values.yaml'
-# Disable memcached; Gitea will use an internal 'memory' cache.
+# The Gitea docs recommend this.
 memcached:
   enabled: false
 
