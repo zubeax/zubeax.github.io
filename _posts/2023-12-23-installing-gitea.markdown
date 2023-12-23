@@ -213,7 +213,7 @@ postgresql-repmgr 19:21:47.24 INFO  ==> ** Starting PostgreSQL with Replication 
 
 ## Installing Gitea
 
-We let helm do the actual installation. The value.yaml is below. The only item to watch out for is postgresql.enabled. For obvious reasons this has to be set to **false**. 
+We let helm do the actual installation. The values file is below. The only item to watch out for is postgresql.enabled. For obvious reasons this has to be set to **false**. 
 
 ~~~yaml
 #File: 'gitea-values.yaml'
