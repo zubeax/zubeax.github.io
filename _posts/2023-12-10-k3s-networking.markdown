@@ -154,7 +154,7 @@ replicaset.apps/nginx-77b4fdf86c   1         1         1       4h14m
 As you can see, there is no service to link to yet, so the next step is to create one.
 
 ```sh
-$ kcqn expose deployment nginx --port=8080 --target-port=80
+$ kubectl -n nginx expose deployment nginx --port=8080 --target-port=80
 service/nginx exposed
 
 $ kubectl -n nginx get svc -o wide
@@ -308,7 +308,7 @@ EOT
 $ kubectl -n nginx apply -f ./nginx-ingressroute-host.yaml
 ingressroute.traefik.containo.us/nginx created
 
-$ kcqn -n nginx describe IngressRoute/nginx
+$ kubectl -n nginx describe IngressRoute/nginx
 Name:         nginx
 Namespace:    nginx
 Labels:       <none>
