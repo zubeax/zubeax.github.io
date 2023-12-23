@@ -158,7 +158,7 @@ spec:
 Now that we have the .yaml files complete, we can kick off the creation of the Postgres service.
 
 ~~~sh
-File: 'install-postgres.sh'
+#File: 'install-postgres.sh'
 #!/bin/bash
 
 kubectl create namespace gitea
@@ -246,7 +246,7 @@ gitea:
 ~~~
 
 ~~~sh
-File: 'install-gitea.sh'
+#File: 'install-gitea.sh'
 #!/bin/bash
 
 dir=$(dirname ${0})
@@ -310,7 +310,7 @@ spec:
     app: gitea
 ~~~
 
-After applying the .yaml file with kubectl i took the external ip address and added it to `/etc/dnsmasq.hosts` of my dnsdhcp server.
+After applying the .yaml file with kubectl i took the external ip address and added it to `/etc/dnsmasq.hosts` on my dnsdhcp server.
 
 ~~~sh
 #kubectl -n gitea get svc/gitea
