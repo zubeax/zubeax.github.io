@@ -278,7 +278,7 @@ $ curl -s -X GET http://registry.k3s.kippel.de:5000/v2/_catalog
 
 Well, it is. We can tick that box.
 <br/><br/>
-<b>CAVEAT:</b> Remember the [Customizing a k3s Kubernetes Cluster]({{"/posts/2023-12-08-customizing-k3s.html" | relative_url }}) blog ? At the end i mentioned that i had added a number of cluster-external ip addresses to the <b>/etc/dnsmasq.hosts</b> configuration file of my dnsmasq service. 'registry.k3s.kippel.de' was one of them. That is the reason i can use a host name in that curl command.
+<b>CAVEAT:</b> Remember the [Customizing a k3s Kubernetes Cluster]({{"/kubernetes/k3s/2023-12-08-customizing-k3s/#dns-resolution-of-loadbalancer-services" | relative_url }}) blog ? At the end i mentioned that i had added a number of cluster-external ip addresses to the <b>/etc/dnsmasq.hosts</b> configuration file of my dnsmasq service. 'registry.k3s.kippel.de' was one of them. That is the reason i can use a host name in that curl command.
 
 ### Configuring Kubernetes for the Private Registry
 
