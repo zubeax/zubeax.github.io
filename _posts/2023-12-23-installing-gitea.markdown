@@ -1,6 +1,6 @@
 ---
 layout: post
-title: "Installing Gitea"
+title: "Installing Gitea Version Control Service"
 date: 2023-12-23
 categories: kubernetes
 tags: git
