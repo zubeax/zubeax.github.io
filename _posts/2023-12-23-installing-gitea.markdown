@@ -136,7 +136,7 @@ spec:
 ~~~
 
 
-The Postgres instance and Gitea will be living in the same namespace, so a service with a cluster ip-address is sufficient to establish connectivity.
+The Postgres instance and Gitea will be living in the same namespace so a service with a cluster ip-address is sufficient to establish connectivity.
 
 ~~~yaml
 #File: 'postgres-service.yaml'
