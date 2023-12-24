@@ -7,7 +7,7 @@ I like writing as much as reading, so I decided to spend a bit of time creating 
 
 ## About Hydejack
 
-This blog is based on the jekyll theme **[Hydejack]**.<br>
+This blog is based on the **[Hydejack]** jekyll theme.<br>
 Please give credit to its author : *[qwtel]*.
 
 [About Me]: https://blog.smooth-sailing.net/about/

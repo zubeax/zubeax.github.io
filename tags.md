@@ -5,5 +5,5 @@ permalink: /tags/
 sidebar: true
 order: 6
 description: >
-  Blog posts as categorized and tagged.
+  Blog Posts grouped into Categories and Tags.
 ---
