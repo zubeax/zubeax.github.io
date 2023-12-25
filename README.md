@@ -1,3 +1,7 @@
+---
+layout: plain
+---
+
 # Axel's Blog
 
 ## [About Me]

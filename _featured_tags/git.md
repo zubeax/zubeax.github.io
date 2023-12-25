@@ -1,5 +1,6 @@
 ---
 layout: tag-list
+sitemap: false
 type: tag
 title: Git
 slug: git

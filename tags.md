@@ -1,5 +1,6 @@
 ---
 layout: tags
+sitemap: false
 title: Tags
 permalink: /tags/
 sidebar: true

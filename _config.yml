@@ -149,6 +149,12 @@ defaults:
       layout:          plain
       sitemap:         false
 
+  - scope:
+      path:            google413c8bc07de44747.html
+    values:
+      layout:          plain
+      sitemap:         false
+
   # You can use the following to enable comments on all posts.
   - scope:
       type:            posts
