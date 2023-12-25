@@ -144,7 +144,7 @@ defaults:
       sitemap:         false
 
   - scope:
-      path:            licenses/
+      path:            licenses/**
     values:
       layout:          plain
       sitemap:         false
