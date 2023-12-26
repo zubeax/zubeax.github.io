@@ -16,7 +16,7 @@ sed -i -e 's/^#theme:/theme:/' -e 's/^remote_theme:/#remote_theme:/' _config.yml
 
 dest='../zubeax.gitea.io'
 
-rsync -av . $dest --exclude .git --exclude _site --exclude vendor --exclude .jekyll_cache
+rsync -av . $dest --exclude .git --exclude _site --exclude vendor --exclude .jekyll-cache
 
 for i in _site vendor .jekyll_cache
 do
