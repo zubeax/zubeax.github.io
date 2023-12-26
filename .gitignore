@@ -55,3 +55,4 @@ _zip
 /_sass/*/__*__/*
 
 build.log
+Gemfile.lock

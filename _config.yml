@@ -336,6 +336,7 @@ plugins:
   - jekyll-titles-from-headings
   - jekyll-last-modified-at
 
+
 # SEO Tag
 # ---------------------------------------------------------------------------------------
 
@@ -374,6 +375,7 @@ compress_html:
 
 sass:
   style:               compressed
+
 
 # Jekyll Compose Defaults
 # ---------------------------------------------------------------------------------------
