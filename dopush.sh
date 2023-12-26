@@ -18,7 +18,7 @@ dest='../zubeax.gitea.io'
 
 rsync -av . $dest --exclude .git --exclude _site --exclude vendor --exclude .jekyll_cache
 
-for i in (_site vendor .jekyll_cache)
+for i in _site vendor .jekyll_cache
 do
     rm -rf $dest/$i
 done
