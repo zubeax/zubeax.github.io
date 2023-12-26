@@ -28,7 +28,7 @@ cd $dest
 git add -A .
 git commit -m "$commitmessage"
 git push
-popd . 2>&1 > /dev/null
+popd 2>&1 > /dev/null
 
 exit 0
 
