@@ -48,6 +48,7 @@ group :jekyll_plugins do
   # Non-Github Pages plugins:
   gem "jekyll-last-modified-at"
   gem "jekyll-compose"
+  gem 'faraday', '~> 2.7', '>= 2.7.11'
 end
 
 gem 'wdm' if Gem.win_platform?

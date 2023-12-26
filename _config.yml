@@ -323,6 +323,7 @@ include:
 # ----------------------------------------------------------------------------------------
 
 plugins:
+  - jekyll-include-cache
   - jekyll-default-layout
   - jekyll-feed
   - jekyll-optional-front-matter
@@ -333,9 +334,7 @@ plugins:
   - jekyll-seo-tag
   - jekyll-sitemap
   - jekyll-titles-from-headings
-  - jekyll-include-cache
   - jekyll-last-modified-at
-
 
 # SEO Tag
 # ---------------------------------------------------------------------------------------
