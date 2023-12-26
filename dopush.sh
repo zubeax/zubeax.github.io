@@ -14,7 +14,7 @@ git push
 
 sed -i -e 's/^#theme:/theme:/' -e 's/^remote_theme:/#remote_theme:/' _config.yml
 
-rsync -av . ../zubeax.gitea.io --exclude ./.git
+rsync -av . ../zubeax.gitea.io --exclude .git
 
 exit 0
 
