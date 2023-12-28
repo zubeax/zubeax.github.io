@@ -2,7 +2,7 @@
 layout: post
 title: "Building a Raspberry Pi Cluster"
 date: 2023-12-06
-categories: cluster raspberrypi
+categories: raspberrypi cluster
 description: >
   A quick walkthrough on the assembly process for my Raspberry Pi4 Cluster.
 ---
@@ -20,7 +20,7 @@ rbpic0n1 is designated as the master node, the rest will become client nodes.
 
 ## Installing the OS
 
-I used the Raspberry Pi Imager to flash the OS on all 4 SSDs. I connected the SATA/USB Adapters to a USB-Hub attached to my workstation.
+I used the Raspberry Pi Imager to flash the OS on all 4 SSDs after connecting the SATA/USB Adapters to a USB-Hub attached to my workstation.
 
 The configuration options would cover 
 
@@ -32,6 +32,8 @@ The configuration options would cover
 <br/>
 ![General Settings]({{ "/assets/images/2023-12-06-build-pi-cluster/pi-imager-general.png" | relative_url }}){:height="250px"} 
 ![SSH Settings]({{ "/assets/images/2023-12-06-build-pi-cluster/pi-imager.ssh-config.png" | relative_url }}){:height="250px"}
+Raspberry Pi Imager Configuration
+{:.figcaption}
 
 ### Configuring for USB Boot
 

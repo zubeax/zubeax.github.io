@@ -2,7 +2,7 @@
 layout: post
 title: "The Journey Begins"
 date: 2023-11-30
-categories: kubernetes raspberrypi
+categories: raspberrypi
 description: >
   How did i end up thinking about a Kubernetes cluster of my own ?
 ---
