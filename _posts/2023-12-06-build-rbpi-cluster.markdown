@@ -102,23 +102,23 @@ resize2fs /dev/sda2 60G
 then i used `cfdisk` to create a new partition in the reclaimed space.
 
 ```sh
-                                               Disk: /dev/sda
-                          Size: 465.76 GiB, 500107862016 bytes, 976773168 sectors
-                                     Label: dos, identifier: 0x2245eb21
+                                           Disk: /dev/sda
+                      Size: 465.76 GiB, 500107862016 bytes, 976773168 sectors
+                                 Label: dos, identifier: 0x2245eb21
 
-    Device          Boot             Start           End       Sectors       Size     Id Type
-    /dev/sda1                         8192        532479        524288       256M      c W95 FAT32 (LBA)
-    /dev/sda2                       532480     126361599     125829120        60G     83 Linux
->>  /dev/sda3                    126361600     976773119     850411520     405.5G     83 Linux              
+    Device      Boot             Start           End       Sectors       Size     Id Type
+    /dev/sda1                     8192        532479        524288       256M      c W95 FAT32 (LBA)
+    /dev/sda2                   532480     126361599     125829120        60G     83 Linux
+>>  /dev/sda3                126361600     976773119     850411520     405.5G     83 Linux              
 
 
- ┌───────────────────────────────────────────────────────────────────┐
- │  Partition type: Linux (83)                                       │
- │ Filesystem UUID: dfdd8a7e-e593-4c2d-b3e0-684a50189d8c             │
- │Filesystem LABEL: data                                             │
- │      Filesystem: ext4                                             │
- │      Mountpoint: /mnt/sda3 (mounted)                              │
- └───────────────────────────────────────────────────────────────────┘
+ ┌───────────────────────────────────────────────────────┐
+ │  Partition type: Linux (83)                           │
+ │ Filesystem UUID: dfdd8a7e-e593-4c2d-b3e0-684a50189d8c │
+ │Filesystem LABEL: data                                 │
+ │      Filesystem: ext4                                 │
+ │      Mountpoint: /mnt/sda3 (mounted)                  │
+ └───────────────────────────────────────────────────────┘
        [Bootable]  [ Delete ]  [ Resize ]  [  Quit  ]  [  Type  ]  [  Help  ]  [  Write ]  [  Dump  ]
 ```
 
