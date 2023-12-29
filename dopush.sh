@@ -27,6 +27,14 @@ rsync -av . $gitearepo -f '- .git/' -f '- _site/' -f '- vendor/' -f '- .jekyll-c
 [[ -d $gitearepo/_site  ]] && { echo "unexpected dir $gitearepo/_site found"; exit -4; }
 [[ -d $gitearepo/vendor ]] && { echo "unexpected dir $gitearepo/vendor found"; exit -4; }
 
+##
+#   not strictly necessary since .gitignore prevents the caches from upload to the repo
+##
+for i in _site vendor .jekyll-cache
+do
+    rm -rf $dest/$i
+done
+
 pushd . 2>&1 > /dev/null
 cd $gitearepo
 docommit
