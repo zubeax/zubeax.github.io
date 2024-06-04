@@ -9,7 +9,7 @@ permalink: /cookies-policy/
 
 I use [Google Analytics](https://analytics.google.com/analytics/web/) to count how many visitors I receive!<br>
 By some laws I must annouce that I am(or more precisely Google Analytics is) using cookies to do so.<br>
-~~Yes, I copied & modified cookies policy from somewhere.~~
+~~Yes, I copied & modified the cookies policy from somewhere.~~
 
 ## Cookies Policy
 
