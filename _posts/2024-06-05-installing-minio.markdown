@@ -33,7 +33,7 @@ Minio consists of 2 architecture components that are installed in sequence.
 - [Installation of Minio Operator](https://min.io/docs/minio/kubernetes/upstream/operations/installation.html)
 - [Installation of a Minio Tenant](https://min.io/docs/minio/kubernetes/upstream/operations/deploy-manage-tenants.html)
 
-I decided to install both components with helm (it is feasible to install the tenat from the operator, but i decided against that),
+I decided to install both components with helm (it is feasible to install the minio tenant from the minio operator, but i decided against that),
 so in a prerequisite step we add the minio repo :
 
 ```bash
