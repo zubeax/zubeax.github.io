@@ -9,9 +9,10 @@ description: >
 [MinIO](https://min.io/docs/minio/kubernetes/upstream/index.html) is an object storage solution that 
 provides an AWS S3-compatible API plus a neat WebUI for managing `buckets` than can be used for backup and restore,
 disaster recovery, archive, data lakes for analytics and storing output from data streams.<br/>
-I recently found it quite useful as an enhancement for a relational database that is persisting unstructure information 
-attached to workflow items. In a traditional implementation the attachments would be persisted in CLOB columns of a database 
-table. Obviously such an implementation is technically feasible, but (depending on the number and size of attachments) 
+I recently found it quite useful as an enhancement for a relational database that is persisting unstructured information 
+(read: .pdf/.docx/.xlsx files) attached to workflow items.
+In a traditional implementation the attachments would be persisted in CLOB columns of a database table.
+Obviously such an implementation is technically feasible, but - depending on the number and size of attachments - 
 it can result in quite a bit of headache for the DB/A's (performance and backup-wise).<br/>
 When i first worked on document management on a large scale (early 90s of the last millenium),
 we would persist incoming scanned client mail in a file system and only manage the metadata in an RDBMS. Minio would 
@@ -19,7 +20,6 @@ definitely be an improvement over the bare-metal storage systems we used at that
 For a PoC i plugged a Minio backend into a (Java) REST service that implements the persistence layer for a document-attachment service
 in a workflow-management system. It took about 300 lines to provide POST/GET/DELETE methods. The API was quite straightforward
 to use.
-
 
 ![Minio Console]({{ "/assets/images/2024-06-05-installing-minio/Minio Console.png" | relative_url }})
 
