@@ -225,8 +225,8 @@ Set the values for MINIO_ROOT_USER and MINIO_ROOT_PASSWORD.
 ### Configure custom Minio TLS Certificates
 
 By default Minio uses a certificate provisioned from the (kubernetes-)internal CA. The default certificate lacks the hostname 
-tied to our LoadBalancer service's IP address, so we will run into problems whenever we try to login or submit REST requests
-to the API. So we will have to provision a custom certificate that has the hostname of our LoadBalancer service in the 
+tied to our LoadBalancer service's IP address. We are going to run into problems whenever we try to login or submit REST requests
+to the API, so we will have to provision a custom certificate that has the hostname of our LoadBalancer service in the 
 SAN (Subject Alternative Name) list. I will cover the details of submitting CSR's to Kubernetes' CA in a future article.
 (Here is a link to the [kubernetes documentation](https://kubernetes.io/docs/reference/access-authn-authz/certificate-signing-requests/))
 For the moment it should suffice to outline the required steps :
