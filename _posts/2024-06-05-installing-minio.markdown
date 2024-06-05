@@ -116,7 +116,7 @@ and add an ip-address/hostname entry to dnsmasq.hosts of the dnsmasq server serv
 
 Here is the manifests file for the service.
 
-```bash
+```yaml
 apiVersion: v1
 kind: Service
 metadata:
@@ -186,9 +186,114 @@ tenant:
 ```
 
 This gives me 2 servers (i.e. tenant pods) managing 4 volumes of 5GB each supplying me with a total of 40 GB of storage.
+Similar to the operator the tenant console is exposed with a MetalLB Load Balancer service :
 
-```bash
+```yaml
+apiVersion: v1
+kind: Service
+metadata:
+labels:
+app: miniok3s-lb
+name: miniok3s-lb
+namespace: miniok3s
+spec:
+type: LoadBalancer
+ports:
+- name: miniok3s-console
+  port: 443
+  protocol: TCP
+  targetPort: 9443
+- name: miniok3s-api
+  port: 9000
+  protocol: TCP
+  targetPort: 9000
+  selector:
+  v1.min.io/tenant: miniok3s
 ```
+
+
+## Configuration
+
+There are 2 activities left to make Minio fully functional.
+
+### Minio Tenant User + Password
+
+Login to the Operator with the access token retrieved as outlined above and go to the 'Configuration' tab.
+![Minio Tenant User+Password.png]({{ "/assets/images/2024-06-05-installing-minio/Minio Tenant User+Password.png" | relative_url }})
+
+Set the values for MINIO_ROOT_USER and MINIO_ROOT_PASSWORD.
+
+### Configure custom Minio TLS Certificates
+
+By default Minio uses a certificate provisioned from the (kubernetes-)internal CA. The default certificate lacks the hostname 
+tied to our LoadBalancer service's IP address, so we will run into problems whenever we try to login or submit REST requests
+to the API. So we will have to provision a custom certificate that has the hostname of our LoadBalancer service in the 
+SAN (Subject Alternative Name) list. I will cover the details of submitting CSR's to Kubernetes' CA in a future article.
+(Here is a link to the [kubernetes documentation](https://kubernetes.io/docs/reference/access-authn-authz/certificate-signing-requests/))
+For the moment it should suffice to outline the required steps :
+
+- create a CSR (Certificate Signing Request) will all required SAN items
+- submit the CSR to Kubernetes for approval
+- download the finished certificate and configure our tenant in the Minio Operator with it
+
+Here is an outline of the CSR (create with 'openssl req')
+
+```
+Certificate Request:
+    Data:
+        Version: 1 (0x0)
+        Subject: O=system:nodes, CN=system:node:minio.miniok3s.svc.cluster.local
+        Subject Public Key Info:
+            Public Key Algorithm: rsaEncryption
+                Public-Key: (2048 bit)
+                Modulus:
+                    00:aa:f7:6e:86:00:3f:3f:f9:ee:61:e6:ae:0b:5a:
+                    ...
+                    39:f9:36:ea:89:d9:da:0f:a5:58:d2:2b:a6:92:89:
+                    0d:89
+                Exponent: 65537 (0x10001)
+        Attributes:
+            Requested Extensions:
+                X509v3 Basic Constraints: 
+                    CA:FALSE
+                X509v3 Key Usage: 
+                    Digital Signature, Key Encipherment
+                X509v3 Extended Key Usage: 
+                    TLS Web Server Authentication
+                X509v3 Subject Alternative Name: 
+                    DNS:miniok3s-pool-0-{0...1}.miniok3s-hl.miniok3s.svc.cluster.local, DNS:minio.miniok3s.svc.cluster.local, DNS:minio.miniok3s, DNS:minio.miniok3s.svc, DNS:*.miniok3s-hl.miniok3s.svc.cluster.local, DNS:*.miniok3s.svc.cluster.local, DNS:minio-tenant.k3s.kippel.de
+    Signature Algorithm: sha256WithRSAEncryption
+    Signature Value:
+        0b:a8:fa:30:20:25:e5:96:01:2a:65:a9:ca:95:a5:47:25:b0:
+        ...
+        24:c0:78:9e:37:85:f7:a2:7b:65:96:7d:22:04:69:e3:85:0e:
+        77:20:a3:e5
+```
+
+```yaml
+apiVersion: certificates.k8s.io/v1
+kind: CertificateSigningRequest
+spec:
+  request: "$(cat $csrfile | base64 -w0)"
+  expirationSeconds: 31622400
+  signerName: kubernetes.io/kubelet-serving
+  usages:
+  - digital signature
+  - key encipherment
+  - server auth
+```
+
+I spent quite a while figuring out the details. To save you the time :
+
+- key usage <b>must</b> be :  digital signature, key encipherment, server auth
+- the openssl csr <b>must</b> be embedded base64-encoded in the 'request' tag
+- the signer <b>must</b> be 'kubernetes.io/kubelet-serving' 
+- don't make 'expirationSeconds' too small. i picked 366*86400 (i.e. 1 year).
+
+After the csr's state is 'Approved, Issued', you can download the certificate and add it to 'Minio Server Certificates'
+in the 'Security' tab of the operator console.
+
+![Minio TLS Certificates]({{ "/assets/images/2024-06-05-installing-minio/Minio TLS Certificates.png" | relative_url }})
 
 
 <br/><br/>
