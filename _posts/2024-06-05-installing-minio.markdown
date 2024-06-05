@@ -6,17 +6,25 @@ categories: [kubernetes]
 description: >
   Installing the Minio object store
 ---
-[MinIO](https://min.io/docs/minio/kubernetes/upstream/index.html) is an object storage solution that provides an AWS S3-compatible API plus a neat WebUI for managing 
+[MinIO](https://min.io/docs/minio/kubernetes/upstream/index.html) is an object storage solution that 
+provides an AWS S3-compatible API plus a neat WebUI for managing `buckets` than can be used for backup and restore,
+disaster recovery, archive, data lakes for analytics and storing output from data streams.<br/>
+I recently found it quite useful as an enhancement for a relational database that is persisting unstructure information 
+attached to workflow items. In a traditional implementation the attachments would be persisted in CLOB columns of a database 
+table. Obviously such an implementation is technically feasible, but (depending on the number and size of attachments) 
+it can result in quite a bit of headache for the DB/A's (performance and backup-wise).<br/>
+When i first worked on document management on a large scale (early 90s of the last millenium),
+we would persist incoming scanned client mail in a file system and only manage the metadata in an RDBMS. Minio would 
+definitely be an improvement over the bare-metal storage systems we used at that time.<br/>
+For a PoC i plugged a Minio backend into a (Java) REST service that implements the persistence layer for a document-attachment service
+in a workflow-management system. It took about 300 lines to provide POST/GET/DELETE methods. The API was quite straightforward
+to use.
+
 
 ![Minio Console]({{ "/assets/images/2024-06-05-installing-minio/Minio Console.png" | relative_url }})
 
 A Screenshot of the Minio Object Store Console
 {:.figcaption}
-
-A self-hosted and -managed remote persistent storage solution is nice to have when box.net or Google Drive are out of the window 
-for monetary, security or confidentiality reasons.<br/>
-I had a similar use case in mind when i started looking at solutions i could run in my 
-[Raspberry Pi k3s kubernetes cluster](https://blog.smooth-sailing.net/raspberrypi/2023-11-30-the-journey-begins/).
 
 Minio consists of 2 architecture components that are installed in sequence.
 
