@@ -211,7 +211,6 @@ ports:
   v1.min.io/tenant: miniok3s
 ```
 
-
 ## Configuration
 
 There are 2 activities left to make Minio fully functional.
@@ -295,6 +294,66 @@ in the 'Security' tab of the operator console.
 
 ![Minio TLS Certificates]({{ "/assets/images/2024-06-05-installing-minio/Minio TLS Certificates.png" | relative_url }})
 
+With this activity complete, you should now be able to login to the Minio Tenant console.
+
+
+## Installation of Minio CLI
+
+Minio comes with a CLI that facilitates automation of largescale change activities. 'Installation' is by downloading from 
+a download site and copying the executable to a proper destination directory. 
+<b>CAVEAT:</b> be careful to pick the correct architecture (arm64/amd) for your platform !
+
+```bash
+wget https://dl.min.io/client/mc/release/linux-arm64/mc -O $HOME/bin/mc
+chmod 700 $HOME/bin/mc
+```
+
+Login to the Minio <b>Tenant</b> Console, go the tab 'Access Keys' and hit 'Create access key' in the north-east corner.
+
+Copy/Paste the credentials into '~/.mc/config.json'
+
+```json
+{
+	"version": "10",
+	"aliases": {
+		"minio-tenant": {
+			"url": "https://minio-tenant.k3s.kippel.de:9000",
+			"accessKey": "***",
+			"secretKey": "***",
+			"api": "S3v4",
+			"path": "auto"
+		}
+	}
+}
+```
+
+Verify that your access works (even with our certificate in place we have to disable SSL verification with '--insecure')
+
+```
+$ mc --insecure admin info miniok3s
+●  miniok3s-pool-0-0.miniok3s-hl.miniok3s.svc.cluster.local:9000
+   Uptime: 41 minutes 
+   Version: 2024-05-01T01:11:10Z
+   Network: 2/2 OK 
+   Drives: 4/4 OK 
+   Pool: 1
+
+●  miniok3s-pool-0-1.miniok3s-hl.miniok3s.svc.cluster.local:9000
+   Uptime: 41 minutes 
+   Version: 2024-05-01T01:11:10Z
+   Network: 2/2 OK 
+   Drives: 4/4 OK 
+   Pool: 1
+
+Pools:
+   1st, Erasure sets: 1, Drives per erasure set: 8
+
+343 MiB Used, 2 Buckets, 3,066 Objects
+8 drives online, 0 drives offline, EC:4
+```
+
+The CLI exposes all API functions supported by minio. 
+Here is a link to the [documentation](https://min.io/docs/minio/linux/reference/minio-mc.html).
 
 <br/><br/>
-Stay tuned.
+I hope you enjoyed this week's article. Stay tuned for more !
