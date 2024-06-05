@@ -235,7 +235,7 @@ For the moment it should suffice to outline the required steps :
 - submit the CSR to Kubernetes for approval
 - download the finished certificate and configure our tenant in the Minio Operator with it
 
-Here is an outline of the CSR (create with `openssl req`)
+Here is an outline of the CSR (created with `openssl req`)
 
 ```
 Certificate Request:
@@ -299,7 +299,7 @@ With this activity complete, you should now be able to login to the Minio Tenant
 
 ## Installation of Minio CLI
 
-Minio comes with a CLI that facilitates automation of largescale change activities. `Installation` is by downloading from 
+Minio comes with a CLI that facilitates automation of largescale change activities. Installation is by downloading from 
 a download site and copying the executable to a proper destination directory. 
 <b>CAVEAT:</b> be careful to pick the correct architecture (arm64/amd) for your platform !
 
