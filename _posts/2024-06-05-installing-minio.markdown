@@ -84,7 +84,7 @@ operator/
 └── values.yaml
 ```
 
-I prefer to have the images for all applications i deploy to my deploy available in a local registry, so i had to update
+I like my cluster to be stand-alone as much as possible, so i copy the images for all applications i deploy into a local registry. That means i had to update
 the image source in `values.yaml`. After that i did a clean helm install.
 
 ```bash
