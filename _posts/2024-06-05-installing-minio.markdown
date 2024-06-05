@@ -45,7 +45,7 @@ minio-operator/tenant        	5.0.15       	v5.0.15    	A Helm chart for MinIO O
 
 ## Installation of Minio Operator
 
-I prefer to have the helm charts available locally, so i usually fetch them, edit 'values.yaml' 
+I prefer to have the helm charts available locally, so i usually fetch them, edit `values.yaml` 
 and then install from the local directory. Let's go and do that.
 
 ```bash
@@ -77,7 +77,7 @@ operator/
 ```
 
 I prefer to have the images for all applications i deploy to my deploy available in a local registry, so i had to update
-the image source in 'values.yaml'. After that i did a clean helm install.
+the image source in `values.yaml`. After that i did a clean helm install.
 
 ```bash
 $ helm install --namespace minio-operator --create-namespace   operator -f ./values.yaml .
@@ -114,7 +114,7 @@ MetalLB LoadBalancer Service (i covered the installation [here](https://blog.smo
 and add an ip-address/hostname entry to dnsmasq.hosts of the dnsmasq server serving my home network.
 (I use ingress routes for services that i consider more ephemeral).
 
-Here is the manifests file for the service.
+Here is the manifest file for the service.
 
 ```yaml
 apiVersion: v1
@@ -140,7 +140,7 @@ spec:
     app.kubernetes.io/name: operator
 ```
 
-Access to the operator console requires an access token. That is retrieved from the secret 'console-sa-secret' that was 
+Access to the operator console requires an access token. That is retrieved from the secret `console-sa-secret` that was 
 deployed along with the rest. Token retrieval works as usual :
 
 ```bash
@@ -159,7 +159,7 @@ As for the operator, we fetch the tenant helm chart.
 $ helm fetch minio-operator/tenant --untar=true --untardir=.
 ```
 
-In 'values.yaml' i changed :
+In `values.yaml` i changed :
 - the number of servers (2)
 - the number of volumes per server (4)
 - the volume size (5Gi)
@@ -217,7 +217,7 @@ There are 2 activities left to make Minio fully functional.
 
 ### Minio Tenant User + Password
 
-Login to the Operator with the access token retrieved as outlined above and go to the 'Configuration' tab.
+Login to the Operator with the access token retrieved as outlined above and go to the `Configuration` tab.
 ![Minio Tenant User+Password.png]({{ "/assets/images/2024-06-05-installing-minio/Minio Tenant User+Password.png" | relative_url }})
 
 Set the values for MINIO_ROOT_USER and MINIO_ROOT_PASSWORD.
@@ -235,7 +235,7 @@ For the moment it should suffice to outline the required steps :
 - submit the CSR to Kubernetes for approval
 - download the finished certificate and configure our tenant in the Minio Operator with it
 
-Here is an outline of the CSR (create with 'openssl req')
+Here is an outline of the CSR (create with `openssl req`)
 
 ```
 Certificate Request:
@@ -285,12 +285,12 @@ spec:
 I spent quite a while figuring out the details. To save you the time :
 
 - key usage <b>must</b> be :  digital signature, key encipherment, server auth
-- the openssl csr <b>must</b> be embedded base64-encoded in the 'request' tag
-- the signer <b>must</b> be 'kubernetes.io/kubelet-serving' 
-- don't make 'expirationSeconds' too small. i picked 366*86400 (i.e. 1 year).
+- the openssl csr <b>must</b> be embedded base64-encoded in the `request` tag
+- the signer <b>must</b> be `kubernetes.io/kubelet-serving` 
+- don't make `expirationSeconds` too small. i picked 366*86400 (i.e. 1 year).
 
-After the csr's state is 'Approved, Issued', you can download the certificate and add it to 'Minio Server Certificates'
-in the 'Security' tab of the operator console.
+After the csr's state is `Approved, Issued`, you can download the certificate and add it to `Minio Server Certificates`
+in the `Security` tab of the operator console.
 
 ![Minio TLS Certificates]({{ "/assets/images/2024-06-05-installing-minio/Minio TLS Certificates.png" | relative_url }})
 
@@ -299,7 +299,7 @@ With this activity complete, you should now be able to login to the Minio Tenant
 
 ## Installation of Minio CLI
 
-Minio comes with a CLI that facilitates automation of largescale change activities. 'Installation' is by downloading from 
+Minio comes with a CLI that facilitates automation of largescale change activities. `Installation` is by downloading from 
 a download site and copying the executable to a proper destination directory. 
 <b>CAVEAT:</b> be careful to pick the correct architecture (arm64/amd) for your platform !
 
@@ -308,9 +308,9 @@ wget https://dl.min.io/client/mc/release/linux-arm64/mc -O $HOME/bin/mc
 chmod 700 $HOME/bin/mc
 ```
 
-Login to the Minio <b>Tenant</b> Console, go the tab 'Access Keys' and hit 'Create access key' in the north-east corner.
+Login to the Minio <b>Tenant</b> Console, go the tab `Access Keys` and hit `Create access key` in the north-east corner.
 
-Copy/Paste the credentials into '~/.mc/config.json'
+Copy/Paste the credentials into `~/.mc/config.json`
 
 ```json
 {
@@ -327,7 +327,7 @@ Copy/Paste the credentials into '~/.mc/config.json'
 }
 ```
 
-Verify that your access works (even with our certificate in place we have to disable SSL verification with '--insecure')
+Verify that your access works (even with our certificate in place we have to disable SSL verification with `--insecure`)
 
 ```
 $ mc --insecure admin info miniok3s
