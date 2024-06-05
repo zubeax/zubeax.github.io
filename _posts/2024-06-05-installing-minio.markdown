@@ -120,15 +120,12 @@ Here is a list of Minio Operator API objects
 ```
 minio-operator
 ├── configmap
-│   ├── configmap-console-env.yaml
-│   └── configmap-kube-root-ca.crt.yaml
+│   └── configmap-console-env.yaml
 ├── deployment.apps
 │   ├── deployment.apps-console.yaml
 │   └── deployment.apps-minio-operator.yaml
 ├── secret
 │   ├── secret-console-sa-secret.yaml
-│   ├── secret-sh.helm.release.v1.operator.v1.yaml
-│   ├── secret-sh.helm.release.v1.operator.v2.yaml
 │   └── secret-sts-tls.yaml
 ├── service
 │   ├── service-console.yaml
@@ -137,7 +134,6 @@ minio-operator
 │   └── service-sts.yaml
 └── serviceaccount
     ├── serviceaccount-console-sa.yaml
-    ├── serviceaccount-default.yaml
     └── serviceaccount-minio-operator.yaml
 ```
 
@@ -224,9 +220,7 @@ Here are the Minio Tenant API objects<br/>
 Fun Fact: If you look at the end of the list, you will realize that Minio uses a CRD (tenants.minio.min.io)
 for managing specific tenant aspects.<br/>
 ```
-miniok3s/
-├── configmap
-│   └── configmap-kube-root-ca.crt.yaml
+miniok3s
 ├── PersistentVolumeClaim
 │   ├── PersistentVolumeClaim-data0-miniok3s-pool-0-0.yaml
 │   ├── PersistentVolumeClaim-data0-miniok3s-pool-0-1.yaml
@@ -244,15 +238,13 @@ miniok3s/
 │   ├── secret-miniok3s-5pp3e-external-server-certificate-0.yaml
 │   ├── secret-miniok3s-env-configuration.yaml
 │   ├── secret-miniok3s-hlybk-external-server-certificate-0.yaml
-│   ├── secret-miniok3s-tls.yaml
-│   └── secret-sh.helm.release.v1.tenant.v1.yaml
+│   └── secret-miniok3s-tls.yaml
 ├── service
 │   ├── service-miniok3s-console.yaml
 │   ├── service-miniok3s-hl.yaml
 │   ├── service-miniok3s-lb.yaml
 │   └── service-minio.yaml
 ├── serviceaccount
-│   ├── serviceaccount-default.yaml
 │   └── serviceaccount-miniok3s-sa.yaml
 ├── statefulset.apps
 │   └── statefulset.apps-miniok3s-pool-0.yaml
