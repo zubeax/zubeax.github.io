@@ -115,6 +115,33 @@ kubectl -n minio-operator get secret console-sa-secret -o jsonpath="{.data.token
   echo "Visit the Operator Console at http://127.0.0.1:9090"
 ```
 
+Here is a list of Minio Operator API objects
+
+```
+minio-operator
+├── configmap
+│   ├── configmap-console-env.yaml
+│   └── configmap-kube-root-ca.crt.yaml
+├── deployment.apps
+│   ├── deployment.apps-console.yaml
+│   └── deployment.apps-minio-operator.yaml
+├── secret
+│   ├── secret-console-sa-secret.yaml
+│   ├── secret-sh.helm.release.v1.operator.v1.yaml
+│   ├── secret-sh.helm.release.v1.operator.v2.yaml
+│   └── secret-sts-tls.yaml
+├── service
+│   ├── service-console.yaml
+│   ├── service-minio-console-lb.yaml
+│   ├── service-operator.yaml
+│   └── service-sts.yaml
+└── serviceaccount
+    ├── serviceaccount-console-sa.yaml
+    ├── serviceaccount-default.yaml
+    └── serviceaccount-minio-operator.yaml
+```
+
+
 ### Exposing the Minio Operator Console 
 
 My standard procedure for exposing static services is to assign them a static IP address from my home network with a 
@@ -191,6 +218,46 @@ tenant:
       volumesPerServer: 4
       size: 5Gi
       storageClassName: longhorn
+```
+
+Here are the Minio Tenant API objects<br/>
+Fun Fact: If you look at the end of the list, you will realize that Minio uses a CRD (tenants.minio.min.io)
+for managing specific tenant aspects.<br/>
+```
+miniok3s/
+├── configmap
+│   └── configmap-kube-root-ca.crt.yaml
+├── PersistentVolumeClaim
+│   ├── PersistentVolumeClaim-data0-miniok3s-pool-0-0.yaml
+│   ├── PersistentVolumeClaim-data0-miniok3s-pool-0-1.yaml
+│   ├── PersistentVolumeClaim-data1-miniok3s-pool-0-0.yaml
+│   ├── PersistentVolumeClaim-data1-miniok3s-pool-0-1.yaml
+│   ├── PersistentVolumeClaim-data2-miniok3s-pool-0-0.yaml
+│   ├── PersistentVolumeClaim-data2-miniok3s-pool-0-1.yaml
+│   ├── PersistentVolumeClaim-data3-miniok3s-pool-0-0.yaml
+│   └── PersistentVolumeClaim-data3-miniok3s-pool-0-1.yaml
+├── rolebinding.rbac.authorization.k8s.io
+│   └── rolebinding.rbac.authorization.k8s.io-miniok3s-binding.yaml
+├── role.rbac.authorization.k8s.io
+│   └── role.rbac.authorization.k8s.io-miniok3s-role.yaml
+├── secret
+│   ├── secret-miniok3s-5pp3e-external-server-certificate-0.yaml
+│   ├── secret-miniok3s-env-configuration.yaml
+│   ├── secret-miniok3s-hlybk-external-server-certificate-0.yaml
+│   ├── secret-miniok3s-tls.yaml
+│   └── secret-sh.helm.release.v1.tenant.v1.yaml
+├── service
+│   ├── service-miniok3s-console.yaml
+│   ├── service-miniok3s-hl.yaml
+│   ├── service-miniok3s-lb.yaml
+│   └── service-minio.yaml
+├── serviceaccount
+│   ├── serviceaccount-default.yaml
+│   └── serviceaccount-miniok3s-sa.yaml
+├── statefulset.apps
+│   └── statefulset.apps-miniok3s-pool-0.yaml
+└── tenants.minio.min.io
+    └── tenants.minio.min.io-miniok3s.yaml
 ```
 
 This gives me 2 servers (i.e. tenant pods) managing 4 volumes of 5GB each supplying me with a total of 40 GB of storage.
