@@ -4,6 +4,7 @@ title: "Installing Minio"
 date: 2024-06-05
 categories: kubernetes
 tags: longhorn
+sitemap: true
 description: >
   Installing the Minio object store
 ---
@@ -29,12 +30,15 @@ to use.
 
 ![Minio Console]({{ "/assets/images/2024-06-05-installing-minio/Minio Console.png" | relative_url }})
 
-A Screenshot of the Minio Object Store Console
+Screenshot of the Minio Object Store Console
 {:.figcaption}
 
 Minio consists of 2 architecture components that are installed in sequence.
 
 ![Minio-Architecture.png]({{ "/assets/images/2024-06-05-installing-minio/Minio-Architecture.png" | relative_url }})
+
+Minio Architecture
+{:.figcaption}
 
 - [Installation of Minio Operator](https://min.io/docs/minio/kubernetes/upstream/operations/installation.html)
 - [Installation of a Minio Tenant](https://min.io/docs/minio/kubernetes/upstream/operations/deploy-manage-tenants.html)
@@ -154,6 +158,7 @@ and add an ip-address/hostname entry to dnsmasq.hosts of the dnsmasq server serv
 Here is the manifest file for the service.
 
 ~~~yaml
+#File: 'minio-operator-console-lb-service.yaml'
 apiVersion: v1
 kind: Service
 metadata:
@@ -204,6 +209,7 @@ In `values.yaml` i changed :
 (the ssd's attached to my cluster nodes are managed by [longhorn](https://blog.smooth-sailing.net/kubernetes/k3s/2023-12-08-customizing-k3s/))
 
 ~~~yaml
+#File: 'values.yaml'
 tenant:
   name: miniok3s
   image:
@@ -259,9 +265,11 @@ miniok3s
 ~~~
 
 This gives me 2 servers (i.e. tenant pods) managing 4 volumes of 5GB each supplying me with a total of 40 GB of storage.
-Similar to the operator the tenant console is exposed with a MetalLB Load Balancer service :
+Similar to the operator the tenant console is exposed with a MetalLB Load Balancer service.<br/>
+The `miniok3s-api` clause exposes the Minio API with a cluster-external IP address. This is required when we want to 
 
 ~~~yaml
+#File: 'minio-tenant-console-lb-service.yaml'
 apiVersion: v1
 kind: Service
 metadata:
@@ -291,15 +299,20 @@ There are 2 activities left to make Minio fully functional.
 ### Minio Tenant User + Password
 
 Login to the Operator with the access token retrieved as outlined above and go to the `Configuration` tab.
+
 ![Minio Tenant User+Password.png]({{ "/assets/images/2024-06-05-installing-minio/Minio Tenant User+Password.png" | relative_url }})
+
+Minio Configuration
+{:.figcaption}
 
 Set the values for MINIO_ROOT_USER and MINIO_ROOT_PASSWORD.
 
 ### Configure custom Minio TLS Certificates
 
-By default Minio uses a certificate provisioned from the (kubernetes-)internal CA. The default certificate lacks the hostname 
-tied to our LoadBalancer service's IP address. We are going to run into problems whenever we try to login or submit REST requests
-to the API, so we will have to provision a custom certificate that has the hostname of our LoadBalancer service in the 
+By default Minio uses a certificate provisioned from the (kubernetes-)internal CA at installation time. 
+Since the default certificate lacks the hostname tied to our LoadBalancer service's IP address, we are going to run 
+into problems whenever we try to login or submit REST requests to the API. 
+We will have to provision a custom certificate that has the hostname of our LoadBalancer service in the 
 SAN (Subject Alternative Name) list. I will cover the details of submitting CSR's to Kubernetes' CA in a future article.
 (Here is a link to the [kubernetes documentation](https://kubernetes.io/docs/reference/access-authn-authz/certificate-signing-requests/))
 For the moment it should suffice to outline the required steps :
@@ -343,6 +356,7 @@ Certificate Request:
 ~~~
 
 ~~~yaml
+#File: `minio-custom-certificate.csr`
 apiVersion: certificates.k8s.io/v1
 kind: CertificateSigningRequest
 spec:
@@ -357,15 +371,18 @@ spec:
 
 I spent quite a while figuring out the details. To save you the time :
 
-- key usage <b>must</b> be :  digital signature, key encipherment, server auth
-- the openssl csr <b>must</b> be embedded base64-encoded in the `request` tag
-- the signer <b>must</b> be `kubernetes.io/kubelet-serving` 
-- don't make `expirationSeconds` too small. i picked 366*86400 (i.e. 1 year).
+ - key usage <b>must</b> be :  digital signature, key encipherment, server auth
+ - the openssl csr <b>must</b> be embedded base64-encoded in the `request` tag
+ - the signer <b>must</b> be `kubernetes.io/kubelet-serving` 
+ - don't make `expirationSeconds` too small. i picked 366*86400 (i.e. 1 year).
 
 After the csr's state is `Approved, Issued`, you can download the certificate and add it to `Minio Server Certificates`
 in the `Security` tab of the operator console.
 
 ![Minio TLS Certificates]({{ "/assets/images/2024-06-05-installing-minio/Minio TLS Certificates.png" | relative_url }})
+
+Minio Server Certificate Configuration
+{:.figcaption}
 
 With this activity complete, you should now be able to login to the Minio Tenant console.
 
@@ -373,7 +390,7 @@ With this activity complete, you should now be able to login to the Minio Tenant
 ## Installation of Minio CLI
 
 Minio comes with a CLI that facilitates automation of largescale change activities. Installation is by downloading from 
-a download site and copying the executable to a proper destination directory. 
+a download site and copying the executable to a proper destination directory.<br/>
 <b>CAVEAT:</b> be careful to pick the correct architecture (arm64/amd) for your platform !
 
 ~~~sh
@@ -381,15 +398,15 @@ wget https://dl.min.io/client/mc/release/linux-arm64/mc -O $HOME/bin/mc
 chmod 700 $HOME/bin/mc
 ~~~
 
-Login to the Minio <b>Tenant</b> Console, go the tab `Access Keys` and hit `Create access key` in the north-east corner.
+Login to the Minio <b>Tenant</b> Console, go the tab `Access Keys` and hit `Create access key` in the north-east corner
+then copy/paste the credentials into `~/.mc/config.json`
 
-Copy/Paste the credentials into `~/.mc/config.json`
-
-~~~json
+~~~js
+// file: "~/.mc/config.json"
 {
 	"version": "10",
 	"aliases": {
-		"minio-tenant": {
+		"miniok3s": {
 			"url": "https://minio-tenant.k3s.kippel.de:9000",
 			"accessKey": "***",
 			"secretKey": "***",
@@ -400,9 +417,10 @@ Copy/Paste the credentials into `~/.mc/config.json`
 }
 ~~~
 
-Verify that your access works (even with our certificate in place we have to disable SSL verification with `--insecure`)
+Verify that your access works<br/>
+(even with our certificate in place we have to disable SSL verification with `--insecure`)
 
-~~~
+~~~sh
 $ mc --insecure admin info miniok3s
 ●  miniok3s-pool-0-0.miniok3s-hl.miniok3s.svc.cluster.local:9000
    Uptime: 41 minutes 
@@ -425,8 +443,31 @@ Pools:
 8 drives online, 0 drives offline, EC:4
 ~~~
 
-The CLI exposes all API functions supported by minio. 
-Here is a link to the [documentation](https://min.io/docs/minio/linux/reference/minio-mc.html).
+The CLI exposes all [API functions](https://min.io/docs/minio/linux/reference/minio-mc.html) supported by minio. 
+
+Here is are some example commands.
+~~~sh
+# creating a new bucket
+minioclient mb miniok3s/knowhow
+Bucket created successfully `miniok3s/knowhow`.
+
+# List the created bucket:
+minioclient ls miniok3s
+[2024-04-20 23:34:48 CEST]     0B knowhow/
+
+# Copy everything from the local directory to the destination recursively
+minioclient cp -r . miniok3s/knowhow
+
+# Check minio liveness
+minioclient ping miniok3s
+
+1: http://minio.k3s.kippel.de:9000 min=2.18ms max=2.18ms average=2.18ms errors=0 roundtrip=2.18ms  
+2: http://minio.k3s.kippel.de:9000 min=1.69ms max=2.18ms average=1.93ms errors=0 roundtrip=1.69ms  
+3: http://minio.k3s.kippel.de:9000 min=1.69ms max=2.22ms average=2.03ms errors=0 roundtrip=2.22ms  
+4: http://minio.k3s.kippel.de:9000 min=1.45ms max=2.22ms average=1.89ms errors=0 roundtrip=1.45ms  
+5: http://minio.k3s.kippel.de:9000 min=1.45ms max=2.22ms average=1.81ms errors=0 roundtrip=1.50ms  
+6: http://minio.k3s.kippel.de:9000 min=1.22ms max=2.22ms average=1.71ms errors=0 roundtrip=1.22ms  
+~~~
 
 <br/><br/>
 I hope you enjoyed this week's article. Stay tuned for more !
