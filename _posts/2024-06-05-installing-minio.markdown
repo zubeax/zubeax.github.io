@@ -16,8 +16,8 @@ disaster recovery, archive, data lakes for analytics and storing output from dat
 {:toc .large-only}
 
 ## Introduction
-I recently found it quite useful as an enhancement for a relational database that is persisting unstructured information 
-(read: .pdf/.docx/.xlsx files) attached to workflow items.
+I recently found Minio quite useful as an enhancement for a relational database that is persisting unstructured information 
+(read: `.pdf` `.docx` `.xlsx` files) attached to workflow items.
 In a traditional implementation the attachments would be persisted in CLOB columns of a database table.
 Obviously such an implementation is technically feasible, but - depending on the number and size of attachments - 
 it can result in quite a bit of headache for the DB/A's (performance and backup-wise).<br/>
@@ -25,7 +25,7 @@ When i first worked on document management on a large scale (early 90s of the la
 we would persist incoming scanned client mail in a file system and only manage the metadata in an RDBMS. Minio would 
 definitely be an improvement over the bare-metal storage systems we used at that time.<br/>
 For a PoC i plugged a Minio backend into a (Java) REST service that implements the persistence layer for a document-attachment service
-in a workflow-management system. It took about 300 lines to provide POST/GET/DELETE methods. The API was quite straightforward
+in a workflow-management system. It took about 300 lines to provide CREATE/READ/DELETE methods. The API was quite straightforward
 to use.
 
 ![Minio Console]({{ "/assets/images/2024-06-05-installing-minio/Minio Console.png" | relative_url }})
@@ -370,9 +370,9 @@ spec:
 I spent quite a while figuring out the details. To save you the time :
 
  - key usage <b>must</b> be :  digital signature, key encipherment, server auth
- - the openssl csr <b>must</b> be embedded base64-encoded in the `request` tag
+ - the openssl csr <b>must</b> be embedded base64-encoded after the `request` tag
  - the signer <b>must</b> be `kubernetes.io/kubelet-serving` 
- - don't make `expirationSeconds` too small. i picked 366*86400 (i.e. 1 year).
+ - don't make `expirationSeconds` too small. i picked 366*86400s (i.e. 1 year).
 
 After the csr's state is `Approved, Issued`, you can download the certificate and add it to `Minio Server Certificates`
 in the `Security` tab of the operator console.
@@ -461,10 +461,7 @@ minioclient ping miniok3s
 
 1: http://minio.k3s.kippel.de:9000 min=2.18ms max=2.18ms average=2.18ms errors=0 roundtrip=2.18ms  
 2: http://minio.k3s.kippel.de:9000 min=1.69ms max=2.18ms average=1.93ms errors=0 roundtrip=1.69ms  
-3: http://minio.k3s.kippel.de:9000 min=1.69ms max=2.22ms average=2.03ms errors=0 roundtrip=2.22ms  
-4: http://minio.k3s.kippel.de:9000 min=1.45ms max=2.22ms average=1.89ms errors=0 roundtrip=1.45ms  
-5: http://minio.k3s.kippel.de:9000 min=1.45ms max=2.22ms average=1.81ms errors=0 roundtrip=1.50ms  
-6: http://minio.k3s.kippel.de:9000 min=1.22ms max=2.22ms average=1.71ms errors=0 roundtrip=1.22ms  
+3: http://minio.k3s.kippel.de:9000 min=1.69ms max=2.22ms average=2.03ms errors=0 roundtrip=2.22ms   
 ~~~
 
 <br/><br/>
