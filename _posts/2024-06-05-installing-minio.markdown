@@ -41,27 +41,27 @@ Minio consists of 2 architecture components that are installed in sequence.
 I decided to install both components with helm (it is feasible to install the minio tenant from the minio operator, but i decided against that),
 so in a prerequisite step we add the minio repo :
 
-```bash
+~~~sh
 $ helm repo add minio-operator https://operator.min.io
 "minio-operator" has been added to your repositories
-```
+~~~
 
 Now we can check which version is available.
 
-```bash
+~~~sh
 $ helm search repo minio-operator
 NAME                         	CHART VERSION	APP VERSION	DESCRIPTION
 minio-operator/minio-operator	4.3.7        	v4.3.7     	A Helm chart for MinIO Operator
 minio-operator/operator      	5.0.15       	v5.0.15    	A Helm chart for MinIO Operator
 minio-operator/tenant        	5.0.15       	v5.0.15    	A Helm chart for MinIO Operator
-```
+~~~
 
 ## Installation of Minio Operator
 
 I prefer to have the helm charts available locally, so i usually fetch them, edit `values.yaml` 
 and then install from the local directory. Let's go and do that.
 
-```bash
+~~~sh
 $ helm fetch minio-operator/operator --untar=true --untardir=.
 operator/
 ├── Chart.yaml
@@ -87,12 +87,12 @@ operator/
 │   ├── sts.min.io_policybindings.yaml
 │   └── sts-service.yaml
 └── values.yaml
-```
+~~~
 
 I like my cluster to be stand-alone as much as possible, so i copy the images for all applications i deploy into a local registry. That means i had to update
 the image source in `values.yaml`. After that i did a clean helm install.
 
-```bash
+~~~sh
 $ helm install --namespace minio-operator --create-namespace   operator -f ./values.yaml .
 
 NAME: operator
@@ -118,11 +118,11 @@ kubectl -n minio-operator get secret console-sa-secret -o jsonpath="{.data.token
 2. Get the Operator Console URL by running these commands:
   kubectl --namespace minio-operator port-forward svc/console 9090:9090
   echo "Visit the Operator Console at http://127.0.0.1:9090"
-```
+~~~
 
 Here is a list of Minio Operator API objects
 
-```
+~~~
 minio-operator
 ├── configmap
 │   └── configmap-console-env.yaml
@@ -140,7 +140,7 @@ minio-operator
 └── serviceaccount
     ├── serviceaccount-console-sa.yaml
     └── serviceaccount-minio-operator.yaml
-```
+~~~
 
 
 ### Exposing the Minio Operator Console 
@@ -152,7 +152,7 @@ and add an ip-address/hostname entry to dnsmasq.hosts of the dnsmasq server serv
 
 Here is the manifest file for the service.
 
-```yaml
+~~~yaml
 apiVersion: v1
 kind: Service
 metadata:
@@ -174,15 +174,15 @@ spec:
   selector:
     app.kubernetes.io/instance: operator-console
     app.kubernetes.io/name: operator
-```
+~~~
 
 Access to the operator console requires an access token. That is retrieved from the secret `console-sa-secret` that was 
 deployed along with the rest. Token retrieval works as usual :
 
-```bash
+~~~sh
 kubectl -n minio-operator get secret console-sa-secret -o jsonpath='{.data.token}' | base64 -d
 eyJhbGciOiJSUzI1NiIs...DaIVLsEYCW5ww
-```
+~~~
 
 For the moment we are done with the Minio Operator. Let's start with tenant installation.
 
@@ -191,9 +191,9 @@ For the moment we are done with the Minio Operator. Let's start with tenant inst
 
 As for the operator, we fetch the tenant helm chart.
 
-```bash
+~~~sh
 $ helm fetch minio-operator/tenant --untar=true --untardir=.
-```
+~~~
 
 In `values.yaml` i changed :
 - the number of servers (2)
@@ -202,7 +202,7 @@ In `values.yaml` i changed :
 - the storage class name (longhorn). 
 (the ssd's attached to my cluster nodes are managed by [longhorn](https://blog.smooth-sailing.net/kubernetes/k3s/2023-12-08-customizing-k3s/))
 
-```yaml
+~~~yaml
 tenant:
   name: miniok3s
   image:
@@ -219,12 +219,12 @@ tenant:
       volumesPerServer: 4
       size: 5Gi
       storageClassName: longhorn
-```
+~~~
 
 Here are the Minio Tenant API objects<br/>
 Fun Fact: If you look at the end of the list, you will realize that Minio uses a CRD (tenants.minio.min.io)
 for managing specific tenant aspects.<br/>
-```
+~~~
 miniok3s
 ├── PersistentVolumeClaim
 │   ├── PersistentVolumeClaim-data0-miniok3s-pool-0-0.yaml
@@ -255,12 +255,12 @@ miniok3s
 │   └── statefulset.apps-miniok3s-pool-0.yaml
 └── tenants.minio.min.io
     └── tenants.minio.min.io-miniok3s.yaml
-```
+~~~
 
 This gives me 2 servers (i.e. tenant pods) managing 4 volumes of 5GB each supplying me with a total of 40 GB of storage.
 Similar to the operator the tenant console is exposed with a MetalLB Load Balancer service :
 
-```yaml
+~~~yaml
 apiVersion: v1
 kind: Service
 metadata:
@@ -281,7 +281,7 @@ ports:
   targetPort: 9000
   selector:
   v1.min.io/tenant: miniok3s
-```
+~~~
 
 ## Configuration
 
@@ -309,7 +309,7 @@ For the moment it should suffice to outline the required steps :
 
 Here is an outline of the CSR (created with `openssl req`)
 
-```
+~~~
 Certificate Request:
     Data:
         Version: 1 (0x0)
@@ -339,9 +339,9 @@ Certificate Request:
         ...
         24:c0:78:9e:37:85:f7:a2:7b:65:96:7d:22:04:69:e3:85:0e:
         77:20:a3:e5
-```
+~~~
 
-```yaml
+~~~yaml
 apiVersion: certificates.k8s.io/v1
 kind: CertificateSigningRequest
 spec:
@@ -352,7 +352,7 @@ spec:
   - digital signature
   - key encipherment
   - server auth
-```
+~~~
 
 I spent quite a while figuring out the details. To save you the time :
 
@@ -375,16 +375,16 @@ Minio comes with a CLI that facilitates automation of largescale change activiti
 a download site and copying the executable to a proper destination directory. 
 <b>CAVEAT:</b> be careful to pick the correct architecture (arm64/amd) for your platform !
 
-```bash
+~~~sh
 wget https://dl.min.io/client/mc/release/linux-arm64/mc -O $HOME/bin/mc
 chmod 700 $HOME/bin/mc
-```
+~~~
 
 Login to the Minio <b>Tenant</b> Console, go the tab `Access Keys` and hit `Create access key` in the north-east corner.
 
 Copy/Paste the credentials into `~/.mc/config.json`
 
-```json
+~~~json
 {
 	"version": "10",
 	"aliases": {
@@ -397,11 +397,11 @@ Copy/Paste the credentials into `~/.mc/config.json`
 		}
 	}
 }
-```
+~~~
 
 Verify that your access works (even with our certificate in place we have to disable SSL verification with `--insecure`)
 
-```
+~~~
 $ mc --insecure admin info miniok3s
 ●  miniok3s-pool-0-0.miniok3s-hl.miniok3s.svc.cluster.local:9000
    Uptime: 41 minutes 
@@ -422,7 +422,7 @@ Pools:
 
 343 MiB Used, 2 Buckets, 3,066 Objects
 8 drives online, 0 drives offline, EC:4
-```
+~~~
 
 The CLI exposes all API functions supported by minio. 
 Here is a link to the [documentation](https://min.io/docs/minio/linux/reference/minio-mc.html).
