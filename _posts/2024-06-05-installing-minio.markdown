@@ -8,7 +8,9 @@ description: >
 ---
 [MinIO](https://min.io/docs/minio/kubernetes/upstream/index.html) is an object storage solution that 
 provides an AWS S3-compatible API plus a neat WebUI for managing `buckets` than can be used for backup and restore,
-disaster recovery, archive, data lakes for analytics and storing output from data streams.<br/>
+disaster recovery, archive, data lakes for analytics and storing output from data streams.
+
+# Introduction
 I recently found it quite useful as an enhancement for a relational database that is persisting unstructured information 
 (read: .pdf/.docx/.xlsx files) attached to workflow items.
 In a traditional implementation the attachments would be persisted in CLOB columns of a database table.
