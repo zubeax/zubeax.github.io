@@ -125,28 +125,6 @@ kubectl -n minio-operator get secret console-sa-secret -o jsonpath="{.data.token
   echo "Visit the Operator Console at http://127.0.0.1:9090"
 ~~~
 
-Here is a list of Minio Operator API objects
-
-~~~
-minio-operator
-├── configmap
-│   └── configmap-console-env.yaml
-├── deployment.apps
-│   ├── deployment.apps-console.yaml
-│   └── deployment.apps-minio-operator.yaml
-├── secret
-│   ├── secret-console-sa-secret.yaml
-│   └── secret-sts-tls.yaml
-├── service
-│   ├── service-console.yaml
-│   ├── service-minio-console-lb.yaml
-│   ├── service-operator.yaml
-│   └── service-sts.yaml
-└── serviceaccount
-    ├── serviceaccount-console-sa.yaml
-    └── serviceaccount-minio-operator.yaml
-~~~
-
 
 ### Exposing the Minio Operator Console 
 
@@ -199,7 +177,23 @@ As for the operator, we fetch the tenant helm chart.
 
 ~~~sh
 $ helm fetch minio-operator/tenant --untar=true --untardir=.
+
+tenant/
+├── Chart.yaml
+├── README.md
+├── templates
+│   ├── api-ingress.yaml
+│   ├── console-ingress.yaml
+│   ├── extra-resources.yaml
+│   ├── _helpers.tpl
+│   ├── kes-configuration-secret.yaml
+│   ├── NOTES.txt
+│   ├── tenant-configuration.yaml
+│   └── tenant.yaml
+└── values.yaml
 ~~~
+
+<b>Interesting Fact:</b> Minio uses a CRD (tenants.minio.min.io) for managing specific tenant aspects. `tenant.yaml` is the template for that.<br/>
 
 In `values.yaml` i changed :
 - the number of servers (2)
@@ -228,45 +222,49 @@ tenant:
       storageClassName: longhorn
 ~~~
 
-Here are the Minio Tenant API objects<br/>
-Fun Fact: If you look at the end of the list, you will realize that Minio uses a CRD (tenants.minio.min.io)
-for managing specific tenant aspects.<br/>
-~~~
-miniok3s
-├── PersistentVolumeClaim
-│   ├── PersistentVolumeClaim-data0-miniok3s-pool-0-0.yaml
-│   ├── PersistentVolumeClaim-data0-miniok3s-pool-0-1.yaml
-│   ├── PersistentVolumeClaim-data1-miniok3s-pool-0-0.yaml
-│   ├── PersistentVolumeClaim-data1-miniok3s-pool-0-1.yaml
-│   ├── PersistentVolumeClaim-data2-miniok3s-pool-0-0.yaml
-│   ├── PersistentVolumeClaim-data2-miniok3s-pool-0-1.yaml
-│   ├── PersistentVolumeClaim-data3-miniok3s-pool-0-0.yaml
-│   └── PersistentVolumeClaim-data3-miniok3s-pool-0-1.yaml
-├── rolebinding.rbac.authorization.k8s.io
-│   └── rolebinding.rbac.authorization.k8s.io-miniok3s-binding.yaml
-├── role.rbac.authorization.k8s.io
-│   └── role.rbac.authorization.k8s.io-miniok3s-role.yaml
-├── secret
-│   ├── secret-miniok3s-5pp3e-external-server-certificate-0.yaml
-│   ├── secret-miniok3s-env-configuration.yaml
-│   ├── secret-miniok3s-hlybk-external-server-certificate-0.yaml
-│   └── secret-miniok3s-tls.yaml
-├── service
-│   ├── service-miniok3s-console.yaml
-│   ├── service-miniok3s-hl.yaml
-│   ├── service-miniok3s-lb.yaml
-│   └── service-minio.yaml
-├── serviceaccount
-│   └── serviceaccount-miniok3s-sa.yaml
-├── statefulset.apps
-│   └── statefulset.apps-miniok3s-pool-0.yaml
-└── tenants.minio.min.io
-    └── tenants.minio.min.io-miniok3s.yaml
+Installation of the tenant with helm is straightforward.
+
+~~~sh
+$ helm install --namespace miniok3s --create-namespace tenant -f ./values.yaml .
+
+NAME: tenant
+LAST DEPLOYED: Tue May 21 21:09:31 2024
+NAMESPACE: minio-tenant
+STATUS: deployed
+REVISION: 1
+TEST SUITE: None
+NOTES:
+To connect to the minio-tenant tenant if it doesn't have a service exposed, you can port-forward to it by running:
+
+  kubectl --namespace minio-tenant port-forward svc/minio-tenant-console 9443:9443
+
+  Then visit the MinIO Console at https://127.0.0.1:9443
 ~~~
 
 This gives me 2 servers (i.e. tenant pods) managing 4 volumes of 5GB each supplying me with a total of 40 GB of storage.
-Similar to the operator the tenant console is exposed with a MetalLB Load Balancer service.<br/>
-The `miniok3s-api` clause exposes the Minio API with a cluster-external IP address. This is required when we want to 
+
+~~~sh
+$ k -n miniok3s get all
+
+NAME                    READY   STATUS    RESTARTS   AGE
+pod/miniok3s-pool-0-1   2/2     Running   0          7h20m
+pod/miniok3s-pool-0-0   2/2     Running   0          7h19m
+
+NAME                       TYPE           CLUSTER-IP      EXTERNAL-IP       PORT(S)                        AGE
+service/minio              ClusterIP      10.43.74.222    <none>            443/TCP                        13d
+service/miniok3s-console   ClusterIP      10.43.215.4     <none>            9443/TCP                       13d
+service/miniok3s-lb        LoadBalancer   10.43.204.137   192.168.100.165   443:31196/TCP,9000:32751/TCP   13d
+service/miniok3s-hl        ClusterIP      None            <none>            9000/TCP,8022/TCP              13d
+
+NAME                               READY   AGE
+statefulset.apps/miniok3s-pool-0   2/2     13d
+~~~
+
+### Exposing the Minio Tenant Console
+
+Similar to the operator, the tenant console is exposed with a MetalLB Load Balancer service.<br/>
+The `miniok3s-api` clause exposes the Minio API with a cluster-external IP address. This is required when we want
+to orchestrate the API with the Minio CLI or with an application that implements Minio SDK calls.  
 
 ~~~yaml
 #File: 'minio-tenant-console-lb-service.yaml'
