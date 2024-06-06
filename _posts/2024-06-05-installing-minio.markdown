@@ -2,7 +2,8 @@
 layout: post
 title: "Installing Minio"
 date: 2024-06-05
-categories: [kubernetes]
+categories: kubernetes
+tags: longhorn
 description: >
   Installing the Minio object store
 ---
@@ -11,7 +12,7 @@ provides an AWS S3-compatible API plus a neat WebUI for managing `buckets` than 
 disaster recovery, archive, data lakes for analytics and storing output from data streams.
 
 - Table of Contents
-  {:toc .large-only}
+{:toc .large-only}
 
 ## Introduction
 I recently found it quite useful as an enhancement for a relational database that is persisting unstructured information 
