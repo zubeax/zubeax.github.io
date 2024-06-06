@@ -304,7 +304,7 @@ SAN (Subject Alternative Name) list. I will cover the details of submitting CSR'
 (Here is a link to the [kubernetes documentation](https://kubernetes.io/docs/reference/access-authn-authz/certificate-signing-requests/))
 For the moment it should suffice to outline the required steps :
 
-- create a CSR (Certificate Signing Request) will all required SAN items
+- create a CSR (Certificate Signing Request) with all required SAN items
 - submit the CSR to Kubernetes for approval
 - download the finished certificate and configure our tenant in the Minio Operator with it
 
