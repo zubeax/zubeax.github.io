@@ -7,26 +7,30 @@ tags: git
 description: >
   Install a self-hosted Git service. Git with a cup of tea
 ---
-[<b>Gitea</b>](https://about.gitea.com/) is an excellent and easy to use version control system. Today we are going to install it in our cluster as the next step in creating a build pipeline for our container images.
+[<b>Gitea</b>](https://about.gitea.com/) is an excellent and easy to use version control system. 
+Today we are going to install it in our cluster as the next step in creating a build pipeline for our container images.
 
 - Table of Contents
 {:toc .large-only}
 
 ## Prerequisite - Installing Postgres
 
-The [<b>bitnami</b>](https://bitnami.com/stack/gitea/virtual-machine) Gitea images do not support the arm64 architecture, so we have to install Postgres on our own. To create the Kubernetes objects we require the .yaml files to feed to kubectl. An easy way to get them is to use helm and let it do a dry run installation :
+The [<b>bitnami</b>](https://bitnami.com/stack/gitea/virtual-machine) Gitea images do not support the arm64 architecture, 
+so we have to install Postgres on our own. To create the Kubernetes objects we require the .yaml files to feed to kubectl.
+The simplest way to obtain them is to use helm and let it do a dry run installation :
 
 - download the helm chart and unpack the tar ball into a local directory
-- do a dry-run installation to collect the .yaml files
+- do a dry-run installation to collect the manifest files
 
 ~~~sh
 helm fetch gitea-charts/gitea --untar=true --untardir=.
 helm install --dry-run gitea -f ./values.yaml  . > ./gitea-dry-run-log.txt
 ~~~
 
-Now we can lift the .yaml files from `./gitea-dry-run-log.txt`.
+Now we can lift the manifest files from `./gitea-dry-run-log.txt`.
 
-We need a password for Postgres. Security is not really a concern for this installation, so let's just make it a little harder for my kids.
+We need a password for Postgres. Security is not really a concern for this installation,
+so let's just make it a little harder for my kids.
 
 ~~~sh
 #File: 'mkpgpass.sh'
@@ -57,7 +61,9 @@ data:
   password: Yzg2NmIzNGJkMmQ3Y2FiZA==
 ~~~
 
-The [database create statements](https://docs.gitea.com/next/installation/database-prep) are straight from the Gitea documentation. We collect them in a config map and inject that as the file `init-gitea.sh` in the volume `/docker-entrypoint-initdb.d/` of the stateful set.
+The [database create statements](https://docs.gitea.com/next/installation/database-prep) are straight from the Gitea documentation. 
+We collect them in a config map and inject that as the file `init-gitea.sh`
+in the volume `/docker-entrypoint-initdb.d/` of the stateful set.
 
 ~~~yaml
 #File: 'postgres-configmap.yaml'
@@ -136,7 +142,8 @@ spec:
 ~~~
 
 
-The Postgres instance and Gitea will be living in the same namespace so a service with a cluster ip-address is sufficient to establish connectivity.
+The Postgres instance and Gitea will be living in the same namespace so a service with a
+cluster ip-address is sufficient to establish connectivity.
 
 ~~~yaml
 #File: 'postgres-service.yaml'
@@ -213,7 +220,8 @@ postgresql-repmgr 19:21:47.24 INFO  ==> ** Starting PostgreSQL with Replication 
 
 ## Installing Gitea
 
-We let helm do the actual installation. The `values` file is below. The only item to watch out for is postgresql.enabled. For obvious reasons this has to be set to **false**. 
+We let helm do the actual installation. The `values.yaml` file is below. The only item to watch out for is `postgresql.enabled`.
+Since we provisioned Postgres on our own, this has to be set to **false**. 
 
 ~~~yaml
 #File: 'gitea-values.yaml'
@@ -345,6 +353,15 @@ To git.k3s.kippel.de:axel/swagger-editor.git
  * [new branch]      master -> master
 branch 'master' set up to track 'origin/master'.
 ~~~
+
+## What's left ?
+
+We can configure some nice-to-have features in Gitea to integrate it with our CI/CD pipeline :
+
+- register and activate an ssh key so that Intellij can commit updates to a repo
+- create Jenkins webhooks for repos to automatically trigger image rebuilds upon commit
+- create access token(s) to facilitate repository access for remote applications (Jenkins, PyStatikMan)
+
 
 ## Conclusion
 
