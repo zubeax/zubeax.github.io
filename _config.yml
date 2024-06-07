@@ -79,29 +79,22 @@ permalink:             /:categories/:year-:month-:day-:title/
 paginate:              10
 paginate_path:         /:num/
 
-
 # Theme. Use local them for local build, remote_them for github pages build.
 # ---------------------------------------------------------------------------------------
 
 #theme: jekyll-theme-hydejack
 remote_theme: hydecorp/hydejack@v9
 
-
 # No Google Analytics for the moment
 # ---------------------------------------------------------------------------------------
-
 google_analytics: false
-
 
 # pyStatikMan configuration
 # ---------------------------------------------------------------------------------------
-
 staticman_url: https://kippel.smooth-sailing.net:5000/api/v1.0/comments/
-
 
 # Customization
 # ----------------------------------------------------------------------------------------
- 
 # Sidebar image and theme color of the site.
 accent_image:          /assets/images/sunset-shot.jpg
 accent_color:          rgb(241, 202, 27)
@@ -163,6 +156,7 @@ defaults:
   # You can use the following to enable comments on all posts.
   - scope:
       type:            posts
+      path:            _posts/**
     values:
       comments:        true
 
@@ -344,7 +338,6 @@ plugins:
 
 # SEO Tag
 # ---------------------------------------------------------------------------------------
-
 # Where you prove that you own this site (used by jekyll-seo-tag)
 # The id is from the Google Search Console.
 google_site_verification: aQO_ZBtf4DJpJ_5n8-vIgzZlWhzK3w_UxWCO_oQGU1E
