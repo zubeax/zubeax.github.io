@@ -443,7 +443,7 @@ Pools:
 
 The CLI exposes all [API functions](https://min.io/docs/minio/linux/reference/minio-mc.html) supported by minio. 
 
-Here is are some example commands.
+Here are are some example commands.
 ~~~sh
 # creating a new bucket
 minioclient mb miniok3s/knowhow
