@@ -42,6 +42,7 @@ validation-report.json
 node_modules
 package*.json
 vendor
+.bundle
 .sass-cache
 .jekyll-metadata
 .jekyll-cache
