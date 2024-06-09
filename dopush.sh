@@ -7,7 +7,7 @@ then
     exit 1
 fi
 
-function docommit()
+docommit()
 {
 git add -A .
 git commit -m "$commitmessage"
