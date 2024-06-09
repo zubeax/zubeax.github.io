@@ -453,7 +453,7 @@ Bucket created successfully `miniok3s/knowhow`.
 minioclient ls miniok3s
 [2024-04-20 23:34:48 CEST]     0B knowhow/
 
-# Copy everything from the local directory to the destination recursively
+# Copy everything recursively from the local directory to the destination
 minioclient cp -r . miniok3s/knowhow
 
 # Check minio liveness
