@@ -11,5 +11,3 @@ draftsclause="--drafts"
 bundle exec jekyll serve --host=192.168.100.136 $draftsclause --incremental --watch --force_polling 
 
 exit 0
-
-

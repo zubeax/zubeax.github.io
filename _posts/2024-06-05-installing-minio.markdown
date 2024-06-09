@@ -43,6 +43,9 @@ Minio Architecture
 - [Installation of Minio Operator](https://min.io/docs/minio/kubernetes/upstream/operations/installation.html)
 - [Installation of a Minio Tenant](https://min.io/docs/minio/kubernetes/upstream/operations/deploy-manage-tenants.html)
 
+The MinIO Kubernetes Operator supports deploying MinIO Tenants onto private and public cloud infrastructures.
+The MinIO Tenant represents an independent MinIO Object Store.
+
 I decided to install both components with helm (it is feasible to install the minio tenant from the minio operator, but i decided against that),
 so in a prerequisite step we add the minio repo :
 
