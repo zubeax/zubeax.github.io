@@ -1,0 +1,6 @@
+_id: 6e8958d5-41d8-4e69-bbcd-5fc1773591c0
+date: '1718016704'
+message: I use an intermediate nginx reverse proxy that terminates the inbound TLS
+  connection before forwarding the traffic to the Minio Tenant exposing its own certificate.
+name: Axel
+parent_id: 45d93e72-0e02-434d-8658-f331c28583a3
