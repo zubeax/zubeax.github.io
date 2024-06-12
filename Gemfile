@@ -33,8 +33,13 @@ gem "duktape"
 gem "webrick"
 
 group :jekyll_plugins do
+  gem "jekyll-coffeescript"
+  gem "jekyll-commonmark-ghpages"
   gem "jekyll-default-layout"
   gem "jekyll-feed"
+  gem "jekyll-gist"
+  gem "jekyll-github-metadata"
+  gem "jekyll-include-cache"
   gem "jekyll-optional-front-matter"
   gem "jekyll-paginate"
   gem "jekyll-readme-index"
@@ -42,8 +47,8 @@ group :jekyll_plugins do
   gem "jekyll-relative-links"
   gem "jekyll-seo-tag"
   gem "jekyll-sitemap"
+  gem "jekyll-theme-primer"
   gem "jekyll-titles-from-headings"
-  gem "jekyll-include-cache"
 
   # Non-Github Pages plugins:
   gem "jekyll-last-modified-at"
