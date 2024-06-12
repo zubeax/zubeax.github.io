@@ -318,13 +318,17 @@ include:
   - .well-known
   - LICENSE.md
 
-
 # ----------------------------------------------------------------------------------------
 
 plugins:
-  - jekyll-include-cache
+  - jekyll-coffeescript
+  - jekyll-commonmark-ghpages
   - jekyll-default-layout
   - jekyll-feed
+  - jekyll-gist
+  - jekyll-github-metadata
+  - jekyll-include-cache
+  - jekyll-last-modified-at
   - jekyll-optional-front-matter
   - jekyll-paginate
   - jekyll-readme-index
@@ -332,9 +336,8 @@ plugins:
   - jekyll-relative-links
   - jekyll-seo-tag
   - jekyll-sitemap
+  - jekyll-theme-primer
   - jekyll-titles-from-headings
-  - jekyll-last-modified-at
-
 
 # SEO Tag
 # ---------------------------------------------------------------------------------------
