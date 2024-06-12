@@ -82,7 +82,7 @@ paginate_path:         /:num/
 # Theme. Use local them for local build, remote_them for github pages build.
 # ---------------------------------------------------------------------------------------
 
-theme: jekyll-theme-hydejack
+#theme: jekyll-theme-hydejack
 #remote_theme: hydecorp/hydejack@v9
 
 # No Google Analytics for the moment
@@ -217,7 +217,7 @@ hydejack:
   # This will increase site build speed dramatically!
   no_inline_css:       false
 
-  # Set to `true` if you don't intend on changing the accent color on a per-page basis. 
+  # Set to `true` if you don't intend on changing the accent color on a per-page basis.
   # This will increase site build speed!
   no_page_style:       false
 
@@ -260,7 +260,7 @@ hydejack:
 
   # Buyers of the PRO version can opt to hide all dates from the theme.
   # Frequent consumers of online content will know that nothing devalues a post like
-  # seeing an old date. 
+  # seeing an old date.
   hide_dates:          false
 
   # TODO
@@ -286,7 +286,6 @@ hydejack:
   #  cache_version:     13
   #  precache_assets:
   #    - /assets/images/swipe.svg
-
 
 # Collections
 # ----------------------------------------------------------------------------------------
@@ -320,14 +319,9 @@ include:
 # ----------------------------------------------------------------------------------------
 
 plugins:
-  - jekyll-coffeescript
-  - jekyll-commonmark-ghpages
+  - jekyll-include-cache
   - jekyll-default-layout
   - jekyll-feed
-  - jekyll-gist
-  - jekyll-github-metadata
-  - jekyll-include-cache
-  - jekyll-last-modified-at
   - jekyll-optional-front-matter
   - jekyll-paginate
   - jekyll-readme-index
@@ -335,8 +329,8 @@ plugins:
   - jekyll-relative-links
   - jekyll-seo-tag
   - jekyll-sitemap
-  - jekyll-theme-primer
   - jekyll-titles-from-headings
+  - jekyll-last-modified-at
 
 # SEO Tag
 # ---------------------------------------------------------------------------------------
@@ -384,21 +378,21 @@ jekyll_compose:
   default_front_matter:
     drafts:
       layout: post
-      description: > 
+      description: >
         A short ~160 character description of your post for search engines,
         social media previews, etc.
       image:
         path: /assets/images/sunset-shot.png
     posts:
       layout: post
-      description: > 
+      description: >
         A short ~160 character description of your post for search engines,
         social media previews, etc.
       image:
         path: /assets/images/sunset-shot.png
     projects:
       layout: project
-      description: > 
+      description: >
         A short ~160 character description of your post for search engines,
         social media previews, etc.
       image:
