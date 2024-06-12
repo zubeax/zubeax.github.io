@@ -1,13 +1,16 @@
 ---
-layout: about
-title: About Axel
+layout: welcome
+title: About
 permalink: /about/
+more_posts: posts.md
 categories: kubernetes raspberrypi
 feature_image: /assets/images/axel.jpg
+sidebar: true
 cover: true
+order: 1
 ---
 
-My name is Axel Zuber. I live in a small village to the north of Frankfurt/Main in Germany.
+Hi !. My name is Axel Zuber. I live in a small village to the north of Frankfurt/Main in Germany.
 
 ![Axel]({{ "/assets/images/axel.jpg" | relative_url }})
 

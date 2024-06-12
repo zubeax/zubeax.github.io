@@ -83,7 +83,7 @@ paginate_path:         /:num/
 # ---------------------------------------------------------------------------------------
 
 #theme: jekyll-theme-hydejack
-remote_theme: hydecorp/hydejack@v9
+#remote_theme: hydecorp/hydejack@v9
 
 # No Google Analytics for the moment
 # ---------------------------------------------------------------------------------------
@@ -285,7 +285,7 @@ hydejack:
   #  enabled:           false
   #  cache_version:     13
   #  precache_assets:
-  #    - /assets/img/swipe.svg
+  #    - /assets/images/swipe.svg
 
 
 # Collections

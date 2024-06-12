@@ -4,7 +4,7 @@ sitemap: false
 type: tag
 title: Github Pages
 slug: github-pages
-category: devlog
+category: topics
 sidebar: false
 description: >
    Website hosted via github.
