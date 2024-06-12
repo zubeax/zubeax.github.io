@@ -96,7 +96,7 @@ staticman_url: https://kippel.smooth-sailing.net:5000/api/v1.0/comments/
 # Customization
 # ----------------------------------------------------------------------------------------
 # Sidebar image and theme color of the site.
-accent_image:          /assets/images/sunset-shot.jpg
+accent_image:          /assets/images/sunset-shot.png
 accent_color:          rgb(241, 202, 27)
 
 # This is used for the `theme-color` meta tag,
