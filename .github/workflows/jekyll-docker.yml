@@ -19,4 +19,4 @@ jobs:
         -v ${{ github.workspace }}:/srv/jekyll -v ${{ github.workspace }}/_site:/srv/jekyll/_site \
         -e JEKYLL_ENV=development \
         jekyll/builder:latest /bin/bash -c "chmod -R 777 /srv/jekyll && \
-        echo $JEKYLL_ENV && jekyll build --incremental --trace -V"
+        echo $JEKYLL_ENV && jekyll build --trace -V"
