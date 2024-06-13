@@ -18,6 +18,10 @@ baseurl: ""
 # You may also provide a location, e.g.: en-us, de_AT.
 lang:                  en
 
+# Try to enforce encoding to prevent this error :
+# jekyll 3.9.5 | Error:  Liquid error (line 1): Invalid US-ASCII character "\xE2" on line 6
+encoding:              utf-8
+
 # The title of your blog. Used in the sidebar and the browser tab.
 title:                 Axel's Blog
 
