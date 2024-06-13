@@ -32,6 +32,7 @@ gem "duktape"
 gem "webrick"
 
 group :jekyll_plugins do
+  gem  "jekyll-coffeescript"
   gem "jekyll-default-layout"
   gem "jekyll-feed"
   gem "jekyll-optional-front-matter"
