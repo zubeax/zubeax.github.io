@@ -336,6 +336,7 @@ plugins:
   - jekyll-sitemap
   - jekyll-titles-from-headings
   - jekyll-last-modified-at
+  - jekyll-liquid-debug
 
 # SEO Tag
 # ---------------------------------------------------------------------------------------
