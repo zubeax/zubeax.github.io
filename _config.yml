@@ -86,7 +86,7 @@ paginate_path:         /:num/
 # Theme. Use local them for local build, remote_them for github pages build.
 # ---------------------------------------------------------------------------------------
 
-theme: jekyll-theme-hydejack
+#theme: jekyll-theme-hydejack
 #remote_theme: hydecorp/hydejack@v9
 
 # No Google Analytics for the moment
