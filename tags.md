@@ -4,7 +4,7 @@ sitemap: false
 title: Tags
 permalink: /tags/
 sidebar: true
-order: 6
+order: 5
 description: >
-  Blog Posts grouped into Categories and Tags.
+  Blog Posts by Tags
 ---

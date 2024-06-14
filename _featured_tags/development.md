@@ -4,7 +4,7 @@ sitemap: false
 type: tag
 title: Development
 slug: development
-category: devlog
+category: topics
 sidebar: true
 description: >
    Development Tips & Settings

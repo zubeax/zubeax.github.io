@@ -18,6 +18,10 @@ baseurl: ""
 # You may also provide a location, e.g.: en-us, de_AT.
 lang:                  en
 
+# Try to enforce encoding to prevent this error :
+# jekyll 3.9.5 | Error:  Liquid error (line 1): Invalid US-ASCII character "\xE2" on line 6
+encoding:              utf-8
+
 # The title of your blog. Used in the sidebar and the browser tab.
 title:                 Axel's Blog
 
@@ -83,7 +87,7 @@ paginate_path:         /:num/
 # ---------------------------------------------------------------------------------------
 
 #theme: jekyll-theme-hydejack
-remote_theme: hydecorp/hydejack@v9
+#remote_theme: hydecorp/hydejack@v9
 
 # No Google Analytics for the moment
 # ---------------------------------------------------------------------------------------
@@ -96,7 +100,7 @@ staticman_url: https://kippel.smooth-sailing.net:5000/api/v1.0/comments/
 # Customization
 # ----------------------------------------------------------------------------------------
 # Sidebar image and theme color of the site.
-accent_image:          /assets/images/sunset-shot.jpg
+accent_image:          /assets/images/sunset-shot.png
 accent_color:          rgb(241, 202, 27)
 
 # This is used for the `theme-color` meta tag,
@@ -217,7 +221,7 @@ hydejack:
   # This will increase site build speed dramatically!
   no_inline_css:       false
 
-  # Set to `true` if you don't intend on changing the accent color on a per-page basis. 
+  # Set to `true` if you don't intend on changing the accent color on a per-page basis.
   # This will increase site build speed!
   no_page_style:       false
 
@@ -260,7 +264,7 @@ hydejack:
 
   # Buyers of the PRO version can opt to hide all dates from the theme.
   # Frequent consumers of online content will know that nothing devalues a post like
-  # seeing an old date. 
+  # seeing an old date.
   hide_dates:          false
 
   # TODO
@@ -285,8 +289,7 @@ hydejack:
   #  enabled:           false
   #  cache_version:     13
   #  precache_assets:
-  #    - /assets/img/swipe.svg
-
+  #    - /assets/images/swipe.svg
 
 # Collections
 # ----------------------------------------------------------------------------------------
@@ -304,7 +307,6 @@ collections:
     permalink:         /projects/:path/
     output:            true
 
-
 # ----------------------------------------------------------------------------------------
 
 exclude:
@@ -318,10 +320,10 @@ include:
   - .well-known
   - LICENSE.md
 
-
 # ----------------------------------------------------------------------------------------
 
 plugins:
+  - jekyll-coffeescript
   - jekyll-include-cache
   - jekyll-default-layout
   - jekyll-feed
@@ -334,7 +336,7 @@ plugins:
   - jekyll-sitemap
   - jekyll-titles-from-headings
   - jekyll-last-modified-at
-
+  - jekyll-liquid-debug
 
 # SEO Tag
 # ---------------------------------------------------------------------------------------
@@ -382,25 +384,25 @@ jekyll_compose:
   default_front_matter:
     drafts:
       layout: post
-      description: > 
+      description: >
         A short ~160 character description of your post for search engines,
         social media previews, etc.
       image:
-        path: /assets/images/sunset-shot.jpg
+        path: /assets/images/sunset-shot.png
     posts:
       layout: post
-      description: > 
+      description: >
         A short ~160 character description of your post for search engines,
         social media previews, etc.
       image:
-        path: /assets/images/sunset-shot.jpg
+        path: /assets/images/sunset-shot.png
     projects:
       layout: project
-      description: > 
+      description: >
         A short ~160 character description of your post for search engines,
         social media previews, etc.
       image:
-        path: /assets/images/sunset-shot.jpg
+        path: /assets/images/sunset-shot.png
       links:
         - title: Project Link
           url: https://example.com

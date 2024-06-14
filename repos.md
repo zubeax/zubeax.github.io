@@ -1,7 +1,9 @@
 ---
 layout: repository
-title: Github Repositories
+title: Repositories
 permalink: /repositories/
+sidebar: true
+order: 6
 description: >
   Proof-of-concept and utility repositories that i am hosting on Github. 
 ---
