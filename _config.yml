@@ -339,6 +339,7 @@ plugins:
   - jekyll-last-modified-at
   - jekyll-compose
   - faraday
+  - kramdown-math-katex
 
 # SEO Tag
 # ---------------------------------------------------------------------------------------
