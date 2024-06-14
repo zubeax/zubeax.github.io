@@ -4,7 +4,7 @@ sitemap: false
 type: tag
 title: Jekyll
 slug: jekyll
-category: topics
+category: devlog
 sidebar: false
 description: >
    Jekyll • Simple, blog-aware, static sites.

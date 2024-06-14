@@ -1,0 +1,183 @@
+---
+layout: post
+title: "Installing Kubernetes on a Raspberry Pi Cluster"
+date: 2023-12-07
+categories: kubernetes cluster k3s
+description: >
+  The initial steps of deploying k3s to the master and client nodes.
+---
+After completing the basic prerequisite tasks I am now ready to install Kubernetes on the master and client nodes.
+There are a number of options for doing so :
+
+-   [k3s](https://k3s.io/), a bare-metal Kubernetes distribution derived from the official sources, published by Rancher
+-   [MicroK8s](https://microk8s.io/), similar to k3s, published by Canonical
+-   os-specific packages for kubectl, containerd, ...
+
+k3s seems to be a popular choice, so i decided to go with it.
+
+- Table of Contents
+{:toc .large-only}
+
+## Installing the Master Node
+
+Installation of k3s is straighforward : you grab the installscript from their website, parameterize it appropriately and execute.
+
+```sh
+# curl -sfL https://get.k3s.io | sh -s - \
+		--write-kubeconfig-mode 644 \
+		--disable servicelb \
+		--token k3smaster \
+		--bind-address 192.168.100.242 \
+		--disable-cloud-controller \
+		--disable local-storage
+```
+
+The parameters are :
+
+- <b>write-kubeconfig-mode 644</b> This is the mode that we want to use for the kubeconfig file.
+- <b>disable servicelb</b> We will use <b>metallb</b> as a load balancer, so we disable the service load balancer.
+- <b>token</b> This is the token that we want the client nodes to use to connect to the K3s master node.
+- <b>bind-address</b> This is the master node's ip address as assigned by my DHCP infrastructure.
+- <b>disable-cloud-controller</b> CCM (Cloud Controller Manager) enables a k3s cluster to talk to a cloud provider API. I don't think we need it.
+- <b>disable local-storage</b> We will use <b>longhorn</b> as a storage provider, so we have to disable the K3s local storage.
+
+If you want the master node excluded from container scheduling, add the 'node-taint' parameter :
+
+```sh
+		--node-taint CriticalAddonsOnly=true:NoExecute
+```
+
+Since i can always taint the master node manually, i will skip this until i can observe if the master node is able to take the load.
+
+The script logs its activity like this :
+
+```sh
+[INFO]  Finding release for channel stable
+[INFO]  Using v1.27.6+k3s1 as release
+[INFO]  Downloading hash https://github.com/k3s-io/k3s/releases/download/v1.27.6+k3s1/sha256sum-arm64.txt
+[INFO]  Downloading binary https://github.com/k3s-io/k3s/releases/download/v1.27.6+k3s1/k3s-arm64
+[INFO]  Verifying binary download
+[INFO]  Installing k3s to /usr/local/bin/k3s
+[INFO]  Skipping installation of SELinux RPM
+[INFO]  Creating /usr/local/bin/kubectl symlink to k3s
+[INFO]  Creating /usr/local/bin/crictl symlink to k3s
+[INFO]  Skipping /usr/local/bin/ctr symlink to k3s, command exists in PATH at /usr/bin/ctr
+[INFO]  Creating killall script /usr/local/bin/k3s-killall.sh
+[INFO]  Creating uninstall script /usr/local/bin/k3s-uninstall.sh
+[INFO]  env: Creating environment file /etc/systemd/system/k3s.service.env
+[INFO]  systemd: Creating service file /etc/systemd/system/k3s.service
+[INFO]  systemd: Enabling k3s unit
+Created symlink /etc/systemd/system/multi-user.target.wants/k3s.service → /etc/systemd/system/k3s.service.
+[INFO]  systemd: Starting k3s
+```
+
+
+If everything went according to plan, the master node should now be up and running :
+
+```sh
+# systemctl status k3s
+● k3s.service - Lightweight Kubernetes
+     Loaded: loaded (/etc/systemd/system/k3s.service; enabled; vendor preset: enabled)
+     Active: active (running) since Wed 2023-12-06 20:57:46 CET; 18h ago
+       Docs: https://k3s.io
+    Process: 657 ExecStartPre=/bin/sh -xc ! /usr/bin/systemctl is-enabled --quiet nm-cloud-setup.service (code=exited, status=0/SUCCESS)
+    Process: 665 ExecStartPre=/sbin/modprobe br_netfilter (code=exited, status=0/SUCCESS)
+    Process: 672 ExecStartPre=/sbin/modprobe overlay (code=exited, status=0/SUCCESS)
+   Main PID: 677 (k3s-server)
+      Tasks: 365
+     Memory: 3.0G
+        CPU: 8h 47min 6.857s
+     CGroup: /system.slice/k3s.service
+             ├─  677 /usr/local/bin/k3s server
+             ├─  912 containerd
+             ├─ 2753 /var/lib/rancher/k3s/data/af4faef5f1...
+             ... redacted ..
+             └─15456 /var/lib/rancher/k3s/data/af4faef5f1...
+
+... <redacted> ...
+Dec 07 15:13:56 rbpic0n1 k3s[677]: Trace[1341680801]:  ---"Txn call completed" 648ms (15:13:56.834)]
+Dec 07 15:13:56 rbpic0n1 k3s[677]: Trace[1341680801]: [650.046539ms] [650.046539ms] END
+```
+
+## Installing the Client Nodes
+
+In order to connect to the master, the client nodes require the hashed master token. Go grab that :
+
+```sh
+cat /var/lib/rancher/k3s/server/node-token'
+K10cda...<redacted>...fad8::server:k3smaster
+```
+
+Then execute this script on each client node (replacing <node-token> with our master token) :
+
+```sh
+curl -sfL https://get.k3s.io | K3S_URL=https://192.168.100.242:6443 K3S_TOKEN=<node-token> sh -
+```
+
+Installation should return a log similar to this :
+
+```sh
+[INFO]  Finding release for channel stable
+[INFO]  Using v1.27.6+k3s1 as release
+[INFO]  Downloading hash https://github.com/k3s-io/k3s/releases/download/v1.27.6+k3s1/sha256sum-arm64.txt
+[INFO]  Downloading binary https://github.com/k3s-io/k3s/releases/download/v1.27.6+k3s1/k3s-arm64
+[INFO]  Verifying binary download
+[INFO]  Installing k3s to /usr/local/bin/k3s
+[INFO]  Skipping installation of SELinux RPM
+[INFO]  Creating /usr/local/bin/kubectl symlink to k3s
+[INFO]  Creating /usr/local/bin/crictl symlink to k3s
+[INFO]  Creating /usr/local/bin/ctr symlink to k3s
+[INFO]  Creating killall script exit
+[INFO]  Creating uninstall script /usr/local/bin/k3s-agent-uninstall.sh
+[INFO]  env: Creating environment file /etc/systemd/system/k3s-agent.service.env
+[INFO]  systemd: Creating service file /etc/systemd/system/k3s-agent.service
+[INFO]  systemd: Enabling k3s-agent unit
+Created symlink /etc/systemd/system/multi-user.target.wants/k3s-agent.service → /etc/systemd/system/k3s-agent.service.
+[INFO]  systemd: Starting k3s-agent
+```
+
+If everything went well, all agents should now be running. Let's check with <b>systemctl status</b>
+
+```sh
+# systemctl status k3s-agent'
+
+● k3s-agent.service - Lightweight Kubernetes
+     Loaded: loaded (/etc/systemd/system/k3s-agent.service; enabled; vendor preset: enabled)
+     Active: active (running) since Wed 2023-12-06 20:58:14 CET; 18h ago
+       Docs: https://k3s.io
+    Process: 629 ExecStartPre=/bin/sh -xc ! /usr/bin/systemctl is-enabled --quiet nm-cloud-setup.service (code=exited, status=0/SUCCESS)
+    Process: 636 ExecStartPre=/sbin/modprobe br_netfilter (code=exited, status=0/SUCCESS)
+    Process: 640 ExecStartPre=/sbin/modprobe overlay (code=exited, status=0/SUCCESS)
+   Main PID: 642 (k3s-agent)
+      Tasks: 391
+     Memory: 957.1M
+        CPU: 3h 55min 1.704s
+     CGroup: /system.slice/k3s-agent.service
+             ├─  642 /usr/local/bin/k3s agent
+             ├─  689 containerd
+             ├─ 1693 /var/lib/rancher/k3s/data/af4faef5f17...
+             ... <redacted> ...
+             └─14119 /var/lib/rancher/k3s/data/af4faef5f17...
+```
+
+## Verify Cluster Health
+
+If the client nodes were successful in connecting to the master, the <b>kubectl get nodes</b> command should list them :
+
+```sh
+# kubectl get nodes
+NAME       STATUS   ROLES                  AGE     VERSION
+rbpic0n1   Ready    control-plane,master   18m     v1.27.7+k3s2
+rbpic0n2   Ready    <none>                 5m8s    v1.27.7+k3s2
+rbpic0n3   Ready    <none>                 4m43s   v1.27.7+k3s2
+rbpic0n4   Ready    <none>                 48s     v1.27.7+k3s2
+```
+
+There they are. We are making progress. Our Kubernetes Cluster is up and running.
+
+In the next article i will cover customization activities :
+
+- Installing Metallb Load Balancer
+- Installing Longhorn Storage Manager
+
+Stay tuned !

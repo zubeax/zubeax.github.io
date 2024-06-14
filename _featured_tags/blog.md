@@ -2,10 +2,10 @@
 layout: tag-list
 sitemap: false
 type: tag
-title: Git
-slug: git
+title: Blog
+slug: blog
 category: devlog
-sidebar: false
+sidebar: true
 description: >
-   Any article related to Git.
+   Posts about blogging / jekyll theme.
 ---
