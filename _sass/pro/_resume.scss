@@ -163,14 +163,14 @@
 
   @media screen and (min-width: $break-point-dynamic) {
     .columns-break {
-      $helper: $content-width-5 / 2 - $content-margin-5 - 1rem;
+      $helper: calc($content-width-5 / 2) - $content-margin-5 - 1rem;
       width: calc(50vw + #{$helper});
       > .column-3-5 {
         width: $content-width-5;
       }
       > .column-2-5 {
         width: calc(50vw + #{$helper} - #{$content-width-5});
-        max-width: $content-width-5 / 2 - $pad;
+        max-width: calc($content-width-5 / 2) - $pad;
       }
     }
   }
