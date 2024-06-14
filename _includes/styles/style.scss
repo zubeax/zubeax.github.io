@@ -27,30 +27,30 @@
 @import "reboot-mod";
 
 {% unless site.hydejack.no_inline_css or jekyll.environment == 'development' %}
-  @import "pooleparty/link/base";
-  @import "pooleparty/link/type";
-  @import "pooleparty/link/table";
-  @import "pooleparty/link/footer";
-  @import "pooleparty/link/footnotes";
-  @import "pooleparty/link/code";
-  @import "pooleparty/link/posts";
-  @import "pooleparty/link/related";
-  @import "pooleparty/link/read-more";
-  @import "pooleparty/link/message";
-  @import "pooleparty/link/pagination";
+  @import "pooleparty/__link__/base";
+  @import "pooleparty/__link__/type";
+  @import "pooleparty/__link__/table";
+  @import "pooleparty/__link__/footer";
+  @import "pooleparty/__link__/footnotes";
+  @import "pooleparty/__link__/code";
+  @import "pooleparty/__link__/posts";
+  @import "pooleparty/__link__/related";
+  @import "pooleparty/__link__/read-more";
+  @import "pooleparty/__link__/message";
+  @import "pooleparty/__link__/pagination";
 
-  @import "hydejack/link/base";
-  @import "hydejack/link/utilities";
-  @import "hydejack/link/links";
-  @import "hydejack/link/images";
-  @import "hydejack/link/sidebar";
-  @import "hydejack/link/social";
-  @import "hydejack/link/menu";
-  @import "hydejack/link/toc";
-  @import "hydejack/link/content";
-  @import "hydejack/link/avatar";
-  @import "hydejack/link/katex";
-  @import "hydejack/link/footer";
+  @import "hydejack/__link__/base";
+  @import "hydejack/__link__/utilities";
+  @import "hydejack/__link__/links";
+  @import "hydejack/__link__/images";
+  @import "hydejack/__link__/sidebar";
+  @import "hydejack/__link__/social";
+  @import "hydejack/__link__/menu";
+  @import "hydejack/__link__/toc";
+  @import "hydejack/__link__/content";
+  @import "hydejack/__link__/avatar";
+  @import "hydejack/__link__/katex";
+  @import "hydejack/__link__/footer";
 
   @import "pro/projects";
   @import "pro/resume";
@@ -62,11 +62,11 @@
   {% endunless %}
 
   {% unless site.hydejack.no_mark_external or site.no_mark_external %}
-    @import "hydejack/link/mark-external";
+    @import "hydejack/__link__/mark-external";
   {% endunless %}
 
   {% unless site.hydejack.no_break_layout %}
-    @import "hydejack/link/break-layout";
+    @import "hydejack/__link__/break-layout";
   {% endunless %}
 
   @import "my-style";
