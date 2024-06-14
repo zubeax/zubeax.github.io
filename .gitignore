@@ -52,8 +52,9 @@ _zip
 /dist
 /build
 
-/assets/js/*hydejack-*
-/_sass/*/__*__/*
+#CAVEAT: disable the below or Jekyll will fail !
+#/assets/js/*hydejack-*
+#/_sass/*/__*__/*
 
 build.log
 Gemfile.lock
