@@ -26,30 +26,30 @@
 
 @import "html";
 
-@import "pooleparty/__inline__/base";
-@import "pooleparty/__inline__/type";
-@import "pooleparty/__inline__/table";
-@import "pooleparty/__inline__/footer";
-@import "pooleparty/__inline__/footnotes";
-@import "pooleparty/__inline__/code";
-@import "pooleparty/__inline__/posts";
-@import "pooleparty/__inline__/related";
-@import "pooleparty/__inline__/read-more";
-@import "pooleparty/__inline__/message";
-@import "pooleparty/__inline__/pagination";
+@import "pooleparty/inline/base";
+@import "pooleparty/inline/type";
+@import "pooleparty/inline/table";
+@import "pooleparty/inline/footer";
+@import "pooleparty/inline/footnotes";
+@import "pooleparty/inline/code";
+@import "pooleparty/inline/posts";
+@import "pooleparty/inline/related";
+@import "pooleparty/inline/read-more";
+@import "pooleparty/inline/message";
+@import "pooleparty/inline/pagination";
 
-@import "hydejack/__inline__/base";
-@import "hydejack/__inline__/utilities";
-@import "hydejack/__inline__/links";
-@import "hydejack/__inline__/images";
-@import "hydejack/__inline__/sidebar";
-@import "hydejack/__inline__/social";
-@import "hydejack/__inline__/menu";
-@import "hydejack/__inline__/toc";
-@import "hydejack/__inline__/content";
-@import "hydejack/__inline__/avatar";
-@import "hydejack/__inline__/katex";
-@import "hydejack/__inline__/footer";
+@import "hydejack/inline/base";
+@import "hydejack/inline/utilities";
+@import "hydejack/inline/links";
+@import "hydejack/inline/images";
+@import "hydejack/inline/sidebar";
+@import "hydejack/inline/social";
+@import "hydejack/inline/menu";
+@import "hydejack/inline/toc";
+@import "hydejack/inline/content";
+@import "hydejack/inline/avatar";
+@import "hydejack/inline/katex";
+@import "hydejack/inline/footer";
 
 @import "my-inline";
 
