@@ -380,6 +380,10 @@ compress_html:
 sass:
   style:               compressed
 
+# Jekyll Github Metadata
+# ---------------------------------------------------------------------------------------
+repository:           "github.com/zubeax"
+
 
 # Jekyll Compose Defaults
 # ---------------------------------------------------------------------------------------
