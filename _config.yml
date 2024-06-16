@@ -382,8 +382,7 @@ sass:
 
 # Jekyll Github Metadata
 # ---------------------------------------------------------------------------------------
-repository:           "github.com/zubeax"
-
+repository:           "https://github.com/zubeax"
 
 # Jekyll Compose Defaults
 # ---------------------------------------------------------------------------------------
