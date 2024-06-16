@@ -6,7 +6,7 @@ draftsclause="--drafts"
 
 export JEKYLL_ENV=production
 export JEKYLL_GITHUB_TOKEN=$(cat token)
-export PAGES_REPO_NWO="https://github.com/zubeax"
+export PAGES_REPO_NWO=zubeax
 
 #bundle exec jekyll build --trace
 bundle exec jekyll serve --host=0.0.0.0 $draftsclause --trace --incremental --watch --force_polling 
