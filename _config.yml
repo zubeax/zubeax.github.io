@@ -338,6 +338,7 @@ plugins:
   - jekyll-titles-from-headings
   - jekyll-last-modified-at
   - jekyll-compose
+  - jekyll-github-metadata
   - faraday
   - kramdown-math-katex
 
