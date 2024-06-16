@@ -47,6 +47,7 @@ jobs:
         run: bundle exec jekyll build --baseurl "${{ steps.pages.outputs.base_path }}"
         env:
           JEKYLL_ENV: production
+          JEKYLL_GITHUB_TOKEN: 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
       - name: Upload artifact
         # Automatically uploads an artifact from the './_site' directory by default
         uses: actions/upload-pages-artifact@v3

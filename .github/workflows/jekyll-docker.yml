@@ -17,4 +17,4 @@ jobs:
       run: |
         docker run \
         -v ${{ github.workspace }}:/srv/jekyll -v ${{ github.workspace }}/_site:/srv/jekyll/_site \
-        jekyll/builder:latest /bin/bash -c "chmod -R 777 /srv/jekyll; JEKYLL_ENV=production jekyll build --safe true --trace"
+        jekyll/builder:latest /bin/bash -c "chmod -R 777 /srv/jekyll; JEKYLL_ENV=production JEKYLL_GITHUB_TOKEN=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 jekyll build --safe true --trace"
