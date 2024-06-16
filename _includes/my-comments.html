@@ -1,5 +1,16 @@
-{% assign provider = site.comments.provider | default:"disqus" %}
-{% if provider == "disqus" %}
+{% assign provider = site.comments.provider | default:"pystatikman" %}
+{% if provider == "pystatikman" %}
+  <section class="comments">
+    {% if site.data.comments[page.slug] %}
+    <div>
+      {% include my-comment-list.html %}
+    </div>
+    {% endif %}
+    <div>
+      {% include my-comment-form.html %}
+    </div>
+  </section>
+{% elsif provider == "disqus" %}
   {% assign disqus = site.disqus | default:site.disqus_shortname %}
   {% if disqus %}
     <div id="disqus_thread"></div>

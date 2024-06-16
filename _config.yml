@@ -104,7 +104,9 @@ google_analytics: false
 
 # pyStatikMan configuration
 # ---------------------------------------------------------------------------------------
-staticman_url: https://kippel.smooth-sailing.net:5000/api/v1.0/comments/
+comments:
+  provider:            pystatikman
+  staticman_url:       https://kippel.smooth-sailing.net:5000/api/v1.0/comments/
 
 # Customization
 # ----------------------------------------------------------------------------------------

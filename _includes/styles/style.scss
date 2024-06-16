@@ -70,6 +70,7 @@
   {% endunless %}
 
   @import "my-style";
+  @import "comments";
 {% else %}
   @import "html";
 
@@ -117,6 +118,7 @@
 
   @import "my-inline";
   @import "my-style";
+  @import "comments";
 
   {% include styles/common.scss %}
 {% endunless %}

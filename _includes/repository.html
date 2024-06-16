@@ -3,14 +3,16 @@
  
     <div class="post-date">
         <span class="ellipsis mr1" aria-expanded="false">
-            Last updated:
+            <b>Last updated:</b>
             <span class="update">
                 {{include.repo.updated_at | date_to_string}}
             </span>
-            Topics:
+            <b> Topics: </b>
+            <div class="topic-tag">
             {% for topic in include.repo.topics %}
-                <span>{{ topic }}</span>
+                {{ topic }}
             {% endfor %}
+            </div>
         </span>
     </div>
 

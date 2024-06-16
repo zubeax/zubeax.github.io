@@ -69,6 +69,24 @@ body:not(.no-third-column) {
     margin-right: .25rem;
   }
 }
+
+.topic-tag {
+    display: inline-block;
+    padding: 0 7px;
+    font-size: 12px;
+    font-weight: 500;
+    line-height: 18px;
+    white-space: nowrap;
+    border: 1px solid transparent;
+    border-radius: 2em;
+    padding-right: 10px;
+    padding-left: 10px;
+    line-height: 22px;
+    color: #0969da;
+    background-color: #ddf4ff;
+    border: 1px solid transparent;
+}
+
 // >>>
 // <<< LINK
 clap-button {
