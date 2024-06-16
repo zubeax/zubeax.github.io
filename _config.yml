@@ -25,6 +25,14 @@ encoding:              utf-8
 # The title of your blog. Used in the sidebar and the browser tab.
 title:                 Axel's Blog
 
+# Jekyll Github Metadata
+# ---------------------------------------------------------------------------------------
+repository:           zubeax
+
+github:
+  hostname:           github.com
+  pages_hostname:     github.io
+
 # A short description (~150 chars) of the page used for the meta description tag.
 # Can use markdown, but no more than one paragraph (enforced by `>`)
 description:           >
@@ -379,10 +387,6 @@ compress_html:
 
 sass:
   style:               compressed
-
-# Jekyll Github Metadata
-# ---------------------------------------------------------------------------------------
-repository:           "https://github.com/zubeax"
 
 # Jekyll Compose Defaults
 # ---------------------------------------------------------------------------------------
