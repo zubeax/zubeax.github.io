@@ -30,6 +30,7 @@ title:                 Axel's Blog
 repository:           zubeax
 
 github:
+  repository:         zubeax
   hostname:           github.com
   pages_hostname:     github.io
 
