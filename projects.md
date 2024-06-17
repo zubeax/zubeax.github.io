@@ -4,7 +4,7 @@ title:           Projects
 show_collection: projects
 featured:        true
 sidebar:         true
-order:           8
+order:           6
 description: >
   Ongoing Projects. 
 hide_description: true

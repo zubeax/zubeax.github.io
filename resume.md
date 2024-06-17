@@ -6,7 +6,7 @@ description: >
   Welcome. My name is Axel Zuber. I'm a developer and software architect on journey.
 hide_description: true
 sidebar: true
-order: 7
+order: 4
 left_column:
  - work
  - education
