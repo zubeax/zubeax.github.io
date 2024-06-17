@@ -25,15 +25,6 @@ encoding:              utf-8
 # The title of your blog. Used in the sidebar and the browser tab.
 title:                 Axel's Blog
 
-# Jekyll Github Metadata
-# ---------------------------------------------------------------------------------------
-repository:           zubeax
-
-github:
-  repository:         zubeax
-  hostname:           github.com
-  pages_hostname:     github.io
-
 # A short description (~150 chars) of the page used for the meta description tag.
 # Can use markdown, but no more than one paragraph (enforced by `>`)
 description:           >
@@ -60,19 +51,6 @@ author:
     linkedin:          axel-zuber
     stackoverflow:     23135442/Ghostdog
     rss:               https://blog.smooth-sailing.net/feed.xml  # make sure you provide an absolute URL
-
-# Add links to the sidebar.
-menu:
-  - title:             Home
-    url:               /
-  - title:             About
-    url:               /about/
-  - title:             Archive
-    url:               /posts/
-  - title:             Tags
-    url:               /tags/
-  - title:             Repositories
-    url:               /repositories/
 
 # Add links to the footer.
 # Typically you'll want to link to your cookie- or privacy policy (if appliable), etc..
@@ -393,7 +371,6 @@ sass:
 
 # Jekyll Compose Defaults
 # ---------------------------------------------------------------------------------------
-
 jekyll_compose:
   default_front_matter:
     drafts:
@@ -420,3 +397,12 @@ jekyll_compose:
       links:
         - title: Project Link
           url: https://example.com
+
+# Jekyll Github Metadata
+# ---------------------------------------------------------------------------------------
+repository:           zubeax
+
+github:
+  repository:         zubeax
+  hostname:           github.com
+  pages_hostname:     github.io
