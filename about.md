@@ -2,7 +2,7 @@
 layout: welcome
 title: About
 permalink: /about/
-more_posts: posts.md
+more_posts: topics.md
 categories: kubernetes raspberrypi
 feature_image: /assets/images/axel.jpg
 sidebar: true
@@ -29,4 +29,3 @@ for [Deutsche Bank](https://www.db.com/). During my tenure i used most of the pl
 I graduated from the [Technical University of Darmstadt](https://www.tu-darmstadt.de/index.en.jsp) with a degree in solid state physics in 1989.
 
 If you want more detail, check out my [LinkedIn profile](https://www.linkedin.com/in/axel-zuber/).
-

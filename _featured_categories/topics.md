@@ -6,5 +6,5 @@ slug: topics
 sidebar: true
 order: 2
 description: >
-  Categorized Articles
+  My blog posts grouped by year of publication.
 ---
