@@ -1,11 +1,11 @@
 ---
 layout: post
-title: "Reconfiguring the Blog for the Hydejack Jekyll Theme"
+title: "Reconfiguring the Blog for the Jekyll Hydejack Theme"
 date: 2023-12-22
 category: topics
 tags: github-pages jekyll
 description: >
-  Moving from minima to hydejack jekyll theme.
+  Moving from minima to jekyll hydejack theme.
 ---
 - Table of Contents
 {:toc .large-only}

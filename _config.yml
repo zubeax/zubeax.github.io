@@ -270,6 +270,9 @@ hydejack:
     # Set to `true` to allow visitors to switch between light and dark mode.
     icon:              true
 
+  # for date formatting in comments
+  date_format:         "%b %-d, %Y"
+
   # ⚡️ DANGER ZONE ⚡️
   # ----------------
   # This is an _experimental_ feature.
