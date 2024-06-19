@@ -1,4 +1,11 @@
 // _sass/comments.scss
+//
+//  Settings like :
+//      color: var(--body-color);
+//      background-color: var(--body-bg);
+//      border-color: var(--dark-mode-border-color);
+//  apply dark mode settings to the 'comment' section
+
 .comment {
   padding-top: 10px;
   h3 {
@@ -45,10 +52,18 @@
     border: 1px solid #ddd;
     color: royalblue;
     font-weight: bold;
+    background-color: var(--body-bg);
+    border-color: var(--dark-mode-border-color);
 
     &:hover {
       cursor: pointer;
     }
+  }
+
+  input {
+    color: var(--body-color);
+    background-color: var(--body-bg);
+    border-color: var(--dark-mode-border-color);
   }
 }
 
@@ -95,9 +110,22 @@
 .CodeMirror,
 .editor-toolbar {
    border-radius: 0;
+   background-color: var(--gray-text);
+   border-color: var(--dark-mode-border-color);
+
+   .fa {
+    color: var(--gray-text);
+    border-right: 1px solid var(--border-color);
+    border-left: 1px solid var(--border-color);
+   }
  }
 
 .CodeMirror,
 .CodeMirror-scroll {
   min-height: 150px;
+  color: var(--body-color);
+  background-color: var(--body-bg);
+  border-color: var(--dark-mode-border-color);
 }
+
+

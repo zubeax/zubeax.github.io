@@ -1,6 +1,6 @@
 {% assign provider = site.comments.provider | default:"pystatikman" %}
 {% if provider == "pystatikman" %}
-  <section class="comments">
+  <section class="comment body html">
     {% if site.data.comments[page.slug] %}
     <div>
       {% include my-comment-list.html %}

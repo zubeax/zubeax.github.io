@@ -1,8 +1,8 @@
-{% assign parent_id = include.parent_id | default: '' %} 
+{% assign parent_id = include.parent_id | default: '' %}
 {% assign comments = site.data.comments[page.slug] | where_exp: "item", "item.parent_id == parent_id" %} 
 {% assign sorted_comments = comments | sort: 'date' %}
 {% for comment in sorted_comments %}
-<div class="comment">
+<div class="comment body html">
   <h3>{{comment.name}}</h3>
   <time
     class="post-meta dt-published"
@@ -13,7 +13,7 @@
     {{ comment.date | date:" %H:%M - %b %-d, %Y" }}
   </time>
   <p>{{comment.message | strip_html | markdownify }}</p>
-  <div class="comment-reply">
+  <div class="comment-reply body html">
     <input id="reply-{{ comment._id}}" type="checkbox" class="checkbox" />
     <label class="open" for="reply-{{ comment._id }}">
       Reply to {{ comment.name }}

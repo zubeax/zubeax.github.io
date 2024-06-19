@@ -1,4 +1,4 @@
-<form method="POST" action="{{ site.comments.staticman_url }}" class="comment-form">
+<form method="POST" action="{{ site.comments.staticman_url }}" class="comment-form body html">
   <input name="options[redirect]" type="hidden" value="{{ 'comment-success' | absolute_url }}">
   <input name="options[redirectError]" type="hidden" value="{{ 'comment-error' | absolute_url }}">
   <input name="options[slug]" type="hidden" value="{{ page.slug }}" />
@@ -8,7 +8,7 @@
   <input type="hidden" name="options[reCaptcha][secret]" value="6LdnV_opAAAAAEIxadkcyztVjMEc5x64VPIWx6Mj">
 
   <input
-      class="comment-name"
+      class="comment-name body html"
       name="fields[name]"
       type="text"
       placeholder="Name"
@@ -17,18 +17,18 @@
 
   <textarea
     id="message-{{ include.parent_id }}"
-    class="comment-message"
+    class="comment-message body html"
     name="fields[message]"
     placeholder="Comment (markdown accepted)"
     required
   ></textarea>
 
   <div 
-    class="g-recaptcha" 
+    class="g-recaptcha"
     data-sitekey="6LdnV_opAAAAAN5iGmTD_oQ0Vc5khmshh4AbGDbk"
   ></div>
 
-  <button class="comment-submit" >
+  <button class="comment-submit">
     SEND
   </button>
 </form>
