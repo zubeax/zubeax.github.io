@@ -30,8 +30,8 @@ work:
     startDate: "1995-06-01"
     endDate: ""
     summary: >
-      Solution Architect in Anti-Financial Crime. Working on case investigation applications
-      deployed on Deutsche Bank's Openshift (private cloud) environment.
+      Solution Architect in Deutsche Bank's Anti-Financial Crime division. 
+      Working on case investigation applications deployed on an in-house Openshift (private cloud) environment.
 #    highlights:
 projects:
   - title: "Integrate Unstructured Information with Case Management Application"
